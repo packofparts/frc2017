@@ -2,20 +2,22 @@ sudo: false
 language: java
 jdk: oraclejdk8
 install: true
-script: ./gradlew build
-before_deploy: ./gradlew generatePomFileForMyPublicationPublication generateBintrayFile
+script: "./gradlew build"
+before_deploy: "./gradlew generatePomFileForMyPublicationPublication generateBintrayFile"
 deploy:
   skip_cleanup: true
   provider: bintray
-  file: "build/bintray.json"
-  user: "timtim17"
+  file: build/bintray.json
+  user: timtim17
   dry-run: false
   on:
     all_branches: true
+  key:
+    secure: DVGZB+3Md2bM6jyHl8DR75uINt8jOuX9bzODdnOSQ0WR23sxk+QhizmClRbv928neyZ5EQCWOwiYBESx64+kpAo0NxAUgyreK0S4x7SEDEC68PcuWl1MeQ7fch+gmO4Nqw4AbThS9MNkxM054vvPTiHJo/0nBcf0FLWV+e8z0f9RkA0lCqEGLBphOlIo4ESRnHJPhNf2XMyYvJOlHHgA71LX2nwUmIc5IdokpHfEC3T2yr5Bt15XPcZvwwdBuTblMJV4BOoxjzV7clq4zEEPkl5UVbvJUzrGBq47mVz8mehlTLmOsJVUSWJjsxWvEOi1e2LYBTJH3cFF2dUPvwnnuFezegLYQu5XjM3QJLMHtq5JXOA0qW1PavOUX8LO89z/v1u0KVH8IYcpy+JtP4ByXHf/4HQtlUaeXfcP7SvNz7yOGSmlQhbjtEBAI5F7AwGNJ1wdOj3Z/Z7mcFY3fUbGipUS9SXna9TpM3QDvj2nCMqRmSGbVIuCzJBAD9sobQ4cpmX9NlbsajkT5WtSZl0i5/ljEIsmY5uLPXqsLWTXkPXf4AKs4P1V3j4PEmhieZzul7PymPSSXebpAm+3J8WlTwp/42Y54m871AdNGfAi7V8SnQIcu0LJxCl4Um0M9sd48llEgejFTIqlGgFYB2ho/p2T47g3Oyvi0iG9CXjYLTk=
 notifications:
   webhooks:
     urls:
-      - https://webhooks.gitter.im/e/09f40f14885470ecffd1
+    - https://webhooks.gitter.im/e/09f40f14885470ecffd1
     on_start: never
     on_failure: always
     on_success: change
