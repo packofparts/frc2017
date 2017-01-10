@@ -31,8 +31,8 @@ gradlerio.robotClass = "org.usfirst.frc.team1294.robot.Robot"   //The class for 
 gradlerio.team = "1294"                                   //Your FRC team number (e.g. 5333 for team 'Can't C#', or 47 for Chief Delphi)
 //gradlerio.rioIP = "10.53.33.20"                         //Uncomment to specify the IP address of the RIO
 
-gradlerio.wpilib_version = "2017.1.1"
-gradlerio.ntcore_version = "3.1.5"
+//gradlerio.wpilib_version = "2017.1.1"
+//gradlerio.ntcore_version = "3.1.5"
 
 dependencies {
   compile fileTree(dir: "lib/", include: '**/*.jar')
