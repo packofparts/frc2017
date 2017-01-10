@@ -19,6 +19,9 @@ plugins {
     id 'org.ajoberstar.release-opinion' version '1.3.2'
 }
 
+configurations.all {
+	exclude group: "edu.wpi.first.wpilibj", module: 'wpilibJavaFinal'
+}
 
 apply plugin: 'java'
 apply plugin: 'idea'
