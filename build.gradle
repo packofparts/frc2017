@@ -31,6 +31,9 @@ gradlerio.robotClass = "org.usfirst.frc.team1294.robot.Robot"   //The class for 
 gradlerio.team = "1294"                                   //Your FRC team number (e.g. 5333 for team 'Can't C#', or 47 for Chief Delphi)
 //gradlerio.rioIP = "10.53.33.20"                         //Uncomment to specify the IP address of the RIO
 
+gradlerio.wpilib_version = "2017.1.1"
+gradlerio.ntcore_version = "3.1.5"
+
 dependencies {
   compile fileTree(dir: "lib/", include: '**/*.jar')
 }
@@ -48,7 +51,7 @@ publishing {
 
 model {
 	tasks.generatePomFileForMyPublicationPublication {
-		destination = file("$buildDir/frc2016-${project.version.toString()}.pom")
+		destination = file("$buildDir/frc2017-${project.version.toString()}.pom")
 	}
 }
 

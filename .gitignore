@@ -27,6 +27,8 @@ local.properties
 # Eclipse Core
 .project
 
+!lib/
+
 # External tool builders
 .externalToolBuilders/
 
@@ -67,3 +69,5 @@ build/
 .Trashes
 ehthumbs.db
 Thumbs.db
+/frc2017.iws
+/frc2017.ipr
