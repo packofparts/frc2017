@@ -9,8 +9,6 @@
 //  }
 //}
 
-task build(type: build) {}
-
 plugins {
   id 'jaci.openrio.gradle.GradleRIO' version '2017.0.0'
   id 'java'
