@@ -27,7 +27,7 @@ local.properties
 # Eclipse Core
 .project
 
-!lib/*.jar
+!libs/*.jar
 
 # External tool builders
 .externalToolBuilders/
