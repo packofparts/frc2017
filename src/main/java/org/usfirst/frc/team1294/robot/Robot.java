@@ -45,7 +45,6 @@ public class Robot extends IterativeRobot {
 		// this is NOT valid command based code, but it will do for testing
 		CANTalon testTalon = new CANTalon(1);
 		navX = new AHRS(SerialPort.Port.kMXP);
-		SmartDashboard.putNumber("b", Double.MAX_VALUE);  // for some reason this fixes a segmentation fault with the navX and ntcore...?
 	}
 
 	/**
