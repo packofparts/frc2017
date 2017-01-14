@@ -2,6 +2,7 @@ package org.usfirst.frc.team1294.robot.subsystems;
 
 import com.ctre.CANTalon;
 
+import org.usfirst.frc.team1294.robot.commands.DriveMotorCommand;
 import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -33,10 +34,11 @@ public class DriveSubsystem extends Subsystem {
 
   @Override
   protected void initDefaultCommand() {
-    setDefaultCommand(new MecanumDriveCommand());
+    setDefaultCommand(new DriveMotorCommand());
   }
 
   public void mecanumDrive(double x, double y, double rotate, double gyro) {
     robotDrive.mecanumDrive_Cartesian(x, y, rotate, gyro);
+    //robotDrive.mecanumDrive_Cartesian();
   }
 }
