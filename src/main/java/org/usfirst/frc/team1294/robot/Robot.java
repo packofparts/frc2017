@@ -17,6 +17,7 @@ import org.usfirst.frc.team1294.robot.commands.ExampleCommand;
 import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
 import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.VisionSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,6 +32,8 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static DriveSubsystem driveSubsystem;
 	public static AHRS navX;  // NOT command based
+	public static VisionSubsystem visionSubsystem;
+
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -50,6 +53,8 @@ public class Robot extends IterativeRobot {
 		CANTalon testTalon = new CANTalon(1);
 		navX = new AHRS(SerialPort.Port.kMXP);
 		driveSubsystem = new DriveSubsystem();
+
+		visionSubsystem = new VisionSubsystem();
 
 		SmartDashboard.putData(new MecanumDriveCommand());
 		SmartDashboard.putData(new DriveMotorCommand());
