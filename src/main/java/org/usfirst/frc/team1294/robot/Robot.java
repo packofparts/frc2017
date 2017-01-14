@@ -52,10 +52,10 @@ public class Robot extends IterativeRobot {
 		driveSubsystem = new DriveSubsystem();
 
 		SmartDashboard.putData(new MecanumDriveCommand());
-		SmartDashboard.putData(new DriveMotorCommand(1));
-		SmartDashboard.putData(new DriveMotorCommand(2));
-		SmartDashboard.putData(new DriveMotorCommand(3));
-		SmartDashboard.putData(new DriveMotorCommand(4));
+		SmartDashboard.putData(new DriveMotorCommand());
+		SmartDashboard.putData(new DriveMotorCommand());
+		SmartDashboard.putData(new DriveMotorCommand());
+		SmartDashboard.putData(new DriveMotorCommand());
 	}
 
 	/**
