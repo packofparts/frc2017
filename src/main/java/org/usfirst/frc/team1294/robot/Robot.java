@@ -12,7 +12,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team1294.robot.commands.DriveMotorCommand;
 import org.usfirst.frc.team1294.robot.commands.ExampleCommand;
+import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
+import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.ExampleSubsystem;
 
 /**
@@ -26,10 +29,11 @@ public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
+	public static DriveSubsystem driveSubsystem;
+	public static AHRS navX;  // NOT command based
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
-	AHRS navX;  // NOT command based
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -45,6 +49,13 @@ public class Robot extends IterativeRobot {
 		// this is NOT valid command based code, but it will do for testing
 		CANTalon testTalon = new CANTalon(1);
 		navX = new AHRS(SerialPort.Port.kMXP);
+		driveSubsystem = new DriveSubsystem();
+
+		SmartDashboard.putData(new MecanumDriveCommand());
+		SmartDashboard.putData(new DriveMotorCommand(1));
+		SmartDashboard.putData(new DriveMotorCommand(2));
+		SmartDashboard.putData(new DriveMotorCommand(3));
+		SmartDashboard.putData(new DriveMotorCommand(4));
 	}
 
 	/**
