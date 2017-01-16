@@ -38,7 +38,7 @@ public class DriveMotorCommand extends Command {
       Robot.driveSubsystem.rightFrontTalon.set(0);
     }
 
-    if (joystick.getAButton()) {
+    if (joystick.getYButton()) {
       Robot.driveSubsystem.rightRearTalon.set(0.5);
     } else {
       Robot.driveSubsystem.rightRearTalon.set(0);
