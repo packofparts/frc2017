@@ -2,15 +2,11 @@ package org.usfirst.frc.team1294.robot.subsystems;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
-
-import org.usfirst.frc.team1294.robot.commands.DriveMotorCommand;
-import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
-
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import org.usfirst.frc.team1294.robot.RobotMap;
+import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
 
 /**
  * @author Austin Jenchi (timtim17)
@@ -27,10 +23,10 @@ public class DriveSubsystem extends Subsystem {
   public DriveSubsystem() {
     super("DriveSubsystem");
 
-    leftFrontTalon = new CANTalon(2);
-    leftRearTalon = new CANTalon(3);
-    rightFrontTalon = new CANTalon(4);
-    rightRearTalon = new CANTalon(1);
+    leftFrontTalon = new CANTalon(RobotMap.DRIVEBASE_LEFT_FRONT_TALON);
+    leftRearTalon = new CANTalon(RobotMap.DRIVEBASE_LEFT_REAR_TALON);
+    rightFrontTalon = new CANTalon(RobotMap.DRIVEBASE_RIGHT_FRONT_TALON);
+    rightRearTalon = new CANTalon(RobotMap.DRIVEBASE_RIGHT_REAR_TALON);
     robotDrive = new RobotDrive(leftFrontTalon, leftRearTalon, rightFrontTalon, rightRearTalon);
     robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
     navX = new AHRS(SerialPort.Port.kMXP);

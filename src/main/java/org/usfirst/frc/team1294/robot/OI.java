@@ -1,10 +1,6 @@
 package org.usfirst.frc.team1294.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.Button;
-
-import org.usfirst.frc.team1294.robot.commands.ExampleCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -14,7 +10,7 @@ public class OI {
   private XboxController joystick;
 
   public OI() {
-    this.joystick = new XboxController(RobotMap.JOYSTICK);
+    this.joystick = new XboxController(RobotMap.XBOX_CONTROLLER);
   }
 
   public XboxController getJoystick() {
