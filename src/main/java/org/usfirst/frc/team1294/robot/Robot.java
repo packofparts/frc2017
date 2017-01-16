@@ -54,6 +54,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new MecanumDriveCommand());
 		SmartDashboard.putData(new DriveMotorCommand());
 		SmartDashboard.putData(new ResetGyroCommand());
+        SmartDashboard.putData(new DriveBaseBreakInCommand());
 	}
 
 	/**
