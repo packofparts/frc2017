@@ -2,24 +2,17 @@
 package org.usfirst.frc.team1294.robot;
 
 import com.ctre.CANTalon;
-import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team1294.robot.commands.DriveMotorCommand;
-import org.usfirst.frc.team1294.robot.commands.ExampleCommand;
-import org.usfirst.frc.team1294.robot.commands.FieldOrientedMecanumDriveCommand;
-import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
-import org.usfirst.frc.team1294.robot.commands.ResetGyroCommand;
+import org.usfirst.frc.team1294.robot.commands.*;
 import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team1294.robot.subsystems.ExampleSubsystem;
-import org.usfirst.frc.team1294.robot.subsystems.VisionSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.GearVisionSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,10 +23,9 @@ import org.usfirst.frc.team1294.robot.subsystems.VisionSubsystem;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 	public static DriveSubsystem driveSubsystem;
-	public static VisionSubsystem visionSubsystem;
+	public static GearVisionSubsystem gearVisionSubsystem;
 
 
 	Command autonomousCommand;
@@ -46,15 +38,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
+
+		chooser.addDefault("Auto Gear Center", new AutoGearCenter());
+		chooser.addObject("Auto Gear Left", new AutoGearLeft());
+		chooser.addObject("Auto Gear Right", new AutoGearRight());
 		SmartDashboard.putData("Auto mode", chooser);
 
-		// this is NOT valid command based code, but it will do for testing
-		CANTalon testTalon = new CANTalon(1);
 		driveSubsystem = new DriveSubsystem();
-
-		visionSubsystem = new VisionSubsystem();
+		gearVisionSubsystem = new GearVisionSubsystem();
 
 		SmartDashboard.putData(new MecanumDriveCommand());
 		SmartDashboard.putData(new DriveMotorCommand());
