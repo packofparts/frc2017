@@ -26,8 +26,8 @@ public class CameraSubsystem extends Subsystem {
     private final CvSource gearOutputStream;
     private final GearGripPipeline gearGripPipeline = new GearGripPipeline();
     private final Mat gearFrame = new Mat();
-    private boolean targetFound;
-    private int pixelsFromCenter;
+    private boolean gearTargetAcquired;
+    private int gearTargetPixelsFromCenter;
 
     public CameraSubsystem() {
         super("CameraSubsystem");
@@ -47,7 +47,7 @@ public class CameraSubsystem extends Subsystem {
 
     }
 
-    public void process() {
+    public void doVisionProcessingOnGearCamera() {
         // grab a gearFrame
         gearVideo.grabFrame(gearFrame);
 
@@ -70,29 +70,33 @@ public class CameraSubsystem extends Subsystem {
         // get the best (lowest) scoring pair
         Optional<PairOfRect> bestPair = pairs.min((a, b) -> scorePair(b).compareTo(scorePair(a)));
 
-        this.targetFound = bestPair.isPresent();
+        this.gearTargetAcquired = bestPair.isPresent();
         if (bestPair.isPresent()) {
             PairOfRect pair = bestPair.get();
 
             // calculate how many pixels off center
-            pixelsFromCenter = (int) (pair.centerY() - IMG_WIDTH / 2);
+            gearTargetPixelsFromCenter = (int) (pair.centerY() - IMG_WIDTH / 2);
 
             // draw a rectangle around the best pair
             Imgproc.rectangle(gearFrame, pair.topLeft(), pair.bottomRight(), new Scalar(0,0,255), 2);
         } else {
-            pixelsFromCenter = 0;
+            gearTargetPixelsFromCenter = 0;
         }
 
         // output the gearFrame
         gearOutputStream.putFrame(gearFrame);
     }
 
-    public boolean isTargetFound() {
-        return targetFound;
+    public boolean isGearTargetAcquired() {
+        return gearTargetAcquired;
     }
 
-    public int getPixelsFromCenter() {
-        return pixelsFromCenter;
+    public int getGearTargetPixelsFromCenter() {
+        if (gearTargetAcquired) {
+            return gearTargetPixelsFromCenter;
+        } else {
+            return 0;
+        }
     }
 
     private class PairOfRect {
