@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1294.robot.commands.*;
+import org.usfirst.frc.team1294.robot.subsystems.ClimbingSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
 
@@ -24,6 +25,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static DriveSubsystem driveSubsystem;
 	public static CameraSubsystem cameraSubsystem;
+    public static ClimbingSubsystem climbingSubsystem;
 
 
 	Command autonomousCommand;
@@ -44,6 +46,7 @@ public class Robot extends IterativeRobot {
 
 		driveSubsystem = new DriveSubsystem();
 		cameraSubsystem = new CameraSubsystem();
+        climbingSubsystem = new ClimbingSubsystem();
 
 		SmartDashboard.putData(new MecanumDriveCommand());
 		SmartDashboard.putData(new DriveMotorCommand());
