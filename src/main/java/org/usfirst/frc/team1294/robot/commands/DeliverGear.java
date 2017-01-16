@@ -13,7 +13,7 @@ public class DeliverGear extends Command {
 
     public DeliverGear() {
         requires(Robot.driveSubsystem);
-        requires(Robot.gearVisionSubsystem);
+        requires(Robot.cameraSubsystem);
     }
 
     @Override

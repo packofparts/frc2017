@@ -15,33 +15,31 @@ import org.usfirst.frc.team1294.robot.vision.GearGripPipeline;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class GearVisionSubsystem extends Subsystem {
+public class CameraSubsystem extends Subsystem {
 
     private static final int IMG_WIDTH = 320;
     private static final int IMG_HEIGHT = 240;
-    private final CvSink video;
+    private final CvSink gearVideo;
 
-    private final UsbCamera camera;
+    private final UsbCamera gearCamera;
     private final CameraServer cameraServer;
-    private final CvSource outputStream;
-    private final GearGripPipeline gearGripPipeline;
-    private final Mat frame;
+    private final CvSource gearOutputStream;
+    private final GearGripPipeline gearGripPipeline = new GearGripPipeline();
+    private final Mat gearFrame = new Mat();
     private boolean targetFound;
     private int pixelsFromCenter;
 
-    public GearVisionSubsystem() {
-        super("GearVisionSubsystem");
+    public CameraSubsystem() {
+        super("CameraSubsystem");
 
         cameraServer = CameraServer.getInstance();
-        camera = cameraServer.startAutomaticCapture();
-        camera.setFPS(5);
-        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-        video = cameraServer.getVideo(camera);
-        frame = new Mat();
 
-        outputStream = cameraServer.putVideo("ProcessedVideo", IMG_WIDTH, IMG_HEIGHT);
+        gearCamera = cameraServer.startAutomaticCapture(0);
+        gearCamera.setFPS(10);
+        gearCamera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+        gearVideo = cameraServer.getVideo(gearCamera);
 
-        gearGripPipeline = new GearGripPipeline();
+        gearOutputStream = cameraServer.putVideo("GearVisionProcessing", IMG_WIDTH, IMG_HEIGHT);
     }
 
     @Override
@@ -50,14 +48,14 @@ public class GearVisionSubsystem extends Subsystem {
     }
 
     public void process() {
-        // grab a frame
-        video.grabFrame(frame);
+        // grab a gearFrame
+        gearVideo.grabFrame(gearFrame);
 
         // run the grip pipeline
-        gearGripPipeline.process(frame);
+        gearGripPipeline.process(gearFrame);
 
         // outline all the contours
-        Imgproc.drawContours(frame, gearGripPipeline.filterContoursOutput(), 0, new Scalar(160,160,160));
+        Imgproc.drawContours(gearFrame, gearGripPipeline.filterContoursOutput(), 0, new Scalar(160,160,160));
 
         // get the bounding rect for each contour
         Stream<Rect> rects = gearGripPipeline
@@ -80,13 +78,13 @@ public class GearVisionSubsystem extends Subsystem {
             pixelsFromCenter = (int) (pair.centerY() - IMG_WIDTH / 2);
 
             // draw a rectangle around the best pair
-            Imgproc.rectangle(frame, pair.topLeft(), pair.bottomRight(), new Scalar(0,0,255), 2);
+            Imgproc.rectangle(gearFrame, pair.topLeft(), pair.bottomRight(), new Scalar(0,0,255), 2);
         } else {
             pixelsFromCenter = 0;
         }
 
-        // output the frame
-        outputStream.putFrame(frame);
+        // output the gearFrame
+        gearOutputStream.putFrame(gearFrame);
     }
 
     public boolean isTargetFound() {

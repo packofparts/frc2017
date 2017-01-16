@@ -1,8 +1,6 @@
 
 package org.usfirst.frc.team1294.robot;
 
-import com.ctre.CANTalon;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -12,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1294.robot.commands.*;
 import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team1294.robot.subsystems.GearVisionSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,7 +23,7 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static DriveSubsystem driveSubsystem;
-	public static GearVisionSubsystem gearVisionSubsystem;
+	public static CameraSubsystem cameraSubsystem;
 
 
 	Command autonomousCommand;
@@ -45,11 +43,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto mode", chooser);
 
 		driveSubsystem = new DriveSubsystem();
-		gearVisionSubsystem = new GearVisionSubsystem();
+		cameraSubsystem = new CameraSubsystem();
 
 		SmartDashboard.putData(new MecanumDriveCommand());
 		SmartDashboard.putData(new DriveMotorCommand());
-		SmartDashboard.putData(new FieldOrientedMecanumDriveCommand());
 		SmartDashboard.putData(new ResetGyroCommand());
 	}
 
