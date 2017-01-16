@@ -12,6 +12,7 @@ import org.usfirst.frc.team1294.robot.commands.*;
 import org.usfirst.frc.team1294.robot.subsystems.ClimbingSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.FuelSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,6 +27,7 @@ public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSubsystem;
 	public static CameraSubsystem cameraSubsystem;
     public static ClimbingSubsystem climbingSubsystem;
+    public static FuelSubsystem fuelSubsystem;
 
 
 	Command autonomousCommand;
@@ -47,6 +49,7 @@ public class Robot extends IterativeRobot {
 		driveSubsystem = new DriveSubsystem();
 		cameraSubsystem = new CameraSubsystem();
         climbingSubsystem = new ClimbingSubsystem();
+        fuelSubsystem = new FuelSubsystem();
 
 		SmartDashboard.putData(new MecanumDriveCommand());
 		SmartDashboard.putData(new DriveMotorCommand());
