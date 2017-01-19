@@ -8,8 +8,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team1294.robot.commands.ExampleCommand;
-import org.usfirst.frc.team1294.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team1294.robot.commands.*;
+import org.usfirst.frc.team1294.robot.subsystems.ClimbingSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.FuelSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,8 +23,12 @@ import org.usfirst.frc.team1294.robot.subsystems.ExampleSubsystem;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
+	public static DriveSubsystem driveSubsystem;
+	public static CameraSubsystem cameraSubsystem;
+    public static ClimbingSubsystem climbingSubsystem;
+    public static FuelSubsystem fuelSubsystem;
+
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -32,10 +39,25 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		// THESE MUST BE INITIALIZED FIRST
 		oi = new OI();
-		chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		driveSubsystem = new DriveSubsystem();
+		cameraSubsystem = new CameraSubsystem();
+        climbingSubsystem = new ClimbingSubsystem();
+        fuelSubsystem = new FuelSubsystem();
+
+		chooser.addDefault("Auto Gear Center", new AutoGearCenter());
+		chooser.addObject("Auto Gear Left", new AutoGearLeft());
+		chooser.addObject("Auto Gear Right", new AutoGearRight());
 		SmartDashboard.putData("Auto mode", chooser);
+
+		SmartDashboard.putData(new MecanumDriveCommand());
+		SmartDashboard.putData(new DriveMotorCommand());
+		SmartDashboard.putData(new ResetGyroCommand());
+        SmartDashboard.putData(new DriveBaseBreakInCommand());
+		SmartDashboard.putData(new TestVisionCommand());
+		SmartDashboard.putData(new PutGearFrameCommand());
+		SmartDashboard.putData(new PutPlainFrameCommand());
 	}
 
 	/**
