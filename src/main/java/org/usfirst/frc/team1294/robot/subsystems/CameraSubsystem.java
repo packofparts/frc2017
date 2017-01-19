@@ -10,6 +10,10 @@ import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
+<<<<<<< HEAD
+=======
+import org.usfirst.frc.team1294.robot.commands.PutPlainFrameCommand;
+>>>>>>> origin
 import org.usfirst.frc.team1294.robot.vision.GearGripPipeline;
 
 import java.util.Optional;
@@ -23,7 +27,11 @@ public class CameraSubsystem extends Subsystem {
 
     private final UsbCamera gearCamera;
     private final CameraServer cameraServer;
+<<<<<<< HEAD
     private final CvSource gearOutputStream;
+=======
+//    private final CvSource outputStream;
+>>>>>>> origin
     private final GearGripPipeline gearGripPipeline = new GearGripPipeline();
     private final Mat gearFrame = new Mat();
     private boolean gearTargetAcquired;
@@ -33,6 +41,7 @@ public class CameraSubsystem extends Subsystem {
         super("CameraSubsystem");
 
         cameraServer = CameraServer.getInstance();
+<<<<<<< HEAD
 
         gearCamera = cameraServer.startAutomaticCapture(0);
         gearCamera.setFPS(10);
@@ -40,11 +49,31 @@ public class CameraSubsystem extends Subsystem {
         gearVideo = cameraServer.getVideo(gearCamera);
 
         gearOutputStream = cameraServer.putVideo("GearVisionProcessing", IMG_WIDTH, IMG_HEIGHT);
+=======
+        gearCamera = cameraServer.startAutomaticCapture(0);
+        gearCamera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+        gearVideo = cameraServer.getVideo(gearCamera);
+
+//        outputStream = cameraServer.putVideo("OutputStream", IMG_WIDTH, IMG_HEIGHT);
+    }
+
+    public boolean setFPS(int fps) {
+        return gearCamera.setFPS(fps);
+>>>>>>> origin
     }
 
     @Override
     protected void initDefaultCommand() {
+<<<<<<< HEAD
 
+=======
+//        setDefaultCommand(new PutPlainFrameCommand());
+    }
+
+    public void doVisionProcessingOnNormalCamera() {
+//        gearVideo.grabFrame(gearFrame);
+//        outputStream.putFrame(gearFrame);
+>>>>>>> origin
     }
 
     public void doVisionProcessingOnGearCamera() {
@@ -84,7 +113,11 @@ public class CameraSubsystem extends Subsystem {
         }
 
         // output the gearFrame
+<<<<<<< HEAD
         gearOutputStream.putFrame(gearFrame);
+=======
+//        outputStream.putFrame(gearFrame);
+>>>>>>> origin
     }
 
     public boolean isGearTargetAcquired() {

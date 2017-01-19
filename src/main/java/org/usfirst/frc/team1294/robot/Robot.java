@@ -39,22 +39,39 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		// THESE MUST BE INITIALIZED FIRST
 		oi = new OI();
+<<<<<<< HEAD
+=======
+		driveSubsystem = new DriveSubsystem();
+		cameraSubsystem = new CameraSubsystem();
+        climbingSubsystem = new ClimbingSubsystem();
+        fuelSubsystem = new FuelSubsystem();
+>>>>>>> origin
 
 		chooser.addDefault("Auto Gear Center", new AutoGearCenter());
 		chooser.addObject("Auto Gear Left", new AutoGearLeft());
 		chooser.addObject("Auto Gear Right", new AutoGearRight());
 		SmartDashboard.putData("Auto mode", chooser);
 
+<<<<<<< HEAD
 		driveSubsystem = new DriveSubsystem();
 		cameraSubsystem = new CameraSubsystem();
         climbingSubsystem = new ClimbingSubsystem();
         fuelSubsystem = new FuelSubsystem();
 
+=======
+>>>>>>> origin
 		SmartDashboard.putData(new MecanumDriveCommand());
 		SmartDashboard.putData(new DriveMotorCommand());
 		SmartDashboard.putData(new ResetGyroCommand());
         SmartDashboard.putData(new DriveBaseBreakInCommand());
+<<<<<<< HEAD
+=======
+		SmartDashboard.putData(new TestVisionCommand());
+		SmartDashboard.putData(new PutGearFrameCommand());
+		SmartDashboard.putData(new PutPlainFrameCommand());
+>>>>>>> origin
 	}
 
 	/**
