@@ -5,23 +5,26 @@ import org.usfirst.frc.team1294.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * @author Austin Jenchi (timtim17)
+ * Runs the gear camera image processing once
  */
-public class PutPlainFrameCommand extends Command {
+public class DoGearCameraImageProcessingCommand extends Command {
 
-  public PutPlainFrameCommand() {
-    super("Put unedited frame on camera");
+  private boolean hasRunOnce = false;
+
+  public DoGearCameraImageProcessingCommand() {
+    super("DoGearCameraImageProcessingCommand");
     requires(Robot.cameraSubsystem);
   }
 
   @Override
   protected void initialize() {
-    Robot.cameraSubsystem.setFPS(30);
+    Robot.cameraSubsystem.setFPS(10);
   }
 
   @Override
   protected void execute() {
-    Robot.cameraSubsystem.doVisionProcessingOnNormalCamera();
+    Robot.cameraSubsystem.doVisionProcessingOnGearCamera();
+    hasRunOnce = true;
   }
 
   @Override
@@ -36,6 +39,6 @@ public class PutPlainFrameCommand extends Command {
 
   @Override
   protected boolean isFinished() {
-    return false;
+    return hasRunOnce;
   }
 }
