@@ -7,20 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * @author Austin Jenchi (timtim17)
  */
-public class TestVisionCommand extends Command {
-  public TestVisionCommand() {
-    super("TestVisionCommand");
+public class PutGearFrameCommand extends Command {
+  public PutGearFrameCommand() {
+    super("Put gear frame on camera");
     requires(Robot.cameraSubsystem);
   }
 
   @Override
   protected void initialize() {
-    Robot.cameraSubsystem.doVisionProcessingOnGearCamera();
+    Robot.cameraSubsystem.setFPS(10);
   }
 
   @Override
   protected void execute() {
-
+    Robot.cameraSubsystem.doVisionProcessingOnGearCamera();
   }
 
   @Override
@@ -35,6 +35,6 @@ public class TestVisionCommand extends Command {
 
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 }

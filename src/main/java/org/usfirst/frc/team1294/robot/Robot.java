@@ -23,6 +23,7 @@ import org.usfirst.frc.team1294.robot.subsystems.FuelSubsystem;
  */
 public class Robot extends IterativeRobot {
 
+	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 	public static DriveSubsystem driveSubsystem;
 	public static CameraSubsystem cameraSubsystem;
