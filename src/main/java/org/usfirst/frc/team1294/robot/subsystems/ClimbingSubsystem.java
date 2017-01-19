@@ -1,11 +1,8 @@
 package org.usfirst.frc.team1294.robot.subsystems;
 import com.ctre.CANTalon;
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team1294.robot.RobotMap;
-import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
+import org.usfirst.frc.team1294.robot.commands.ClimbRope;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -21,6 +18,6 @@ public class ClimbingSubsystem extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-    	setDefaultCommand(new ClimbRope)
+    	setDefaultCommand(new ClimbRope());
     }
 }
