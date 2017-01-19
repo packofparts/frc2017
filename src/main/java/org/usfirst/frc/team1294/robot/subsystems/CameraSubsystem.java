@@ -1,16 +1,13 @@
 package org.usfirst.frc.team1294.robot.subsystems;
 
 import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team1294.robot.commands.PutPlainFrameCommand;
 import org.usfirst.frc.team1294.robot.vision.GearGripPipeline;
 
 import java.util.Optional;
@@ -24,7 +21,6 @@ public class CameraSubsystem extends Subsystem {
 
     private final UsbCamera gearCamera;
     private final CameraServer cameraServer;
-//    private final CvSource outputStream;
     private final GearGripPipeline gearGripPipeline = new GearGripPipeline();
     private final Mat gearFrame = new Mat();
     private boolean gearTargetAcquired;
@@ -37,8 +33,6 @@ public class CameraSubsystem extends Subsystem {
         gearCamera = cameraServer.startAutomaticCapture(0);
         gearCamera.setResolution(IMG_WIDTH, IMG_HEIGHT);
         gearVideo = cameraServer.getVideo(gearCamera);
-
-//        outputStream = cameraServer.putVideo("OutputStream", IMG_WIDTH, IMG_HEIGHT);
     }
 
     public boolean setFPS(int fps) {
@@ -47,12 +41,6 @@ public class CameraSubsystem extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-//        setDefaultCommand(new PutPlainFrameCommand());
-    }
-
-    public void doVisionProcessingOnNormalCamera() {
-//        gearVideo.grabFrame(gearFrame);
-//        outputStream.putFrame(gearFrame);
     }
 
     public void doVisionProcessingOnGearCamera() {
@@ -61,9 +49,6 @@ public class CameraSubsystem extends Subsystem {
 
         // run the grip pipeline
         gearGripPipeline.process(gearFrame);
-
-        // outline all the contours
-        Imgproc.drawContours(gearFrame, gearGripPipeline.filterContoursOutput(), 0, new Scalar(160,160,160));
 
         // get the bounding rect for each contour
         Stream<Rect> rects = gearGripPipeline
@@ -84,15 +69,9 @@ public class CameraSubsystem extends Subsystem {
 
             // calculate how many pixels off center
             gearTargetPixelsFromCenter = (int) (pair.centerY() - IMG_WIDTH / 2);
-
-            // draw a rectangle around the best pair
-            Imgproc.rectangle(gearFrame, pair.topLeft(), pair.bottomRight(), new Scalar(0,0,255), 2);
         } else {
             gearTargetPixelsFromCenter = 0;
         }
-
-        // output the gearFrame
-//        outputStream.putFrame(gearFrame);
     }
 
     public boolean isGearTargetAcquired() {
