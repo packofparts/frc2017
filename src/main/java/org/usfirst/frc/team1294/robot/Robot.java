@@ -40,16 +40,15 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		driveSubsystem = new DriveSubsystem();
+		cameraSubsystem = new CameraSubsystem();
+        climbingSubsystem = new ClimbingSubsystem();
+        fuelSubsystem = new FuelSubsystem();
 
 		chooser.addDefault("Auto Gear Center", new AutoGearCenter());
 		chooser.addObject("Auto Gear Left", new AutoGearLeft());
 		chooser.addObject("Auto Gear Right", new AutoGearRight());
 		SmartDashboard.putData("Auto mode", chooser);
-
-		driveSubsystem = new DriveSubsystem();
-		cameraSubsystem = new CameraSubsystem();
-        climbingSubsystem = new ClimbingSubsystem();
-        fuelSubsystem = new FuelSubsystem();
 
 		SmartDashboard.putData(new MecanumDriveCommand());
 		SmartDashboard.putData(new DriveMotorCommand());
@@ -60,6 +59,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new TurnToHeading(180));
 		SmartDashboard.putData(new TurnToHeading(270));
 
+        SmartDashboard.putData(new DriveBaseBreakInCommand());
+		SmartDashboard.putData(new DoGearCameraImageProcessingCommand());
 	}
 
 	/**
