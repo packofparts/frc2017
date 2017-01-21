@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1294.robot.subsystems;
 import com.ctre.CANTalon;
+
+import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team1294.robot.RobotMap;
 import org.usfirst.frc.team1294.robot.commands.ClimbRope;
@@ -13,11 +15,13 @@ public class ClimbingSubsystem extends Subsystem {
 
     public ClimbingSubsystem() {
         super("ClimbingSubsystem");
-        climbTalon = new CANTalon(RobotMap.DRIVEBASE_CLIMBING_TALON);
+        climbTalon = new CANTalon(RobotMap.CLIMBING_TALON);
     }
 
     @Override
     protected void initDefaultCommand() {
-    	setDefaultCommand(new ClimbRope());
     }
+    public void setMotor(double speed) {
+        climbTalon.set(speed);
+      }
 }

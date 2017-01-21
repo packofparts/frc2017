@@ -1,6 +1,10 @@
 package org.usfirst.frc.team1294.robot;
 
+import org.usfirst.frc.team1294.robot.commands.ClimbRope;;
+
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -8,9 +12,11 @@ import edu.wpi.first.wpilibj.XboxController;
  */
 public class OI {
   private XboxController joystick;
+  private Button climbButton = new JoystickButton(joystick, 3);
 
   public OI() {
     this.joystick = new XboxController(RobotMap.XBOX_CONTROLLER);
+    climbButton.whenPressed(new ClimbRope());
   }
 
   public XboxController getJoystick() {

@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1294.robot.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
 import org.usfirst.frc.team1294.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -19,14 +18,8 @@ public class ClimbRope extends Command {
 
   @Override
   protected void execute() {
-    XboxController joystick = Robot.oi.getJoystick();
-    if (joystick.getBumper()) {
-      Robot.climbingSubsystem.climbTalon.set(0.5);
-    } else {
-	      Robot.climbingSubsystem.climbTalon.set(0);
-	    }
-    }
-
+    Robot.climbingSubsystem.setMotor(0.5);
+  }
   @Override
   protected void end() {
     Robot.climbingSubsystem.climbTalon.set(0);
