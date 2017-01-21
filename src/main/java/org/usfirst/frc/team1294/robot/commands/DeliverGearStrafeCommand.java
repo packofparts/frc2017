@@ -39,6 +39,11 @@ public class DeliverGearStrafeCommand extends PIDCommand {
 
   @Override
   protected boolean isFinished() {
+    return false;
+    //return getPIDController().onTarget();
+  }
+
+  public boolean onTarget() {
     return getPIDController().onTarget();
   }
 }

@@ -24,20 +24,23 @@ public class DeliverGearCommand extends CommandGroup {
     requires(Robot.driveSubsystem);
     requires(Robot.cameraSubsystem);
 
-  }
-
-  @Override
-  protected void initialize() {
     deliverGearStrafeCommand = new DeliverGearStrafeCommand();
     deliverGearDriveCommand = new DeliverGearDriveCommand();
 
     addParallel(deliverGearStrafeCommand);
     addParallel(deliverGearDriveCommand);
+
+
+  }
+
+  @Override
+  protected void initialize() {
+
   }
 
   @Override
   protected boolean isFinished() {
-    return deliverGearStrafeCommand.isFinished();
+    return deliverGearStrafeCommand.onTarget();
   }
   //  private static final double ANGLE_TOLERANCE_DEGREES = 2.0f;
 //  private static final double ANGLE_KP = 0.3f;
