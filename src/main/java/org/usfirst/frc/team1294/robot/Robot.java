@@ -28,6 +28,19 @@ public class Robot extends IterativeRobot {
 	public static CameraSubsystem cameraSubsystem;
     public static ClimbingSubsystem climbingSubsystem;
     public static FuelSubsystem fuelSubsystem;
+ 
+    public final double HEADING_TO_TRAVEL_C = 0;
+    public final double DISTANCE_TO_TRAVEL_C = 1.99;
+    public final double HEADING_TO_FACE_C = 0;
+
+    public final double DISTANCE_TO_TRAVEL_R = 4.8;
+    public final double HEADING_TO_TRAVEL_R = 30.0;
+    public final double HEADING_TO_FACE_R = -90.0;
+    
+ 
+    public final double DISTANCE_TO_TRAVEL_L = 4.8;
+    public final double HEADING_TO_TRAVEL_L = -30.0;
+    public final double HEADING_TO_FACE_L = 90.0;
 
 
 	Command autonomousCommand;

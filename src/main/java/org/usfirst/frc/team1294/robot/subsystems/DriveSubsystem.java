@@ -17,6 +17,24 @@ public class DriveSubsystem extends Subsystem {
   public final CANTalon leftRearTalon;
   public final CANTalon rightFrontTalon;
   public final CANTalon rightRearTalon;
+  //Alliance Wall is 6.1722 meters(243 in)
+  // robot placed middle of Alliance Wall
+  // ~3.851 meters from right or left
+  public final double HEADING_TO_TRAVEL_C = 0;
+  public final double DISTANCE_TO_TRAVEL_C = 1.99;
+  public final double HEADING_TO_FACE_C = 0;
+
+  // robot placed ~2.57 meters from right
+  // Distance is 5.4 meters all the way to the wall 
+  public final double DISTANCE_TO_TRAVEL_R = 4.8;
+  public final double HEADING_TO_TRAVEL_R = 30.0;
+  public final double HEADING_TO_FACE_R = -90.0;
+  
+  // Robot placed ~2.57 from left
+  //Distance is 5.4 meters all the way to the wall
+  public final double DISTANCE_TO_TRAVEL_L = 4.8;
+  public final double HEADING_TO_TRAVEL_L = -30.0;
+  public final double HEADING_TO_FACE_L = 90.0;
   private final RobotDrive robotDrive;
   private static AHRS navX;
 
