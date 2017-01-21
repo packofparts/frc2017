@@ -9,6 +9,7 @@ import org.usfirst.frc.team1294.robot.Robot;
  */
 public class DriveBaseBreakInCommand extends Command {
     private Timer timer;
+    private long n = 0;
 
     public DriveBaseBreakInCommand() {
         super("DriveBaseBreakInCommand");
@@ -19,16 +20,27 @@ public class DriveBaseBreakInCommand extends Command {
     protected void initialize() {
         timer = new Timer();
         timer.start();
+        Robot.driveSubsystem.toggleSafety();
     }
 
     @Override
     protected void execute() {
         // tell the robot to drive all motors at various speeds and direction
-        Robot.driveSubsystem.mecanumDrive(0, Math.sin(0.31415 * timer.get()), 0, 0);
+        Robot.driveSubsystem.mecanumDrive(0, Math.sin((Math.PI / 1000) * n++), 0, 0);
     }
 
     @Override
     protected boolean isFinished() {
         return timer.hasPeriodPassed(5 * 60); // 5 minutes
+    }
+
+    @Override
+    protected void end() {
+        Robot.driveSubsystem.toggleSafety();
+    }
+
+    @Override
+    protected void interrupted() {
+        end();
     }
 }

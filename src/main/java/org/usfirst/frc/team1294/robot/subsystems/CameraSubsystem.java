@@ -32,8 +32,9 @@ public class CameraSubsystem extends Subsystem {
 
         cameraServer = CameraServer.getInstance();
         gearCamera = cameraServer.startAutomaticCapture(0);
-        gearCamera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+        //gearCamera.setResolution(IMG_WIDTH, IMG_HEIGHT);
         gearVideo = cameraServer.getVideo(gearCamera);
+        System.out.println("CameraSubsystem constructor finished");
     }
 
     public boolean setFPS(int fps) {
@@ -76,6 +77,8 @@ public class CameraSubsystem extends Subsystem {
 
       SmartDashboard.putBoolean("CameraSubsystem.GearTargetAcquired", this.gearTargetAcquired);
       SmartDashboard.putNumber("CameraSubsystem.GearTargerPixelsFromCenter", this.gearTargetPixelsFromCenter);
+
+    System.out.println("yay!");
     }
 
     public boolean isGearTargetAcquired() {

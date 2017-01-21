@@ -20,8 +20,8 @@ public class DriveSubsystem extends Subsystem {
   public final CANTalon rightRearTalon;
   private final RobotDrive robotDrive;
   private static AHRS navX;
-  private final Ultrasonic leftUltrasonic;
-  private final Ultrasonic rightUltrasonic;
+//  private final Ultrasonic leftUltrasonic;
+//  private final Ultrasonic rightUltrasonic;
 
   public DriveSubsystem() {
     super("DriveSubsystem");
@@ -34,8 +34,8 @@ public class DriveSubsystem extends Subsystem {
     robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
     navX = new AHRS(SerialPort.Port.kMXP);
 
-    leftUltrasonic = new Ultrasonic(RobotMap.DRIVEBASE_ULTRASONIC_PING_LEFT, RobotMap.DRIVEBASE_ULTRASONIC_ECHO_LEFT, Ultrasonic.Unit.kInches);
-    rightUltrasonic = new Ultrasonic(RobotMap.DRIVEBASE_ULTRASONIC_PING_RIGHT, RobotMap.DRIVEBASE_ULTRASONIC_ECHO_RIGHT, Ultrasonic.Unit.kInches);
+//    leftUltrasonic = new Ultrasonic(RobotMap.DRIVEBASE_ULTRASONIC_PING_LEFT, RobotMap.DRIVEBASE_ULTRASONIC_ECHO_LEFT, Ultrasonic.Unit.kInches);
+//    rightUltrasonic = new Ultrasonic(RobotMap.DRIVEBASE_ULTRASONIC_PING_RIGHT, RobotMap.DRIVEBASE_ULTRASONIC_ECHO_RIGHT, Ultrasonic.Unit.kInches);
   }
 
   @Override
@@ -60,10 +60,15 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public double getDistanceToWall() {
-    return (leftUltrasonic.getRangeMM() + rightUltrasonic.getRangeMM()) / 2;
+//    return (leftUltrasonic.getRangeMM() + rightUltrasonic.getRangeMM()) / 2;
+    return -1;
   }
 
   public double getAngleToWall() {
     return 0;
+  }
+
+  public void toggleSafety() {
+    robotDrive.setSafetyEnabled(!robotDrive.isSafetyEnabled());
   }
 }

@@ -14,11 +14,13 @@ public class DoGearCameraImageProcessingCommand extends Command {
   public DoGearCameraImageProcessingCommand() {
     super("DoGearCameraImageProcessingCommand");
     requires(Robot.cameraSubsystem);
+    System.out.println("init");
   }
 
   @Override
   protected void initialize() {
     Robot.cameraSubsystem.setFPS(10);
+    System.out.println("hi");
   }
 
   @Override
