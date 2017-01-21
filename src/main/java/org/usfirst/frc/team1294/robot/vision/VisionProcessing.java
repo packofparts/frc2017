@@ -1,15 +1,12 @@
 package org.usfirst.frc.team1294.robot.vision;
 
-import edu.wpi.cscore.CvSink;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfInt;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
+import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
 
-import java.util.Date;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,9 +19,18 @@ public class VisionProcessing {
   private boolean gearTargetAcquired;
   private int gearTargetPixelsFromCenter;
   private final GearGripPipeline gearGripPipeline = new GearGripPipeline();
+  private Optional<PairOfRect> bestPair;
 
   public VisionProcessing() {
 
+  }
+
+  public Optional<PairOfRect> getBestPair() {
+    return bestPair;
+  }
+
+  public ArrayList<MatOfPoint> getContours() {
+    return gearGripPipeline.filterContoursOutput();
   }
 
   public void processGearFrame(Mat gearFrame) {
@@ -34,6 +40,7 @@ public class VisionProcessing {
     // get the bounding rect for each contour
     List<Rect> rects = gearGripPipeline
             .filterContoursOutput()
+            //.findContoursOutput()
             .stream()
             .map(contour -> Imgproc.boundingRect(contour))
             .collect(Collectors.toList());
@@ -43,29 +50,28 @@ public class VisionProcessing {
             .flatMap(i -> rects.stream().filter(j -> !i.equals(j)).map(j -> new PairOfRect(i, j)));
 
     // get the best (lowest) scoring pair
-    Optional<PairOfRect> bestPair = pairs.min((a, b) -> scorePair(b).compareTo(scorePair(a)));
+    bestPair = pairs.min((a, b) -> scorePair(b).compareTo(scorePair(a)));
+
+    MatOfInt parameters = new MatOfInt(Imgcodecs.IMWRITE_JPEG_QUALITY, 100);
+    String filename = null;
+    try {
+      filename = File.createTempFile("gear", ".jpg").getAbsolutePath();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    Imgcodecs.imwrite(filename, gearFrame, parameters);
+    System.out.println(filename);
 
     this.gearTargetAcquired = bestPair.isPresent();
     if (bestPair.isPresent()) {
       PairOfRect pair = bestPair.get();
 
       // calculate how many pixels off center
-      gearTargetPixelsFromCenter = (int) (pair.centerY() - gearFrame.width() / 2);
+      gearTargetPixelsFromCenter = (int) (pair.centerX() - gearFrame.width() / 2);
     } else {
       gearTargetPixelsFromCenter = 0;
     }
   }
-
-//  public void saveLastImage() {
-//    try {
-//      String filename = "/u/gearFrame_" + new Date().getTime() + ".jpg";
-//      MatOfInt parameters = new MatOfInt(Imgcodecs.IMWRITE_JPEG_QUALITY, 100);
-//      Imgcodecs.imwrite(filename, gearFrame, parameters);
-//    } catch (Exception ex) {
-//      System.out.println("Failed to save image.");
-//      ex.printStackTrace();
-//    }
-//  }
 
   public boolean isGearTargetAcquired() {
     return gearTargetAcquired;
@@ -88,16 +94,28 @@ public class VisionProcessing {
       this.b = b;
     }
 
-    public double centerY() {
-      return a.y + ((double) (b.y + b.width - a.y)) / 2;
+    public double centerX() {
+      if (a.x < b.x) {
+        return a.x + ((double) (b.x + b.width - a.x)) / 2;
+      } else {
+        return b.x + ((double) (a.x + a.width - b.x)) / 2;
+      }
     }
 
     public Point topLeft() {
-      return new Point(a.x, a.y);
+      if (a.x < b.x) {
+        return new Point(a.x, a.y);
+      } else {
+        return new Point(b.x, b.y);
+      }
     }
 
     public Point bottomRight() {
-      return new Point(b.x + b.width, b.y + b.height);
+      if (a.x < b.x) {
+        return new Point(b.x + b.width, b.y + b.height);
+      } else {
+        return new Point(a.x + a.width, a.y + a.height);
+      }
     }
   }
 
@@ -116,8 +134,19 @@ public class VisionProcessing {
     score += Math.abs(rect1CenterY - rect2CenterY);
 
     // difference between combined rect width:height ratio and the ideal of 2.05
-    double combinedWidth = pair.a.x + pair.b.x + pair.b.width;
-    double combinedHeight = pair.a.y + pair.b.y + pair.b.height;
+    double combinedWidth;
+    double combinedHeight;
+    if (pair.a.x < pair.b.x) {
+      combinedWidth = pair.a.x + pair.b.x + pair.b.width;
+    } else {
+      combinedWidth = pair.b.x + pair.a.x + pair.a.width;
+    }
+    if (pair.a.y < pair.b.y) {
+      combinedHeight = pair.a.y + pair.b.y + pair.b.height;
+    } else {
+      combinedHeight = pair.b.y + pair.a.y + pair.a.height;
+    }
+
     double combinedRatio = combinedWidth / combinedHeight;
     score += Math.abs(combinedRatio - 2.05);
 

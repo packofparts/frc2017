@@ -5,6 +5,9 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfInt;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
@@ -93,5 +96,39 @@ public class VisionProcessingTests {
       visionProcessing.processGearFrame(image);
       assertThat(file.getAbsolutePath(), visionProcessing.isGearTargetAcquired(), is(true));
     }
+  }
+
+  @Test
+  public void testgearFrame_1485027378566() {
+    VisionProcessing visionProcessing = new VisionProcessing();
+    Mat image = Imgcodecs.imread("src/test/resources/TestImages/positive/gearFrame_1485027378566.jpg");
+    visionProcessing.processGearFrame(image);
+    assertThat(visionProcessing.isGearTargetAcquired(), is(true));
+    assertThat(visionProcessing.getGearTargetPixelsFromCenter(), is(-76));
+  }
+
+  //gearFrame_1485026290472
+  @Test
+  public void testgearFrame_1485026290472() {
+    VisionProcessing visionProcessing = new VisionProcessing();
+    Mat image = Imgcodecs.imread("src/test/resources/TestImages/positive/gearFrame_1485026290472.jpg");
+    visionProcessing.processGearFrame(image);
+
+    assertThat(visionProcessing.getContours().size(), is(2));
+
+    Imgproc.drawContours(image, visionProcessing.getContours(), -1, new Scalar(0,0,255));
+    Imgproc.rectangle(image, visionProcessing.getBestPair().get().topLeft(), visionProcessing.getBestPair().get().bottomRight(), new Scalar(255,0,0));
+    //Point p = new Point(image.h)
+    //Imgproc.circle(image, visionProcessing.getBestPair().get().centerX(), 3, new Scalar(255,0,0));
+    //Point topLeft = new Point(visionProcessing.getBestPair().get().a.x, visionProcessing.getBestPair().get().a.y);
+    //Point bottomRight;
+    //Imgproc.rectangle(image, topLeft, bottomRight, new Scalar(255,0,0));
+
+
+    MatOfInt parameters = new MatOfInt(Imgcodecs.IMWRITE_JPEG_QUALITY, 100);
+    Imgcodecs.imwrite("src/test/resources/TestImages/positive/gearFrame_1485026290472_out.jpg", image, parameters);
+
+    assertThat(visionProcessing.isGearTargetAcquired(), is(true));
+    assertThat(visionProcessing.getGearTargetPixelsFromCenter(), is(21));
   }
 }
