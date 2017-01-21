@@ -21,6 +21,7 @@ public class DriveSubsystem extends Subsystem {
   public final CANTalon rightRearTalon;
   private final RobotDrive robotDrive;
   private static AHRS navX;
+  private double commandedStrafeRate;
 //  private final Ultrasonic leftUltrasonic;
 //  private final Ultrasonic rightUltrasonic;
 
@@ -46,6 +47,14 @@ public class DriveSubsystem extends Subsystem {
   @Override
   protected void initDefaultCommand() {
     setDefaultCommand(new MecanumDriveCommand());
+  }
+
+  public void setCommandedStrafeRate(double output) {
+    this.commandedStrafeRate = output;
+  }
+
+  public void mechanumDriveFromCommandedRates() {
+    robotDrive.mecanumDrive_Cartesian(commandedStrafeRate, 0, 0, 0);
   }
 
   public void mecanumDrive(double x, double y, double rotate, double gyro) {
