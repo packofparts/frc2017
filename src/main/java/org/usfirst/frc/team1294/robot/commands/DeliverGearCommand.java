@@ -2,6 +2,7 @@ package org.usfirst.frc.team1294.robot.commands;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1294.robot.Robot;
 import org.usfirst.frc.team1294.robot.util.SimplePIDSource;
 
@@ -47,8 +48,13 @@ public class DeliverGearCommand extends Command {
 
     strafePid = new PIDController(STRAFE_KP, STRAFE_KI, STRAFE_KD
             , new SimplePIDSource(this::offsetToLift)
-            , output -> commandedStrafeRate = output);
+            , output -> {
+              commandedStrafeRate = output;
+      SmartDashboard.putNumber("strafeoutput", output);
+            });
     strafePid.setAbsoluteTolerance(STRAFE_TOLERANCE);
+    strafePid.setInputRange(-160, 160);
+    strafePid.setOutputRange(-1, 1);
     strafePid.setSetpoint(0);
 
     approachPid = new PIDController(APPROACH_KP, APPROACH_KI, APPROACH_KD
