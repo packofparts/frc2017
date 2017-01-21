@@ -17,12 +17,24 @@ import org.usfirst.frc.team1294.robot.util.SimplePIDSource;
  */
 public class DeliverGearCommand extends CommandGroup {
 
+  private final DeliverGearStrafeCommand deliverGearStrafeCommand;
+  private final DeliverGearDriveCommand deliverGearDriveCommand;
+
   public DeliverGearCommand() {
     requires(Robot.driveSubsystem);
     requires(Robot.cameraSubsystem);
-    addParallel(new DeliverGearStrafeCommand());
+    deliverGearStrafeCommand = new DeliverGearStrafeCommand();
+    deliverGearDriveCommand = new DeliverGearDriveCommand();
+
+    addParallel(deliverGearStrafeCommand);
+    addParallel(deliverGearDriveCommand);
   }
-//  private static final double ANGLE_TOLERANCE_DEGREES = 2.0f;
+
+  @Override
+  protected boolean isFinished() {
+    return deliverGearStrafeCommand.isFinished();
+  }
+  //  private static final double ANGLE_TOLERANCE_DEGREES = 2.0f;
 //  private static final double ANGLE_KP = 0.3f;
 //  private static final double ANGLE_KI = 0;
 //  private static final double ANGLE_KD = 0;
