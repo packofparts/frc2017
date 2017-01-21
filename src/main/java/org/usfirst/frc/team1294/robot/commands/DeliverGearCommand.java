@@ -28,9 +28,9 @@ public class DeliverGearCommand extends Command {
   private static final double APPROACH_KI = 0;
   private static final double APPROACH_KD = 0;
 
-  private final PIDController anglePid;
+  //private final PIDController anglePid;
   private final PIDController strafePid;
-  private final PIDController approachPid;
+  //private final PIDController approachPid;
 
   private double commandedTurnRate = 0;
   private double commandedStrafeRate = 0;
@@ -40,29 +40,31 @@ public class DeliverGearCommand extends Command {
     requires(Robot.driveSubsystem);
     requires(Robot.cameraSubsystem);
 
-    anglePid = new PIDController(ANGLE_KP, ANGLE_KI, ANGLE_KD
-            , new SimplePIDSource(Robot.driveSubsystem::getAngleToWall)
-            , output -> commandedTurnRate = output);
-    anglePid.setAbsoluteTolerance(ANGLE_TOLERANCE_DEGREES);
-    anglePid.setSetpoint(0);
+//    anglePid = new PIDController(ANGLE_KP, ANGLE_KI, ANGLE_KD
+//            , new SimplePIDSource(Robot.driveSubsystem::getAngleToWall)
+//            , output -> commandedTurnRate = output);
+//    anglePid.setAbsoluteTolerance(ANGLE_TOLERANCE_DEGREES);
+//    anglePid.setSetpoint(0);
 
     strafePid = new PIDController(STRAFE_KP, STRAFE_KI, STRAFE_KD
             , new SimplePIDSource(this::offsetToLift)
-            , output -> {
-              commandedStrafeRate = output;
-      SmartDashboard.putNumber("strafeoutput", output);
-            });
+            , this::strafePidOutput);
     strafePid.setAbsoluteTolerance(STRAFE_TOLERANCE);
     strafePid.setInputRange(-160, 160);
     strafePid.setOutputRange(-1, 1);
     strafePid.setSetpoint(0);
     strafePid.enable();
 
-    approachPid = new PIDController(APPROACH_KP, APPROACH_KI, APPROACH_KD
-            , new SimplePIDSource(Robot.driveSubsystem::getDistanceToWall)
-            , output -> commandedApproachRate = output);
-    approachPid.setAbsoluteTolerance(APPROACH_TOLERANCE);
-    strafePid.setSetpoint(0.25); // todo: calibrate this distance
+//    approachPid = new PIDController(APPROACH_KP, APPROACH_KI, APPROACH_KD
+//            , new SimplePIDSource(Robot.driveSubsystem::getDistanceToWall)
+//            , output -> commandedApproachRate = output);
+//    approachPid.setAbsoluteTolerance(APPROACH_TOLERANCE);
+//    strafePid.setSetpoint(0.25); // todo: calibrate this distance
+  }
+
+  protected void strafePidOutput(double output) {
+    commandedStrafeRate = output;
+    SmartDashboard.putNumber("strafeoutput", output);
   }
 
   @Override
@@ -73,7 +75,8 @@ public class DeliverGearCommand extends Command {
 
   @Override
   protected boolean isFinished() {
-    return anglePid.onTarget() && strafePid.onTarget() && approachPid.onTarget();
+    return strafePid.onTarget();
+    //return anglePid.onTarget() && strafePid.onTarget() && approachPid.onTarget();
   }
 
   private double offsetToLift() {
