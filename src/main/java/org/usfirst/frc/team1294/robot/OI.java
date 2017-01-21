@@ -1,16 +1,22 @@
 package org.usfirst.frc.team1294.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc.team1294.robot.commands.DeliverGearCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+  private final JoystickButton abutton;
   private XboxController joystick;
 
   public OI() {
     this.joystick = new XboxController(RobotMap.XBOX_CONTROLLER);
+
+    abutton = new JoystickButton(this.joystick, 1);
+    abutton.whenPressed(new DeliverGearCommand());
   }
 
   public XboxController getJoystick() {
