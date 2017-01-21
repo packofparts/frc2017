@@ -14,6 +14,7 @@ import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
  */
 public class DriveSubsystem extends Subsystem {
 
+  private static final double rampRate = 24;
   public final CANTalon leftFrontTalon;
   public final CANTalon leftRearTalon;
   public final CANTalon rightFrontTalon;
@@ -33,6 +34,10 @@ public class DriveSubsystem extends Subsystem {
     robotDrive = new RobotDrive(leftFrontTalon, leftRearTalon, rightFrontTalon, rightRearTalon);
     robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
     navX = new AHRS(SerialPort.Port.kMXP);
+    leftFrontTalon.setVoltageRampRate (rampRate);
+    rightFrontTalon.setVoltageRampRate (rampRate);
+    leftRearTalon.setVoltageRampRate (rampRate);
+    rightRearTalon.setVoltageRampRate (rampRate);
 
 //    leftUltrasonic = new Ultrasonic(RobotMap.DRIVEBASE_ULTRASONIC_PING_LEFT, RobotMap.DRIVEBASE_ULTRASONIC_ECHO_LEFT, Ultrasonic.Unit.kInches);
 //    rightUltrasonic = new Ultrasonic(RobotMap.DRIVEBASE_ULTRASONIC_PING_RIGHT, RobotMap.DRIVEBASE_ULTRASONIC_ECHO_RIGHT, Ultrasonic.Unit.kInches);
