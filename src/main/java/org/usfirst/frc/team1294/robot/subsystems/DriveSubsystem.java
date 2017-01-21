@@ -48,6 +48,7 @@ public class DriveSubsystem extends Subsystem {
     return angle;
   }
 
+  public void resetEncoder(){} //TODO implement method
 
   public void resetGyro() {
     navX.reset();
