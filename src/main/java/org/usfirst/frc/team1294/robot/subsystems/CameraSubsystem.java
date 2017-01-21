@@ -67,14 +67,16 @@ public class CameraSubsystem extends Subsystem {
   }
 
   public void saveLastImage() {
+    String filename = "/u/gearFrame_" + new Date().getTime() + ".jpg";
+    System.out.println("saving Last Image " + filename);
     try {
-      String filename = "/u/gearFrame_" + new Date().getTime() + ".jpg";
       MatOfInt parameters = new MatOfInt(Imgcodecs.IMWRITE_JPEG_QUALITY, 100);
       Imgcodecs.imwrite(filename, gearFrame, parameters);
     } catch (Exception ex) {
       System.out.println("Failed to save image.");
       ex.printStackTrace();
     }
+    System.out.println("last image saved");
   }
 
   public boolean isGearTargetAcquired() {
