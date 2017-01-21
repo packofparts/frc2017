@@ -53,4 +53,12 @@ public class DriveSubsystem extends Subsystem {
   public void resetGyro() {
     navX.reset();
   }
+
+  public double getEncoderX(){
+      return 0.0;
+  }//TODO implement method
+
+  public double getEncoderY(){
+      return 0.0;
+  }//TODO implement method
 }
