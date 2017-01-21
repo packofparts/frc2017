@@ -14,6 +14,13 @@ public class MecanumDriveCommand extends Command {
   public MecanumDriveCommand() {
     requires(Robot.driveSubsystem);
   }
+  //this entire method is created, can be changed 
+  public void operatorControl() {
+	  while (isOperatorControl() && isEnabled()) {
+		  Robot.driveSubsystem.arcadeDrive(driveStick);
+		  Timer.delay(0.01);
+	  }
+  }
 
   @Override
   protected void initialize() {
@@ -41,14 +48,13 @@ public class MecanumDriveCommand extends Command {
               Robot.driveSubsystem.getAngle());
       System.out.println("FIELD ORIENTED");
     } else {
-      // otherwise use the right analog stick for arcade drive 
       Robot.driveSubsystem.arcadeDrive(joystick.getX(GenericHID.Hand.kRight), //will edit later 
               joystick.getY(GenericHID.Hand.kLeft), //will edit later
-              joystick.getX(GenericHID.moveStick.goForward), //created, can change
-              joystick.getY(GenericHID.moveStick.goBackward),//created, can change
+              joystick.aracdeDrive(GenericHID.moveStick.goForward), //created, can change
+              joystick.arcadeDrive(GenericHID.moveStick.goBackward), //created, can change
               joystick.getTriggerAxis(GenericHID.Hand.kRight) - joystick.getTriggerAxis(GenericHID.Hand.kLeft),
               0); //will edit later 
-      System.out.println("ARCADE DRIVE");
+      System.out.println("ARCADE DRIVE"); 
     }
   }
 
