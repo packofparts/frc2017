@@ -9,7 +9,7 @@ import org.usfirst.frc.team1294.robot.Robot;
  */
 public class DeliverGearStrafeCommand extends PIDCommand {
   private static final double STRAFE_TOLERANCE = 0.5f;
-  private static final double STRAFE_KP = 0.3f;
+  private static final double STRAFE_KP = 1.0f;
   private static final double STRAFE_KI = 0;
   private static final double STRAFE_KD = 0;
 
@@ -17,7 +17,7 @@ public class DeliverGearStrafeCommand extends PIDCommand {
     super("DeliverGearStrafeCommand", STRAFE_KP, STRAFE_KI, STRAFE_KD);
     getPIDController().setAbsoluteTolerance(STRAFE_TOLERANCE);
     getPIDController().setInputRange(-160, 160);
-    getPIDController().setOutputRange(-1, 1);
+    getPIDController().setOutputRange(-0.25, 0.25);
     getPIDController().setSetpoint(0);
     SmartDashboard.putData("strafepid", getPIDController());
   }
