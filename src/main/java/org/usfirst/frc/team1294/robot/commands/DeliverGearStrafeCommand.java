@@ -26,7 +26,7 @@ public class DeliverGearStrafeCommand extends PIDCommand {
   protected double returnPIDInput() {
     Robot.cameraSubsystem.doVisionProcessingOnGearCamera();
     if (Robot.cameraSubsystem.isGearTargetAcquired()) {
-      return Robot.cameraSubsystem.getGearTargetPixelsFromCenter();
+      return -Robot.cameraSubsystem.getGearTargetPixelsFromCenter();
     } else {
       return 0;
     }
