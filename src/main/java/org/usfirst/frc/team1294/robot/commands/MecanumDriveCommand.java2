@@ -14,14 +14,15 @@ public class MecanumDriveCommand extends Command {
   public MecanumDriveCommand() {
     requires(Robot.driveSubsystem);
   }
-  //this entire method is created, can be changed 
+
+//entire method susceptible to changes 
   public void operatorControl() {
 	  while (isOperatorControl() && isEnabled()) {
 		  Robot.driveSubsystem.arcadeDrive(driveStick);
 		  Timer.delay(0.01);
 	  }
   }
-
+  
   @Override
   protected void initialize() {
 
@@ -46,19 +47,21 @@ public class MecanumDriveCommand extends Command {
               joystick.getY(GenericHID.Hand.kLeft),
               joystick.getTriggerAxis(GenericHID.Hand.kRight) - joystick.getTriggerAxis(GenericHID.Hand.kLeft),
               Robot.driveSubsystem.getAngle());
+      		  Robot.driveSubsystem.mecanumDrive(joystick.getTriggerAxis(GenericHID.Hand.kRight) - joystick.getTriggerAxis(GenericHID.Hand.kLeft),
+              0, 0, 0); //susceptible to changes
       System.out.println("FIELD ORIENTED");
     } else {
-      // otherwise use the right analog stick for arcade drive (needs revision)
-              Robot.driveSubsystem.arcadeDrive(joystick.aracdeDrive(GenericHID.moveStick.goForward), //created, can change
-              joystick.arcadeDrive(GenericHID.moveStick.goBackward), //created, can change
-              joystick.arcadeDrive(GenericHID.moveStick.rotateCounterClockise), //created, can change
-              joystick.arcadeDrive(GenericHID.moveStick.rotateClockwise), //created, can change 
-              joystick.getTriggerAngle(GenericHID.Hand.kright). //created, can change 
-              joystick.getTriggerAngle(GenericHID.Hand.kleft), //created, can change 
-              joystick.getTriggerAxis(GenericHID.Hand.kRight) - joystick.getTriggerAxis(GenericHID.Hand.kLeft),
-              0); //will edit later 
-      System.out.println("ARCADE DRIVE"); 
-      System.out.println("RIGHT AND LEFT TRIGGERS ACTIVATED");
+      // otherwise use the right analog stick for arcade drive 
+      Robot.driveSubsystem.arcadeDrive(joystick.getX(GenericHID.moveStick.goForward), //susceptible to changes
+              joystick.getY(GenericHID.moveStick.goBackward), //susceptible to changes 
+              joystick.getW(GenericHID.rotateStick.rotateClockwise), //susceptible to changes 
+              joysticl.getZ(GenericHID.rotateStick.rotateCounterClockwise), //susceptible to changes
+              joystick.getTriggerAngle1(GenericHID.Hand.kRight), //susceptible to changes 
+              joystick.getTriggerAngle2(GenericHID.Hand.kLeft), //susceptible to changes 
+              Robot.driveSubsystem.mecanumDrive(joystick.getTriggerAxis(GenericHID.Hand.kRight) - joystick.getTriggerAxis(GenericHID.Hand.kLeft),
+              0, 0, 0); //susceptible to changes 
+      System.out.println("ARCADE DRIVE");
+      System.out.println("LEFT AND RIGHT TRIGGERS")
     }
   }
 
@@ -69,7 +72,7 @@ public class MecanumDriveCommand extends Command {
 
   @Override
   protected void end() {
-    // does nothing - this command will not end.
+    // does nothing - this command will not end. 
   }
 
   @Override
