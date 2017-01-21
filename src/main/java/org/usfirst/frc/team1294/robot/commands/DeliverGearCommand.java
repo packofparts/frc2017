@@ -1,6 +1,8 @@
 package org.usfirst.frc.team1294.robot.commands;
 
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1294.robot.Robot;
@@ -46,8 +48,28 @@ public class DeliverGearCommand extends Command {
 //    anglePid.setAbsoluteTolerance(ANGLE_TOLERANCE_DEGREES);
 //    anglePid.setSetpoint(0);
 
-    strafePid = new PIDController(STRAFE_KP, STRAFE_KI, STRAFE_KD
-            , new SimplePIDSource(this::offsetToLift)
+    strafePid = new PIDController(STRAFE_KP, STRAFE_KI, STRAFE_KD,
+            new PIDSource() {
+              @Override
+              public void setPIDSourceType(PIDSourceType pidSource) {
+
+              }
+
+              @Override
+              public PIDSourceType getPIDSourceType() {
+                return null;
+              }
+
+              @Override
+              public double pidGet() {
+                Robot.cameraSubsystem.doVisionProcessingOnGearCamera();
+                if (Robot.cameraSubsystem.isGearTargetAcquired()) {
+                  return Robot.cameraSubsystem.getGearTargetPixelsFromCenter();
+                } else {
+                  return 0;
+                }
+              }
+            }
             , this::strafePidOutput);
     strafePid.setAbsoluteTolerance(STRAFE_TOLERANCE);
     strafePid.setInputRange(-160, 160);
