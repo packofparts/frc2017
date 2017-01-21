@@ -1,101 +1,106 @@
 buildscript {
-  repositories {
-	  mavenCentral()
-  }
-  dependencies {
-    classpath 'org.codehaus.groovy.modules.http-builder:http-builder:0.5.2'
-    classpath 'commons-io:commons-io:2.4'
-    classpath 'org.ajoberstar:grgit:1.4.1'
-  }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.codehaus.groovy.modules.http-builder:http-builder:0.5.2'
+        classpath 'commons-io:commons-io:2.4'
+        classpath 'org.ajoberstar:grgit:1.4.1'
+    }
 }
 
 plugins {
-  id 'java'
-  id 'idea'
-  id 'eclipse'
-  id 'jaci.openrio.gradle.GradleRIO' version '2017.0.7'
-  id 'org.ajoberstar.grgit' version '1.3.2'
-  id 'org.ajoberstar.release-opinion' version '1.3.2'
-	id 'maven-publish'
+    id 'java'
+    id 'idea'
+    id 'eclipse'
+    id 'jaci.openrio.gradle.GradleRIO' version '2017.0.7'
+    id 'org.ajoberstar.grgit' version '1.3.2'
+    id 'org.ajoberstar.release-opinion' version '1.3.2'
+    id 'maven-publish'
 }
 
 frc {
-	team = "1294"
-	robotClass = "org.usfirst.frc.team1294.robot.Robot"
+    team = "1294"
+    robotClass = "org.usfirst.frc.team1294.robot.Robot"
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
-  compile wpilib()
-  compile talonSrx()
-  compile fileTree(dir: 'libs', include: '**/*.jar')
-	// GradleRIO README claims this is needed but navX doesn't appear to have any .so files
-//  native fileTree(dir: 'libs', include: '**/*.so')
+    compile wpilib()
+    compile talonSrx()
+    compile fileTree(dir: 'libs', include: '**/*.jar')
+
+    testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '3.3'
+    gradleVersion = '3.3'
 }
 
 publishing {
-	publications {
-		MyPublication(MavenPublication) {
-			from components.java
-			groupId 'org.usfirst.frc.team1294'
-			artifactId 'frc2017'
-			version project.version.toString()
-		}
-	}
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            groupId 'org.usfirst.frc.team1294'
+            artifactId 'frc2017'
+            version project.version.toString()
+        }
+    }
 }
 
 model {
-	tasks.generatePomFileForMyPublicationPublication {
-		destination = file("$buildDir/frc2017-${project.version.toString()}.pom")
-	}
+    tasks.generatePomFileForMyPublicationPublication {
+        destination = file("$buildDir/frc2017-${project.version.toString()}.pom")
+    }
 }
 
 jar {
-	manifest {
-		attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
-		attributes 'Robot-Class': frc.robotClass
-		attributes 'Version' : project.version.toString()
-		attributes 'Author' : getAuthor()
-	}
-	from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    manifest {
+        attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
+        attributes 'Robot-Class': frc.robotClass
+        attributes 'Version': project.version.toString()
+        attributes 'Author': getAuthor()
+    }
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 }
 
 task generateBintrayFile(type: Copy) {
-	def vcs_tag = project.version.toString() // default to version
-	grgit = org.ajoberstar.grgit.Grgit.open(project.file('.'))
-	try {
-		vcs_tag = grgit.log(maxCommits: 1).get(0).id
-	} catch(all) {}
+    def vcs_tag = project.version.toString() // default to version
+    grgit = org.ajoberstar.grgit.Grgit.open(project.file('.'))
+    try {
+        vcs_tag = grgit.log(maxCommits: 1).get(0).id
+    } catch (all) {
+    }
 
-	from(projectDir) {
-		include 'bintray.json'
-	}
-	expand(
-		version: project.version.toString(),
-		date: new Date().format('yyyy-MM-dd'),
-		vcs_tag: vcs_tag
-	)
-	into 'build'
+    from(projectDir) {
+        include 'bintray.json'
+    }
+    expand(
+            version: project.version.toString(),
+            date: new Date().format('yyyy-MM-dd'),
+            vcs_tag: vcs_tag
+    )
+    into 'build'
 }
 
 release {
-  // need to specify the repository to interact with
-  grgit = org.ajoberstar.grgit.Grgit.open(project.file('.'))
+    // need to specify the repository to interact with
+    grgit = org.ajoberstar.grgit.Grgit.open(project.file('.'))
 }
 
 def getAuthor() {
-  def author = "unknown"
-  grgit = org.ajoberstar.grgit.Grgit.open(project.file('.'))
-  if (grgit.status().isClean()) {
-    def history = grgit.log(maxCommits: 1)
-    author = "${history.author.name[0]} <${history.author.email[0]}>"
-  } else {
-    author = System.env.USER ?: System.env.USERNAME
-  }
-  return author
+    def author = "unknown"
+    grgit = org.ajoberstar.grgit.Grgit.open(project.file('.'))
+    if (grgit.status().isClean()) {
+        def history = grgit.log(maxCommits: 1)
+        author = "${history.author.name[0]} <${history.author.email[0]}>"
+    } else {
+        author = System.env.USER ?: System.env.USERNAME
+    }
+    return author
 }
 
 
@@ -106,125 +111,125 @@ import groovyx.net.http.Method
 import org.apache.commons.io.FilenameUtils
 
 String[] getVersionsFromBintray() {
-	def http = new HTTPBuilder("https://bintray.com/api/v1/packages/frc-1294/Robot-Code/frc2016")
-	http.request(Method.GET, ContentType.TEXT ) { req ->
-		headers.'Accept' = 'application/json'
-	    response.success = { resp, reader ->
-	        def versions = new JsonSlurper().parseText(reader.text).versions
-	        return versions;
-	    }
-	}
+    def http = new HTTPBuilder("https://bintray.com/api/v1/packages/frc-1294/Robot-Code/frc2016")
+    http.request(Method.GET, ContentType.TEXT) { req ->
+        headers.'Accept' = 'application/json'
+        response.success = { resp, reader ->
+            def versions = new JsonSlurper().parseText(reader.text).versions
+            return versions;
+        }
+    }
 }
 
 String getVersionJarFileDownloadPath(version) {
 
-	def http = new HTTPBuilder("https://bintray.com/api/v1/packages/frc-1294/Robot-Code/frc2016/versions/" + version + "/files")
-	http.request(Method.GET, ContentType.TEXT ) { req ->
-		headers.'Accept' = 'application/json'
-	    response.success = { resp, reader ->
-	        def files = new JsonSlurper().parseText(reader.text)
-	        def jarFileIndex = files.findIndexOf { it.path.endsWith('.jar') }
-	        def file = files[jarFileIndex]
-	        return String.format("https://bintray.com/artifact/download/%s/%s/%s", file.owner, file.repo, file.path.replaceAll("\\+", "%2B"))
-	    }
-	}
+    def http = new HTTPBuilder("https://bintray.com/api/v1/packages/frc-1294/Robot-Code/frc2016/versions/" + version + "/files")
+    http.request(Method.GET, ContentType.TEXT) { req ->
+        headers.'Accept' = 'application/json'
+        response.success = { resp, reader ->
+            def files = new JsonSlurper().parseText(reader.text)
+            def jarFileIndex = files.findIndexOf { it.path.endsWith('.jar') }
+            def file = files[jarFileIndex]
+            return String.format("https://bintray.com/artifact/download/%s/%s/%s", file.owner, file.repo, file.path.replaceAll("\\+", "%2B"))
+        }
+    }
 }
 
 def downloadFile(url, dest) {
-	def file = new FileOutputStream(dest)
-	def out = new BufferedOutputStream(file)
-	out << new URL(url).openStream()
-	out.close()
+    def file = new FileOutputStream(dest)
+    def out = new BufferedOutputStream(file)
+    out << new URL(url).openStream()
+    out.close()
 }
 
 def downloadReleasesTask = project.task('downloadReleases') << {
-     String[] versions = getVersionsFromBintray()
+    String[] versions = getVersionsFromBintray()
 
-     versions.eachWithIndex{ a,i ->
-     	def dest = new File("$buildDir/releases/${a}.jar")
-     	if (dest.exists()) {
-     		println "Already have ${a}, skipping."
-     	} else {
-     		println "Downloading ${a}"
-     		downloadFile(getVersionJarFileDownloadPath(a), dest);
-     	}
-     }
+    versions.eachWithIndex { a, i ->
+        def dest = new File("$buildDir/releases/${a}.jar")
+        if (dest.exists()) {
+            println "Already have ${a}, skipping."
+        } else {
+            println "Downloading ${a}"
+            downloadFile(getVersionJarFileDownloadPath(a), dest);
+        }
+    }
 }
 
 
 def deployRelease() {
-	File releaseFolder = new File("$buildDir/releases")
-	def releases = releaseFolder.listFiles().sort(false).reverse()
+    File releaseFolder = new File("$buildDir/releases")
+    def releases = releaseFolder.listFiles().sort(false).reverse()
 
-	def console = System.console()
-	if (console) {
-		console.writer().println("\n\nAvailable Releases:")
-		releases.eachWithIndex { it, i ->
-			console.writer().println("[$i]: ${FilenameUtils.removeExtension(it.getName())}")
-		}
-		def releaseIndex = (console.readLine("Which release would you like to deploy? [0]")?:0).toInteger()
-		def releasePath = releases[releaseIndex].toPath()
+    def console = System.console()
+    if (console) {
+        console.writer().println("\n\nAvailable Releases:")
+        releases.eachWithIndex { it, i ->
+            console.writer().println("[$i]: ${FilenameUtils.removeExtension(it.getName())}")
+        }
+        def releaseIndex = (console.readLine("Which release would you like to deploy? [0]") ?: 0).toInteger()
+        def releasePath = releases[releaseIndex].toPath()
 
-		try {
-			def host = "roboRIO-${project.gradlerio.team}.local"
-			println "Attempting to send new code to RoboRIO..."
+        try {
+            def host = "roboRIO-${project.gradlerio.team}.local"
+            println "Attempting to send new code to RoboRIO..."
 
-		    project.ant.scp(file: "${releasePath}",
-		    todir:"lvuser@${host}:${project.gradlerio.deployFile}",
-		    password:"",
-		    port:22,
-		    trust:true)
+            project.ant.scp(file: "${releasePath}",
+                    todir: "lvuser@${host}:${project.gradlerio.deployFile}",
+                    password: "",
+                    port: 22,
+                    trust: true)
 
-		    println "Deploy Successful! Loaded in: ${project.gradlerio.deployFile}"
+            println "Deploy Successful! Loaded in: ${project.gradlerio.deployFile}"
 
-		    println "Attempting to restart the RoboRIO code..."
-		    project.ant.sshexec(host: "${host}",
-		    username:"lvuser",
-		    port:22,
-		    trust:true,
-		    password:"",
-		    command:"/etc/profile.d/natinst-path.sh; /usr/local/frc/bin/frcKillRobot.sh -t -r"
-		    )
-		    println "Robot Code is restarting..."
+            println "Attempting to restart the RoboRIO code..."
+            project.ant.sshexec(host: "${host}",
+                    username: "lvuser",
+                    port: 22,
+                    trust: true,
+                    password: "",
+                    command: "/etc/profile.d/natinst-path.sh; /usr/local/frc/bin/frcKillRobot.sh -t -r"
+            )
+            println "Robot Code is restarting..."
 
-	    } catch (Exception ex) {
-	    	println "RoboRIO not available... Falling back to IP..."
-	    	String ip = project.gradlerio.rioIP
-		    if (ip == "{DEFAULT}") {
-		      String team = project.gradlerio.team
-		      int length = team.length();
-		      if (length < 4)
-		      for (int i = 0; i < 4 - length; i++)
-		      team = "0" + team;
+        } catch (Exception ex) {
+            println "RoboRIO not available... Falling back to IP..."
+            String ip = project.gradlerio.rioIP
+            if (ip == "{DEFAULT}") {
+                String team = project.gradlerio.team
+                int length = team.length();
+                if (length < 4)
+                    for (int i = 0; i < 4 - length; i++)
+                        team = "0" + team;
 
-		      ip = "10." + team.substring(0, 2) + "." + team.substring(2, 4) + ".20"
-		    }
+                ip = "10." + team.substring(0, 2) + "." + team.substring(2, 4) + ".20"
+            }
 
-		    println "Attempting to send new code to RoboRIO..."
+            println "Attempting to send new code to RoboRIO..."
 
-		    project.ant.scp(file: "${releasePath}",
-		    todir:"lvuser@${ip}:${project.gradlerio.deployFile}",
-		    password:"",
-		    port:22,
-		    trust:true)
+            project.ant.scp(file: "${releasePath}",
+                    todir: "lvuser@${ip}:${project.gradlerio.deployFile}",
+                    password: "",
+                    port: 22,
+                    trust: true)
 
-		    println "Deploy Successful! Loaded in: ${project.gradlerio.deployFile}"
+            println "Deploy Successful! Loaded in: ${project.gradlerio.deployFile}"
 
-		    println "Attempting to restart the RoboRIO code..."
-		    project.ant.sshexec(host: "${ip}",
-		    username:"lvuser",
-		    port:22,
-		    trust:true,
-		    password:"",
-		    command:"/etc/profile.d/natinst-path.sh; /usr/local/frc/bin/frcKillRobot.sh -t -r"
-		    )
-		    println "Robot Code is restarting..."
+            println "Attempting to restart the RoboRIO code..."
+            project.ant.sshexec(host: "${ip}",
+                    username: "lvuser",
+                    port: 22,
+                    trust: true,
+                    password: "",
+                    command: "/etc/profile.d/natinst-path.sh; /usr/local/frc/bin/frcKillRobot.sh -t -r"
+            )
+            println "Robot Code is restarting..."
 
-	    }
-	}
+        }
+    }
 
 }
 
 def deployReleaseTask = project.task('deployRelease') << {
-      deployRelease()
+    deployRelease()
 }

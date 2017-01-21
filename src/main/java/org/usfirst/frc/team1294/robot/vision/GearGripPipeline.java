@@ -34,7 +34,11 @@ public class GearGripPipeline implements VisionPipeline {
 	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 
 	static {
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		try {
+			System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		} catch (UnsatisfiedLinkError ex) {
+
+		}
 	}
 
 	/**
