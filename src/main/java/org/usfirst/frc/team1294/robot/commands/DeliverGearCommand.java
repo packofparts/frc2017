@@ -56,6 +56,7 @@ public class DeliverGearCommand extends Command {
     strafePid.setInputRange(-160, 160);
     strafePid.setOutputRange(-1, 1);
     strafePid.setSetpoint(0);
+    strafePid.enable();
 
     approachPid = new PIDController(APPROACH_KP, APPROACH_KI, APPROACH_KD
             , new SimplePIDSource(Robot.driveSubsystem::getDistanceToWall)
