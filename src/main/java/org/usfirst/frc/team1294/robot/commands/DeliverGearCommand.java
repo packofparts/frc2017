@@ -17,12 +17,17 @@ import org.usfirst.frc.team1294.robot.util.SimplePIDSource;
  */
 public class DeliverGearCommand extends CommandGroup {
 
-  private final DeliverGearStrafeCommand deliverGearStrafeCommand;
-  private final DeliverGearDriveCommand deliverGearDriveCommand;
+  private DeliverGearStrafeCommand deliverGearStrafeCommand;
+  private DeliverGearDriveCommand deliverGearDriveCommand;
 
   public DeliverGearCommand() {
     requires(Robot.driveSubsystem);
     requires(Robot.cameraSubsystem);
+
+  }
+
+  @Override
+  protected void initialize() {
     deliverGearStrafeCommand = new DeliverGearStrafeCommand();
     deliverGearDriveCommand = new DeliverGearDriveCommand();
 
