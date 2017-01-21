@@ -11,7 +11,7 @@ import org.usfirst.frc.team1294.robot.util.SimplePIDSource;
  * lift squared up with the gear side of the robot. Uses vision system to move the robot
  * side to side to keep the lift centered. Will time out after 10 seconds.
  */
-public class DeliverGear extends Command {
+public class DeliverGearCommand extends Command {
   private static final double ANGLE_TOLERANCE_DEGREES = 2.0f;
   private static final double ANGLE_KP = 0.3f;
   private static final double ANGLE_KI = 0;
@@ -35,7 +35,7 @@ public class DeliverGear extends Command {
   private double commandedStrafeRate = 0;
   private double commandedApproachRate = 0;
 
-  public DeliverGear() {
+  public DeliverGearCommand() {
     requires(Robot.driveSubsystem);
     requires(Robot.cameraSubsystem);
 
@@ -60,7 +60,8 @@ public class DeliverGear extends Command {
 
   @Override
   protected void execute() {
-    Robot.driveSubsystem.mecanumDrive(commandedStrafeRate, commandedApproachRate, commandedTurnRate, 0);
+    //Robot.driveSubsystem.mecanumDrive(commandedStrafeRate, commandedApproachRate, commandedTurnRate, 0);
+    Robot.driveSubsystem.mecanumDrive(commandedStrafeRate, 0, 0, 0); // temporarily replaced approach and turn rate because we don't yet have ultrasonics
   }
 
   @Override

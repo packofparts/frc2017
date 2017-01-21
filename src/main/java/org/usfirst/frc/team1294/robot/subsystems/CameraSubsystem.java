@@ -4,6 +4,7 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
@@ -72,6 +73,9 @@ public class CameraSubsystem extends Subsystem {
         } else {
             gearTargetPixelsFromCenter = 0;
         }
+
+      SmartDashboard.putBoolean("CameraSubsystem.GearTargetAcquired", this.gearTargetAcquired);
+      SmartDashboard.putNumber("CameraSubsystem.GearTargerPixelsFromCenter", this.gearTargetPixelsFromCenter);
     }
 
     public boolean isGearTargetAcquired() {
