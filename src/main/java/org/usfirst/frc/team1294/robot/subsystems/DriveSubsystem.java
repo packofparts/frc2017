@@ -19,6 +19,7 @@ public class DriveSubsystem extends Subsystem {
   public final CANTalon rightRearTalon;
   private final RobotDrive robotDrive;
   private static AHRS navX;
+  private static double rampRate;
 
   public DriveSubsystem() {
     super("DriveSubsystem");
@@ -29,7 +30,12 @@ public class DriveSubsystem extends Subsystem {
     rightRearTalon = new CANTalon(RobotMap.DRIVEBASE_RIGHT_REAR_TALON);
     robotDrive = new RobotDrive(leftFrontTalon, leftRearTalon, rightFrontTalon, rightRearTalon);
     robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+    rampRate = 12.0;
     navX = new AHRS(SerialPort.Port.kMXP);
+    leftFrontTalon.setVoltageRampRate (rampRate);
+    rightFrontTalon.setVoltageRampRate (rampRate);
+    leftRearTalon.setVoltageRampRate (rampRate);
+    rightRearTalon.setVoltageRampRate (rampRate);
   }
 
   @Override

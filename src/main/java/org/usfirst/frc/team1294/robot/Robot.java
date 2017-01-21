@@ -46,16 +46,13 @@ public class Robot extends IterativeRobot {
         climbingSubsystem = new ClimbingSubsystem();
         fuelSubsystem = new FuelSubsystem();
 
-		chooser.addDefault("Auto Gear Center", new AutoGearCenter());
-		chooser.addObject("Auto Gear Left", new AutoGearLeft());
-		chooser.addObject("Auto Gear Right", new AutoGearRight());
-		SmartDashboard.putData("Auto mode", chooser);
-
 		SmartDashboard.putData(new MecanumDriveCommand());
 		SmartDashboard.putData(new DriveMotorCommand());
 		SmartDashboard.putData(new ResetGyroCommand());
         SmartDashboard.putData(new DriveBaseBreakInCommand());
-		SmartDashboard.putData(new DoGearCameraImageProcessingCommand());
+		SmartDashboard.putData(new TestVisionCommand());
+		SmartDashboard.putData(new PutGearFrameCommand());
+		SmartDashboard.putData(new PutPlainFrameCommand());
 	}
 
 	/**
