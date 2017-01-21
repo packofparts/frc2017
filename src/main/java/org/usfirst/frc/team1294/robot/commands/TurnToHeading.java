@@ -19,7 +19,6 @@ public class TurnToHeading extends PIDCommand {
     private static final double kP = 0.03;
     private static final double kI = 0.00;
     private static final double kD = 0.00;
-    private static final double kF = 0.00;
 
     private final double kToleranceDegrees = 2.0f;
 
@@ -50,6 +49,6 @@ public class TurnToHeading extends PIDCommand {
 
     @Override
     protected void usePIDOutput(double output) {
-        Robot.driveSubsystem.mecanumDrive(0, 0, output, 0);
+        Robot.driveSubsystem.mecanumDrive(0, 0, output, Robot.driveSubsystem.getAngle());
     }
 }
