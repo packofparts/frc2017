@@ -84,28 +84,27 @@ public class VisionProcessingTests {
     }
   }
 
-  @Test
-  public void shouldBeAVisionProcessingTestsbleToFindTargetOnImage() {
-    VisionProcessing visionProcessing = new VisionProcessing();
-    File folder = new File("src/test/resources/TestImages/positive/");
-    for (File file : folder.listFiles()) {
-      String filename = file.getAbsolutePath();
-      Mat image = Imgcodecs.imread(filename);
-      int depth = image.depth();
+//  @Test
+//  public void shouldBeAVisionProcessingTestsbleToFindTargetOnImage() {
+//    VisionProcessing visionProcessing = new VisionProcessing();
+//    File folder = new File("src/test/resources/TestImages/positive/");
+//    for (File file : folder.listFiles()) {
+//      String filename = file.getAbsolutePath();
+//      Mat image = Imgcodecs.imread(filename);
+//
+//      visionProcessing.processGearFrame(image);
+//      assertThat(file.getAbsolutePath(), visionProcessing.isGearTargetAcquired(), is(true));
+//    }
+//  }
 
-      visionProcessing.processGearFrame(image);
-      assertThat(file.getAbsolutePath(), visionProcessing.isGearTargetAcquired(), is(true));
-    }
-  }
-
-  @Test
-  public void testgearFrame_1485027378566() {
-    VisionProcessing visionProcessing = new VisionProcessing();
-    Mat image = Imgcodecs.imread("src/test/resources/TestImages/positive/gearFrame_1485027378566.jpg");
-    visionProcessing.processGearFrame(image);
-    assertThat(visionProcessing.isGearTargetAcquired(), is(true));
-    assertThat(visionProcessing.getGearTargetPixelsFromCenter(), is(-76));
-  }
+//  @Test
+//  public void testgearFrame_1485027378566() {
+//    VisionProcessing visionProcessing = new VisionProcessing();
+//    Mat image = Imgcodecs.imread("src/test/resources/TestImages/positive/gearFrame_1485027378566.jpg");
+//    visionProcessing.processGearFrame(image);
+//    assertThat(visionProcessing.isGearTargetAcquired(), is(true));
+//    assertThat(visionProcessing.getGearTargetPixelsFromCenter(), is(-76));
+//  }
 
   //gearFrame_1485026290472
   @Test
