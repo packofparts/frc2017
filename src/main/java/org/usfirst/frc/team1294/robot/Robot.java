@@ -51,10 +51,8 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Auto Gear Right", new AutoGearRight());
 		SmartDashboard.putData("Auto mode", chooser);
 
-		SmartDashboard.putData(new MecanumDriveCommand());
-		SmartDashboard.putData(new DriveMotorCommand());
 		SmartDashboard.putData(new ResetGyroCommand());
-        SmartDashboard.putData(new DriveBaseBreakInCommand());
+		SmartDashboard.putData(new DriveBaseBreakInCommand());
 		SmartDashboard.putData(new DoGearCameraImageProcessingCommand());
 		SmartDashboard.putData(new DeliverGearCommand());
 	}

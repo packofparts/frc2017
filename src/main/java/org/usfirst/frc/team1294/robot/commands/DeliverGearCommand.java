@@ -75,7 +75,7 @@ public class DeliverGearCommand extends Command {
     strafePid.setInputRange(-160, 160);
     strafePid.setOutputRange(-1, 1);
     strafePid.setSetpoint(0);
-    strafePid.enable();
+    SmartDashboard.putData("strafepid", strafePid);
 
 //    approachPid = new PIDController(APPROACH_KP, APPROACH_KI, APPROACH_KD
 //            , new SimplePIDSource(Robot.driveSubsystem::getDistanceToWall)
@@ -91,6 +91,8 @@ public class DeliverGearCommand extends Command {
 
   @Override
   protected void execute() {
+    strafePid.enable();
+    SmartDashboard.putNumber("commandedStrafeRate", commandedStrafeRate);
     //Robot.driveSubsystem.mecanumDrive(commandedStrafeRate, commandedApproachRate, commandedTurnRate, 0);
     Robot.driveSubsystem.mecanumDrive(commandedStrafeRate, 0, 0, 0); // temporarily replaced approach and turn rate because we don't yet have ultrasonics
   }
