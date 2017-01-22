@@ -22,6 +22,8 @@ public class DriveSubsystem extends Subsystem {
   private final RobotDrive robotDrive;
   private static AHRS navX;
   private double commandedStrafeRate;
+  private double commandedApproachRate;
+  private double commandedTurnRate;
 //  private final Ultrasonic leftUltrasonic;
 //  private final Ultrasonic rightUltrasonic;
 
@@ -54,12 +56,12 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public void mechanumDriveFromCommandedRates() {
+    //robotDrive.mecanumDrive_Cartesian(commandedStrafeRate, commandedApproachRate, commandedTurnRate, 0);
     robotDrive.mecanumDrive_Cartesian(commandedStrafeRate, 0, 0, 0);
   }
 
   public void mecanumDrive(double x, double y, double rotate, double gyro) {
     robotDrive.mecanumDrive_Cartesian(x, y, rotate, gyro);
-    //robotDrive.mecanumDrive_Cartesian();
   }
 
   public double getAngle() {
@@ -75,7 +77,7 @@ public class DriveSubsystem extends Subsystem {
 
   public double getDistanceToWall() {
 //    return (leftUltrasonic.getRangeMM() + rightUltrasonic.getRangeMM()) / 2;
-    return -1;
+    return 0;
   }
 
   public double getAngleToWall() {
@@ -84,5 +86,13 @@ public class DriveSubsystem extends Subsystem {
 
   public void toggleSafety() {
     robotDrive.setSafetyEnabled(!robotDrive.isSafetyEnabled());
+  }
+
+  public void setCommandedApproachRate(double commandedApproachRate) {
+    this.commandedApproachRate = commandedApproachRate;
+  }
+
+  public void setCommandedTurnRate(double commandedTurnRate) {
+    this.commandedTurnRate = commandedTurnRate;
   }
 }

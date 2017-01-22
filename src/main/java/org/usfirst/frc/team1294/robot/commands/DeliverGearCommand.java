@@ -17,20 +17,24 @@ import org.usfirst.frc.team1294.robot.util.SimplePIDSource;
  */
 public class DeliverGearCommand extends CommandGroup {
 
+  private final DeliverGearApproachCommand deliverGearApproachCommand;
   private DeliverGearStrafeCommand deliverGearStrafeCommand;
   private DeliverGearDriveCommand deliverGearDriveCommand;
+  private DeliverGearTurnCommand deliverGearTurnCommand;
 
   public DeliverGearCommand() {
     requires(Robot.driveSubsystem);
     requires(Robot.cameraSubsystem);
 
     deliverGearStrafeCommand = new DeliverGearStrafeCommand();
+    deliverGearApproachCommand = new DeliverGearApproachCommand();
+    deliverGearTurnCommand = new DeliverGearTurnCommand();
     deliverGearDriveCommand = new DeliverGearDriveCommand();
 
     addParallel(deliverGearStrafeCommand);
+    addParallel(deliverGearApproachCommand);
+    addParallel(deliverGearTurnCommand);
     addParallel(deliverGearDriveCommand);
-
-
   }
 
   @Override
@@ -40,104 +44,7 @@ public class DeliverGearCommand extends CommandGroup {
 
   @Override
   protected boolean isFinished() {
-    return deliverGearStrafeCommand.onTarget();
+    return deliverGearStrafeCommand.onTarget() && deliverGearTurnCommand.onTarget() && deliverGearApproachCommand.onTarget();
   }
-  //  private static final double ANGLE_TOLERANCE_DEGREES = 2.0f;
-//  private static final double ANGLE_KP = 0.3f;
-//  private static final double ANGLE_KI = 0;
-//  private static final double ANGLE_KD = 0;
-//
-//  private static final double STRAFE_TOLERANCE = 0.5f;
-//  private static final double STRAFE_KP = 0.3f;
-//  private static final double STRAFE_KI = 0;
-//  private static final double STRAFE_KD = 0;
-//
-//  private static final double APPROACH_TOLERANCE = 0.5f;
-//  private static final double APPROACH_KP = 0.3f;
-//  private static final double APPROACH_KI = 0;
-//  private static final double APPROACH_KD = 0;
-//
-//  //private final PIDController anglePid;
-//  private final PIDController strafePid;
-//  //private final PIDController approachPid;
-//
-//  private double commandedTurnRate = 0;
-//  private double commandedStrafeRate = 0;
-//  private double commandedApproachRate = 0;
-//
-//  public DeliverGearCommand() {
-//    requires(Robot.driveSubsystem);
-//    requires(Robot.cameraSubsystem);
-//
-////    anglePid = new PIDController(ANGLE_KP, ANGLE_KI, ANGLE_KD
-////            , new SimplePIDSource(Robot.driveSubsystem::getAngleToWall)
-////            , output -> commandedTurnRate = output);
-////    anglePid.setAbsoluteTolerance(ANGLE_TOLERANCE_DEGREES);
-////    anglePid.setSetpoint(0);
-//
-//    strafePid = new PIDController(STRAFE_KP, STRAFE_KI, STRAFE_KD,
-//            new PIDSource() {
-//              @Override
-//              public void setPIDSourceType(PIDSourceType pidSource) {
-//
-//              }
-//
-//              @Override
-//              public PIDSourceType getPIDSourceType() {
-//                return null;
-//              }
-//
-//              @Override
-//              public double pidGet() {
-//                Robot.cameraSubsystem.doVisionProcessingOnGearCamera();
-//
-//                if (Robot.cameraSubsystem.isGearTargetAcquired()) {
-//                  return Robot.cameraSubsystem.getGearTargetPixelsFromCenter();
-//                } else {
-//                  return 0;
-//                }
-//              }
-//            }
-//            , this::strafePidOutput);
-//    strafePid.setAbsoluteTolerance(STRAFE_TOLERANCE);
-//    strafePid.setInputRange(-160, 160);
-//    strafePid.setOutputRange(-1, 1);
-//    strafePid.setSetpoint(0);
-//    SmartDashboard.putData("strafepid", strafePid);
-//
-////    approachPid = new PIDController(APPROACH_KP, APPROACH_KI, APPROACH_KD
-////            , new SimplePIDSource(Robot.driveSubsystem::getDistanceToWall)
-////            , output -> commandedApproachRate = output);
-////    approachPid.setAbsoluteTolerance(APPROACH_TOLERANCE);
-////    strafePid.setSetpoint(0.25); // todo: calibrate this distance
-//  }
-//
-//  protected void strafePidOutput(double output) {
-//    commandedStrafeRate = output;
-//    SmartDashboard.putNumber("strafeoutput", output);
-//  }
-//
-//  @Override
-//  protected void execute() {
-//    strafePid.enable();
-//    SmartDashboard.putNumber("commandedStrafeRate", commandedStrafeRate);
-//    //Robot.driveSubsystem.mecanumDrive(commandedStrafeRate, commandedApproachRate, commandedTurnRate, 0);
-//    Robot.driveSubsystem.mecanumDrive(commandedStrafeRate, 0, 0, 0); // temporarily replaced approach and turn rate because we don't yet have ultrasonics
-//  }
-//
-//  @Override
-//  protected boolean isFinished() {
-//    return strafePid.onTarget();
-//    //return anglePid.onTarget() && strafePid.onTarget() && approachPid.onTarget();
-//  }
-//
-//  private double offsetToLift() {
-//    Robot.cameraSubsystem.doVisionProcessingOnGearCamera();
-//    if (Robot.cameraSubsystem.isGearTargetAcquired()) {
-//      return Robot.cameraSubsystem.getGearTargetPixelsFromCenter();
-//    } else {
-//      return 0;
-//    }
-//  }
 
 }
