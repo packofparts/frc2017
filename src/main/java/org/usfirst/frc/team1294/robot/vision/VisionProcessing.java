@@ -16,24 +16,9 @@ import java.util.stream.Stream;
  * Created by jxlewis on 1/21/17.
  */
 public class VisionProcessing {
-  private boolean gearTargetAcquired;
-  private int gearTargetPixelsFromCenter;
   private final GearGripPipeline gearGripPipeline = new GearGripPipeline();
-  private Optional<PairOfRect> bestPair;
 
-  public VisionProcessing() {
-
-  }
-
-  public Optional<PairOfRect> getBestPair() {
-    return bestPair;
-  }
-
-  public ArrayList<MatOfPoint> getContours() {
-    return gearGripPipeline.filterContoursOutput();
-  }
-
-  public void processGearFrame(Mat gearFrame) {
+  public VisionProcessingResult processGearFrame(Mat gearFrame) {
     // run the grip pipeline
     gearGripPipeline.process(gearFrame);
 
@@ -50,39 +35,33 @@ public class VisionProcessing {
             .flatMap(i -> rects.stream().filter(j -> !i.equals(j)).map(j -> new PairOfRect(i, j)));
 
     // get the best (lowest) scoring pair
-    bestPair = pairs.min((a, b) -> scorePair(b).compareTo(scorePair(a)));
+    Optional<PairOfRect> bestPair = pairs.min((a, b) -> scorePair(b).compareTo(scorePair(a)));
 
-    MatOfInt parameters = new MatOfInt(Imgcodecs.IMWRITE_JPEG_QUALITY, 100);
-    String filename = null;
-    try {
-      filename = File.createTempFile("gear", ".jpg").getAbsolutePath();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    Imgcodecs.imwrite(filename, gearFrame, parameters);
-    System.out.println(filename);
 
-    this.gearTargetAcquired = bestPair.isPresent();
+    boolean gearTargetAcquired = bestPair.isPresent();
+    double degreesOffCenter = 0;
+    double pixelsOffCenter = 0;
     if (bestPair.isPresent()) {
       PairOfRect pair = bestPair.get();
-
-      // calculate how many pixels off center
-      gearTargetPixelsFromCenter = (int) (pair.centerX() - gearFrame.width() / 2);
-    } else {
-      gearTargetPixelsFromCenter = 0;
+      // calculate how many degrees off center
+      double halfWidth = gearFrame.width() / 2;
+      pixelsOffCenter = pair.centerX() - halfWidth;
+      double percentOffCenter = pixelsOffCenter  / halfWidth;
+      degreesOffCenter = percentOffCenter * 60;
     }
+
+    VisionProcessingResult result = new VisionProcessingResult();
+    result.targetAcquired = gearTargetAcquired;
+    result.degreesOffCenter = degreesOffCenter;
+    result.pixelsOffCenter = (int)pixelsOffCenter;
+    return result;
   }
 
-  public boolean isGearTargetAcquired() {
-    return gearTargetAcquired;
-  }
-
-  public int getGearTargetPixelsFromCenter() {
-    if (gearTargetAcquired) {
-      return gearTargetPixelsFromCenter;
-    } else {
-      return 0;
-    }
+  public class VisionProcessingResult {
+    public boolean targetAcquired;
+    public double degreesOffCenter;
+    public int headingWhenImageTaken;
+    public int pixelsOffCenter;
   }
 
   public class PairOfRect {

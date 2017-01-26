@@ -7,13 +7,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team1294.robot.vision.GearGripPipeline;
 import org.usfirst.frc.team1294.robot.vision.VisionProcessing;
 
 import java.util.Date;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 public class CameraSubsystem extends Subsystem {
 
@@ -46,19 +43,22 @@ public class CameraSubsystem extends Subsystem {
   protected void initDefaultCommand() {
   }
 
-  public void doVisionProcessingOnGearCamera() {
+  public VisionProcessing.VisionProcessingResult doVisionProcessingOnGearCamera() {
     try {
       setGearFrameFromCamera();
-      visionProcessing.processGearFrame(gearFrame);
+      VisionProcessing.VisionProcessingResult result = visionProcessing.processGearFrame(gearFrame);
 
-      SmartDashboard.putBoolean("CameraSubsystem.GearTargetAcquired", isGearTargetAcquired());
-      SmartDashboard.putNumber("CameraSubsystem.GearTargerPixelsFromCenter", getGearTargetPixelsFromCenter());
+      SmartDashboard.putBoolean("CameraSubsystem.GearTargetAcquired", result.targetAcquired);
+      SmartDashboard.putNumber("CameraSubsystem.GearTargerPixelsFromCenter", result.pixelsOffCenter);
 
       System.out.println("Successfully ran vision processing.");
+
+      return result;
     } catch (Exception ex) {
       System.out.println("Failed to do vision processing.");
       ex.printStackTrace();
     }
+    return null;
   }
 
   public void setGearFrameFromCamera() {
@@ -79,13 +79,13 @@ public class CameraSubsystem extends Subsystem {
     System.out.println("last image saved");
   }
 
-  public boolean isGearTargetAcquired() {
-    return visionProcessing.isGearTargetAcquired();
-  }
-
-  public int getGearTargetPixelsFromCenter() {
-    return visionProcessing.getGearTargetPixelsFromCenter();
-  }
+//  public boolean isGearTargetAcquired() {
+//    return visionProcessing.isGearTargetAcquired();
+//  }
+//
+//  public int getGearTargetPixelsFromCenter() {
+//    return visionProcessing.getGearTargetPixelsFromCenter();
+//  }
 
 
 }

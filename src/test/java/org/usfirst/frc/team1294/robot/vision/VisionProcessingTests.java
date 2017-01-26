@@ -106,17 +106,17 @@ public class VisionProcessingTests {
 //    assertThat(visionProcessing.getGearTargetPixelsFromCenter(), is(-76));
 //  }
 
-  //gearFrame_1485026290472
+//  //gearFrame_1485026290472
   @Test
   public void testgearFrame_1485026290472() {
     VisionProcessing visionProcessing = new VisionProcessing();
     Mat image = Imgcodecs.imread("src/test/resources/TestImages/positive/gearFrame_1485026290472.jpg");
-    visionProcessing.processGearFrame(image);
+    VisionProcessing.VisionProcessingResult result = visionProcessing.processGearFrame(image);
 
-    assertThat(visionProcessing.getContours().size(), is(2));
+    //assertThat(visionProcessing.getContours().size(), is(2));
 
-    Imgproc.drawContours(image, visionProcessing.getContours(), -1, new Scalar(0,0,255));
-    Imgproc.rectangle(image, visionProcessing.getBestPair().get().topLeft(), visionProcessing.getBestPair().get().bottomRight(), new Scalar(255,0,0));
+    //Imgproc.drawContours(image, visionProcessing.getContours(), -1, new Scalar(0,0,255));
+    //Imgproc.rectangle(image, visionProcessing.getBestPair().get().topLeft(), visionProcessing.getBestPair().get().bottomRight(), new Scalar(255,0,0));
     //Point p = new Point(image.h)
     //Imgproc.circle(image, visionProcessing.getBestPair().get().centerX(), 3, new Scalar(255,0,0));
     //Point topLeft = new Point(visionProcessing.getBestPair().get().a.x, visionProcessing.getBestPair().get().a.y);
@@ -127,7 +127,7 @@ public class VisionProcessingTests {
     MatOfInt parameters = new MatOfInt(Imgcodecs.IMWRITE_JPEG_QUALITY, 100);
     Imgcodecs.imwrite("src/test/resources/TestImages/positive/gearFrame_1485026290472_out.jpg", image, parameters);
 
-    assertThat(visionProcessing.isGearTargetAcquired(), is(true));
-    assertThat(visionProcessing.getGearTargetPixelsFromCenter(), is(21));
+    assertThat(result.targetAcquired, is(true));
+    assertThat(result.pixelsOffCenter, is(21));
   }
 }

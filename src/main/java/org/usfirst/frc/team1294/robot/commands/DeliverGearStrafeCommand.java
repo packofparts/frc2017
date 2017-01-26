@@ -3,6 +3,7 @@ package org.usfirst.frc.team1294.robot.commands;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1294.robot.Robot;
+import org.usfirst.frc.team1294.robot.vision.VisionProcessing;
 
 /**
  * Created by jxlewis on 1/21/17.
@@ -24,9 +25,9 @@ public class DeliverGearStrafeCommand extends PIDCommand {
 
   @Override
   protected double returnPIDInput() {
-    Robot.cameraSubsystem.doVisionProcessingOnGearCamera();
-    if (Robot.cameraSubsystem.isGearTargetAcquired()) {
-      return -Robot.cameraSubsystem.getGearTargetPixelsFromCenter();
+    VisionProcessing.VisionProcessingResult result = Robot.cameraSubsystem.doVisionProcessingOnGearCamera();
+    if (result.targetAcquired) {
+      return -result.pixelsOffCenter;
     } else {
       return 0;
     }
