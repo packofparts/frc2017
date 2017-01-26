@@ -6,6 +6,18 @@ import org.usfirst.frc.team1294.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveMotorCommand extends Command {
+	
+	  public final double HEADING_TO_TRAVEL_C = 0;
+	  public final double DISTANCE_TO_TRAVEL_C = 1.99;
+	  public final double HEADING_TO_FACE_C = 0;
+
+	  public final double DISTANCE_TO_TRAVEL_R = 4.8;
+	  public final double HEADING_TO_TRAVEL_R = 30.0;
+	  public final double HEADING_TO_FACE_R = -90.0;
+
+	  public final double DISTANCE_TO_TRAVEL_L = 4.8;
+	  public final double HEADING_TO_TRAVEL_L = -30.0;
+	  public final double HEADING_TO_FACE_L = 90.0;
 
   public DriveMotorCommand() {
     super("Drive motor");
