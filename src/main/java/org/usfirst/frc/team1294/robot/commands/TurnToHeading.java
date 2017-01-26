@@ -31,7 +31,7 @@ public class TurnToHeading extends PIDCommand {
 
     @Override
     protected void execute() {
-        this.getPIDController().setInputRange(-180.0f,  180.0f);
+        this.getPIDController().setInputRange(0f,  360.0f);
         this.getPIDController().setOutputRange(-1.0, 1.0);
         this.getPIDController().setAbsoluteTolerance(kToleranceDegrees);
         this.getPIDController().setContinuous(true);
