@@ -24,17 +24,18 @@ public class TurnToHeading extends PIDCommand {
     private final double kToleranceDegrees = 2.0f;
 
     public TurnToHeading(double heading) {
-        super(kP, kI, kD);
+        super("turn to " + heading, kP, kI, kD);
         requires(Robot.driveSubsystem);
         this.heading = heading;
     }
 
     @Override
     protected void execute() {
-        this.getPIDController().setInputRange(-180.0f,  180.0f);
+        this.getPIDController().setInputRange(0f,  360.0f);
         this.getPIDController().setOutputRange(-1.0, 1.0);
         this.getPIDController().setAbsoluteTolerance(kToleranceDegrees);
         this.getPIDController().setContinuous(true);
+        Robot.driveSubsystem.mecanumDrive(0,0,heading, Robot.driveSubsystem.getAngle());
     }
 
     @Override
@@ -50,6 +51,6 @@ public class TurnToHeading extends PIDCommand {
 
     @Override
     protected void usePIDOutput(double output) {
-        Robot.driveSubsystem.mecanumDrive(0, 0, output, 0);
+        Robot.driveSubsystem.mecanumDrive(0, 0, output, Robot.driveSubsystem.getAngle());
     }
 }
