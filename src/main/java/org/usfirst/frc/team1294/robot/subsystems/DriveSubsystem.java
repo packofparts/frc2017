@@ -30,6 +30,10 @@ public class DriveSubsystem extends Subsystem {
     robotDrive = new RobotDrive(leftFrontTalon, leftRearTalon, rightFrontTalon, rightRearTalon);
     robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
     navX = new AHRS(SerialPort.Port.kMXP);
+    leftFrontTalon.setVoltageRampRate (RobotMap.RAMP_RATE);
+    rightFrontTalon.setVoltageRampRate (RobotMap.RAMP_RATE);
+    leftRearTalon.setVoltageRampRate (RobotMap.RAMP_RATE);
+    rightRearTalon.setVoltageRampRate (RobotMap.RAMP_RATE);
   }
 
   @Override
