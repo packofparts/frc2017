@@ -18,72 +18,46 @@ public class TurnToHeading extends PIDCommand {
 
     private final double heading;
 
-    private static final double kP = 5.;
+    private static final double kP = 0.04;
     private static final double kI = 0.00;
-    private static final double kD = 1.;
+    private static final double kD = 0.075;
 
     private final double kToleranceDegrees = 5.f;
+
+    private boolean hasRunReturnPidInputAtLeastOnce;
 
     public TurnToHeading(double heading) {
         super("turn to " + heading, kP, kI, kD);
         requires(Robot.driveSubsystem);
         this.heading = heading;
-        this.getPIDController().setInputRange(0.f, 360.f);
-        this.getPIDController().setOutputRange(-1.0, 1.0);
-        this.getPIDController().setAbsoluteTolerance(kToleranceDegrees);
-        this.getPIDController().setContinuous(true);
+        getPIDController().setInputRange(0.f, 360.f);
+        getPIDController().setOutputRange(-1., 1.);
+        getPIDController().setAbsoluteTolerance(kToleranceDegrees);
+        getPIDController().setContinuous(true);
         setSetpoint(heading);
-//        SmartDashboard.putData("TurnToHeadingPid", getPIDController());
-      System.out.println("TurnToHeading" + heading + " constructor");
     }
 
     @Override
     protected void initialize() {
-      System.out.println("TurnToHeading" + heading + " init");
-    }
-
-    @Override
-    protected void execute() {
-
-      System.out.println("TurnToHeading" + heading + " execute");
+      hasRunReturnPidInputAtLeastOnce = false;
     }
 
     @Override
     protected boolean isFinished() {
-
-//      System.out.println("TurnToHeading" + heading + " isFinished " + getPIDController().onTarget() + " " + getPIDController().getAvgError());
-//        return this.getPIDController().onTarget();
-      return false;
+        return this.getPIDController().onTarget()
+                && hasRunReturnPidInputAtLeastOnce
+                && Math.abs(Robot.driveSubsystem.getRate()) <= 0.3;
     }
 
 
     @Override
     protected double returnPIDInput() {
-
-      System.out.println("TurnToHeading" + heading + " pidin");
-        return Robot.driveSubsystem.getAngle();
+      if (!hasRunReturnPidInputAtLeastOnce) hasRunReturnPidInputAtLeastOnce = true;
+      return Robot.driveSubsystem.getAngle();
     }
 
     @Override
     protected void usePIDOutput(double output) {
-
-      System.out.println("TurnToHeading" + heading + " pidout " + output);
-        Robot.driveSubsystem.mecanumDrive(0, 0, output, Robot.driveSubsystem.getAngle());
-    }
-
-    @Override
-    protected void end() {
-//        getPIDController().disable();
-
-      System.out.println("TurnToHeading" + heading + " end");
-      getPIDController().reset();
-      System.out.println("TurnToHeading" + heading + " reset");
-    }
-
-    @Override
-    protected void interrupted() {
-
-      System.out.println("TurnToHeading" + heading + " interrupt");
-        end();
+      Robot.driveSubsystem.mecanumDrive(0, 0, output, Robot.driveSubsystem.getAngle());
     }
 }

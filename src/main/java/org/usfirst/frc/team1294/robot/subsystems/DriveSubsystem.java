@@ -4,7 +4,6 @@ import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team1294.robot.RobotMap;
 import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
@@ -52,7 +51,7 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public double getAngle() {
-    double angle = navX.getAngle() % 360;
+    double angle = Math.abs(navX.getAngle()) % 360;
 //    System.out.println(angle);
     return angle;
   }
@@ -69,5 +68,9 @@ public class DriveSubsystem extends Subsystem {
   public double getEncoder() {
 //    return 0.;
     return leftRearTalon.getPosition();
+  }
+
+  public double getRate() {
+    return navX.getRate();
   }
 }
