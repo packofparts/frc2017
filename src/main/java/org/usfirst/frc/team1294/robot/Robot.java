@@ -1,18 +1,26 @@
 
 package org.usfirst.frc.team1294.robot;
 
+import org.usfirst.frc.team1294.robot.commands.AutoGearCenter;
+import org.usfirst.frc.team1294.robot.commands.AutoGearLeft;
+import org.usfirst.frc.team1294.robot.commands.AutoGearRight;
+import org.usfirst.frc.team1294.robot.commands.DoGearCameraImageProcessingCommand;
+import org.usfirst.frc.team1294.robot.commands.DriveBaseBreakInCommand;
+import org.usfirst.frc.team1294.robot.commands.DriveMotorCommand;
+import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
+import org.usfirst.frc.team1294.robot.commands.ResetGyroCommand;
+import org.usfirst.frc.team1294.robot.commands.TurnToHeading;
+import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.ClimbingSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.FuelSubsystem;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team1294.robot.commands.*;
-import org.usfirst.frc.team1294.robot.subsystems.ClimbingSubsystem;
-import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
-import org.usfirst.frc.team1294.robot.subsystems.FuelSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,11 +47,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		oi = new OI();
 		driveSubsystem = new DriveSubsystem();
 		cameraSubsystem = new CameraSubsystem();
         climbingSubsystem = new ClimbingSubsystem();
         fuelSubsystem = new FuelSubsystem();
+		oi = new OI();
 
 		chooser.addDefault("Auto Gear Center", new AutoGearCenter());
 		chooser.addObject("Auto Gear Left", new AutoGearLeft());
@@ -61,6 +69,11 @@ public class Robot extends IterativeRobot {
 
         SmartDashboard.putData(new DriveBaseBreakInCommand());
 		SmartDashboard.putData(new DoGearCameraImageProcessingCommand());
+		SmartDashboard.putData(Scheduler.getInstance());
+		SmartDashboard.putData(driveSubsystem);
+		SmartDashboard.putData(cameraSubsystem);
+		SmartDashboard.putData(climbingSubsystem);
+		SmartDashboard.putData(fuelSubsystem);
 	}
 
 	/**
@@ -111,6 +124,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+
+//		SmartDashboard.putData(Scheduler.getInstance());
 	}
 
 	@Override
@@ -128,7 +143,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		SmartDashboard.putNumber("Angle", driveSubsystem.getAngle());
+		SmartDashboard.putNumber("Angle (PIDSource)", driveSubsystem.getAnglePidGet());
 		Scheduler.getInstance().run();
+
+//		SmartDashboard.putData(Scheduler.getInstance());
+		SmartDashboard.putNumber("enc", driveSubsystem.getEncoder());
 	}
 
 	/**
