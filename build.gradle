@@ -33,7 +33,8 @@ dependencies {
     compile talonSrx()
     compile fileTree(dir: 'libs', include: '**/*.jar')
 
-    testCompile group: 'junit', name: 'junit', version: '4.+'
+    testCompile group: 'org.testng', name: 'testng', version: '6.9.13.6'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.5.2'
 }
 
 task wrapper(type: Wrapper) {
@@ -89,6 +90,15 @@ task generateBintrayFile(type: Copy) {
 release {
     // need to specify the repository to interact with
     grgit = org.ajoberstar.grgit.Grgit.open(project.file('.'))
+}
+
+
+test {
+    useTestNG {
+        include('**/*')
+        if (!project.hasProperty('test.vision'))
+            getExcludeGroups().add('vision')
+    }
 }
 
 def getAuthor() {

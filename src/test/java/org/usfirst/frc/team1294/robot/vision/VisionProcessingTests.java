@@ -1,9 +1,5 @@
 package org.usfirst.frc.team1294.robot.vision;
 
-import org.hamcrest.core.Is;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfInt;
 import org.opencv.core.Point;
@@ -11,15 +7,16 @@ import org.opencv.core.Scalar;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import java.io.*;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 
 public class VisionProcessingTests {
 
-  @BeforeClass
+  @BeforeClass(groups = "vision")
   public static void loadNativeOpenCvLibraries() throws Exception {
     try {
       String osname = System.getProperty("os.name");
@@ -106,8 +103,8 @@ public class VisionProcessingTests {
 //    assertThat(visionProcessing.getGearTargetPixelsFromCenter(), is(-76));
 //  }
 
-//  //gearFrame_1485026290472
-  @Test
+  //gearFrame_1485026290472
+  @Test(groups = "vision")
   public void testgearFrame_1485026290472() {
     VisionProcessing visionProcessing = new VisionProcessing();
     Mat image = Imgcodecs.imread("src/test/resources/TestImages/positive/gearFrame_1485026290472.jpg");
@@ -127,7 +124,7 @@ public class VisionProcessingTests {
     MatOfInt parameters = new MatOfInt(Imgcodecs.IMWRITE_JPEG_QUALITY, 100);
     Imgcodecs.imwrite("src/test/resources/TestImages/positive/gearFrame_1485026290472_out.jpg", image, parameters);
 
-    assertThat(result.targetAcquired, is(true));
-    assertThat(result.pixelsOffCenter, is(21));
+    assertThat(result.targetAcquired).isTrue();
+    assertThat(result.pixelsOffCenter).isEqualTo(21);
   }
 }
