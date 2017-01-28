@@ -1,6 +1,9 @@
 package org.usfirst.frc.team1294.robot;
 
+import org.usfirst.frc.team1294.robot.commands.TurnToHeading;
+
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -11,6 +14,7 @@ public class OI {
 
   public OI() {
     this.joystick = new XboxController(RobotMap.XBOX_CONTROLLER);
+    new JoystickButton(joystick, 1).whenPressed(new TurnToHeading(90.));
   }
 
   public XboxController getJoystick() {

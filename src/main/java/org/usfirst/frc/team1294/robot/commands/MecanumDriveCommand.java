@@ -20,14 +20,15 @@ public class MecanumDriveCommand extends Command {
 
   @Override
   protected void initialize() {
-
+    System.out.println("mecdrive init");
   }
 
   @Override
   protected void execute() {
+    System.out.println("mecdrive execute");
     XboxController joystick = Robot.oi.getJoystick();
     // if the magnitude of the left analog stick > right analog stick, use field oriented
-    System.out.printf("lx: %.2f rx: %.2f // ly: %.2f ry: %.2f // ", joystick.getX(GenericHID.Hand.kLeft), joystick.getX(GenericHID.Hand.kRight), joystick.getY(GenericHID.Hand.kLeft), joystick.getY(GenericHID.Hand.kRight));
+//    System.out.printf("lx: %.2f rx: %.2f // ly: %.2f ry: %.2f // ", joystick.getX(GenericHID.Hand.kLeft), joystick.getX(GenericHID.Hand.kRight), joystick.getY(GenericHID.Hand.kLeft), joystick.getY(GenericHID.Hand.kRight));
     double absXL = Math.abs(joystick.getX(GenericHID.Hand.kLeft));
     absXL = absXL < DEADZONE ? 0 : absXL;
     double absXR = Math.abs(joystick.getX(GenericHID.Hand.kRight));
@@ -42,14 +43,14 @@ public class MecanumDriveCommand extends Command {
               joystick.getY(GenericHID.Hand.kLeft),
               joystick.getTriggerAxis(GenericHID.Hand.kRight) - joystick.getTriggerAxis(GenericHID.Hand.kLeft),
               Robot.driveSubsystem.getAngle());
-      System.out.println("FIELD ORIENTED");
+//      System.out.println("FIELD ORIENTED");
     } else {
       // otherwise use the right analog stick for robot oriented
       Robot.driveSubsystem.mecanumDrive(joystick.getX(GenericHID.Hand.kRight),
               joystick.getY(GenericHID.Hand.kRight),
               joystick.getTriggerAxis(GenericHID.Hand.kRight) - joystick.getTriggerAxis(GenericHID.Hand.kLeft),
               0);
-      System.out.println("ROBOT ORIENTED");
+//      System.out.println("ROBOT ORIENTED");
     }
   }
 
