@@ -7,18 +7,13 @@ package org.usfirst.frc.team1294.robot;
  * floating around.
  */
 public class RobotMap {
-    public static final int XBOX_CONTROLLER = 2;
+  public static final int XBOX_CONTROLLER = 2;
 
-    public static final int DRIVEBASE_LEFT_FRONT_TALON = 2;
-    public static final int DRIVEBASE_LEFT_REAR_TALON = 3;
-    public static final int DRIVEBASE_RIGHT_FRONT_TALON = 4;
-    public static final int DRIVEBASE_RIGHT_REAR_TALON = 1;
-    public static final double RAMP_RATE = 48.;
   public static final int DRIVEBASE_LEFT_FRONT_TALON = 2;
   public static final int DRIVEBASE_LEFT_REAR_TALON = 3;
   public static final int DRIVEBASE_RIGHT_FRONT_TALON = 4;
   public static final int DRIVEBASE_RIGHT_REAR_TALON = 1;
-
+  public static final double RAMP_RATE = 48.;
   public static final int DRIVEBASE_ULTRASONIC_PING_LEFT = -1;
   public static final int DRIVEBASE_ULTRASONIC_ECHO_LEFT = -1;
   public static final int DRIVEBASE_ULTRASONIC_PING_RIGHT = -1;

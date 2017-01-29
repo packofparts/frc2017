@@ -24,6 +24,11 @@ public class DeliverGearTurnCommand extends PIDCommand {
   }
 
   @Override
+  protected void initialize() {
+    getPIDController().reset();
+  }
+
+  @Override
   protected double returnPIDInput() {
     return Robot.driveSubsystem.getAngleToWall();
   }
