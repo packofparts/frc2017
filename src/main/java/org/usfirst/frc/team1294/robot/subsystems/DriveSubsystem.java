@@ -14,20 +14,15 @@ import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
  * @author Austin Jenchi (timtim17)
  */
 public class DriveSubsystem extends Subsystem {
-
-  private static final double rampRate = 24;
   public final CANTalon leftFrontTalon;
   public final CANTalon leftRearTalon;
   public final CANTalon rightFrontTalon;
   public final CANTalon rightRearTalon;
   private final RobotDrive robotDrive;
   private static AHRS navX;
-  private double commandedStrafeRate;
-  private double commandedApproachRate;
-  private double commandedTurnRate;
 //  private final Ultrasonic leftUltrasonic;
 //  private final Ultrasonic rightUltrasonic;
-//  private final CANTalon extraTalon;
+
 
   public DriveSubsystem() {
     super("DriveSubsystem");
@@ -44,7 +39,6 @@ public class DriveSubsystem extends Subsystem {
     leftRearTalon.setVoltageRampRate (RobotMap.RAMP_RATE);
     rightRearTalon.setVoltageRampRate (RobotMap.RAMP_RATE);
 
-//    extraTalon = new CANTalon(0);
     leftRearTalon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
   }
 
@@ -53,25 +47,14 @@ public class DriveSubsystem extends Subsystem {
     setDefaultCommand(new MecanumDriveCommand());
   }
 
-  public void setCommandedStrafeRate(double output) {
-    this.commandedStrafeRate = output;
-  }
-
-  public void mechanumDriveFromCommandedRates() {
-    //robotDrive.mecanumDrive_Cartesian(commandedStrafeRate, commandedApproachRate, commandedTurnRate, 0);
-    robotDrive.mecanumDrive_Cartesian(commandedStrafeRate, 0, 0, 0);
-  }
-
   public void mecanumDrive(double x, double y, double rotate, double gyro) {
     robotDrive.mecanumDrive_Cartesian(x, y, rotate, gyro);
   }
 
   public double getAngle() {
     double angle = Math.abs(navX.getAngle()) % 360;
-//    System.out.println(angle);
     return angle;
   }
-
 
   public void resetGyro() {
     navX.reset();
@@ -96,6 +79,7 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public double getAngleToWall() {
+    // todo: math here using the difference in ultrasonic ranges
     return 0;
   }
 
@@ -103,11 +87,4 @@ public class DriveSubsystem extends Subsystem {
     robotDrive.setSafetyEnabled(!robotDrive.isSafetyEnabled());
   }
 
-  public void setCommandedApproachRate(double commandedApproachRate) {
-    this.commandedApproachRate = commandedApproachRate;
-  }
-
-  public void setCommandedTurnRate(double commandedTurnRate) {
-    this.commandedTurnRate = commandedTurnRate;
-  }
 }

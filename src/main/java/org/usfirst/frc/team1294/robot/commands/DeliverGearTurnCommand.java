@@ -3,9 +3,11 @@ package org.usfirst.frc.team1294.robot.commands;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1294.robot.Robot;
+import org.usfirst.frc.team1294.robot.vision.VisionProcessing;
 
 /**
- * Created by jxlewis on 1/21/17.
+ * Not intended for standalone use. Must be used as part of the DeliverGearCommand CommandGroup.
+ * Sets the z rate in the parent CommandGroup to keep the robot pointing at the vision target.
  */
 public class DeliverGearTurnCommand extends PIDCommand {
 
@@ -16,30 +18,45 @@ public class DeliverGearTurnCommand extends PIDCommand {
 
   public DeliverGearTurnCommand() {
     super("DeliverGearTurnCommand", KP, KI, KD);
+
+    requires(Robot.cameraSubsystem);
+
     getPIDController().setAbsoluteTolerance(TOLERANCE);
     getPIDController().setInputRange(-180, 180);
     getPIDController().setOutputRange(-1, 1);
     getPIDController().setSetpoint(0);
-    SmartDashboard.putData("turnpid", getPIDController());
+    SmartDashboard.putData("DeliverGearTurnCommandPID", getPIDController());
   }
 
   @Override
-  protected void initialize() {
-    getPIDController().reset();
+  protected void execute() {
+    // record the angle before vision processing
+    double angle = Robot.driveSubsystem.getAngle();
+
+    // do vision processing
+    VisionProcessing.VisionProcessingResult visionProcessingResult = Robot.cameraSubsystem.doVisionProcessingOnGearCamera();
+
+    // if the target was acquired, adjust the setpoint
+    if (visionProcessingResult.targetAcquired) {
+      getPIDController().setSetpoint(angle + visionProcessingResult.degreesOffCenter);
+    }
   }
 
   @Override
   protected double returnPIDInput() {
-    return Robot.driveSubsystem.getAngleToWall();
+    return Robot.driveSubsystem.getAngle();
   }
 
   @Override
   protected void usePIDOutput(double output) {
-    Robot.driveSubsystem.setCommandedTurnRate(output);
+    if (getGroup() instanceof DeliverGearCommand) {
+      ((DeliverGearCommand) getGroup()).setzRate(output);
+    }
   }
 
   @Override
   protected boolean isFinished() {
+    // never finishes by itself, depends on the parent CommandGroup to do that
     return false;
   }
 
