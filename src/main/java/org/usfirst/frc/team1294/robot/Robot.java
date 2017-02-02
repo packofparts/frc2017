@@ -149,7 +149,8 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 
 //		SmartDashboard.putData(Scheduler.getInstance());
-		SmartDashboard.putNumber("enc", driveSubsystem.getEncoder());
+		SmartDashboard.putNumber("enc", driveSubsystem.getEncoderX());
+		SmartDashboard.putNumber("enc", driveSubsystem.getEncoderY());
 	}
 
 	/**
