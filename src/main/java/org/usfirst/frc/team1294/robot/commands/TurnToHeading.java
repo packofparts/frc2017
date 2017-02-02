@@ -1,15 +1,8 @@
 package org.usfirst.frc.team1294.robot.commands;
 
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.PIDCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team1294.robot.Robot;
-import org.usfirst.frc.team1294.robot.RobotMap;
-import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
+
+import edu.wpi.first.wpilibj.command.PIDCommand;
 
 /**
  * A command that turns the robot to a particular heading relative to the field.
