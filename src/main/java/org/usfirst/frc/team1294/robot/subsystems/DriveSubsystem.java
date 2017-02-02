@@ -64,9 +64,9 @@ public class DriveSubsystem extends Subsystem {
     return navX.pidGet();
   }
 
-  public double getEncoder() {
+  public double getEncoderY() {
 //    return 0.;
-    return leftRearTalon.getPosition();
+    return leftRearTalon.getPosition(); // TODO: Set this up properly
   }
 
   public double getRate() {
@@ -87,4 +87,7 @@ public class DriveSubsystem extends Subsystem {
     robotDrive.setSafetyEnabled(!robotDrive.isSafetyEnabled());
   }
 
+  public double getEncoderX() {
+    return leftRearTalon.getPosition(); // TODO: Set this up properly
+  }
 }
