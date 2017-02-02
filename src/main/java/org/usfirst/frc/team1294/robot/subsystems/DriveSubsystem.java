@@ -40,6 +40,7 @@ public class DriveSubsystem extends Subsystem {
     rightRearTalon.setVoltageRampRate (RobotMap.RAMP_RATE);
 
     leftRearTalon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+    rightRearTalon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
   }
 
   @Override
@@ -88,6 +89,6 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public double getEncoderX() {
-    return leftRearTalon.getPosition(); // TODO: Set this up properly
+    return rightRearTalon.getPosition(); // TODO: Set this up properly
   }
 }
