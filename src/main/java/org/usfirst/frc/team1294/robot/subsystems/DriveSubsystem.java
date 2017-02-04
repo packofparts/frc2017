@@ -66,7 +66,6 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public double getEncoderY() {
-//    return 0.;
     return leftRearTalon.getPosition(); // TODO: Set this up properly
   }
 
