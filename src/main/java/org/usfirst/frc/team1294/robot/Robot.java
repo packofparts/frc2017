@@ -54,7 +54,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		// THESE MUST BE INITIALIZED FIRST
-		oi = new OI();
 		driveSubsystem = new DriveSubsystem();
 		cameraSubsystem = new CameraSubsystem();
         climbingSubsystem = new ClimbingSubsystem();

@@ -11,12 +11,12 @@ import org.usfirst.frc.team1294.robot.Robot;
  */
 public class DriveGyroCorrect extends PIDCommand{
 
-    private static final double P = 0f;
+    private static final double P = 0.1;
     private static final double I = 0f;
     private static  final double D = 0f;
     private static final double TOLERANCE = 2.;
     private static final double DEADZONE = 0.05f;
-    private static final double constantMultiplier = 1.0; //adjust this and DEADZONE as the need arises
+    private static final double constantMultiplier = 1.5; //adjust this and DEADZONE as the need arises
     private static double left;
     private static double right;
 
@@ -25,17 +25,24 @@ public class DriveGyroCorrect extends PIDCommand{
         super("DriveGyroCorrect", P, I, D);
         requires(Robot.driveSubsystem);
         getPIDController().setAbsoluteTolerance(TOLERANCE);
-        getPIDController().setInputRange(0, 360);
+        getPIDController().setInputRange(-5, 5);
         getPIDController().setOutputRange(-1, 1);
-        SmartDashboard.putData("DriveGyroCorrect", getPIDController());
+        SmartDashboard.putData("DriveGyroCorrectPID", getPIDController());
+        SmartDashboard.putNumber("deadzone", DEADZONE);
     }
 
     @Override
     protected void execute() {
         left = Robot.oi.getJoystick().getTriggerAxis(GenericHID.Hand.kLeft);
         right = Robot.oi.getJoystick().getTriggerAxis(GenericHID.Hand.kRight);
-        if(right - left < DEADZONE) getPIDController().setSetpoint(0);
-        else getPIDController().setSetpoint((left - right) * constantMultiplier);
+        if(Math.abs(right - left) < SmartDashboard.getNumber("deadzone", DEADZONE)) {
+            getPIDController().setSetpoint(0.);
+        } else {
+            getPIDController().setSetpoint((right - left) * constantMultiplier);
+            System.out.println("jbl: " + ((right - left) * constantMultiplier));
+        }
+        System.out.printf("left: %.2f // right: %.2f // right - left: %.2f%n", left, right,
+                right - left);
     }
 
     @Override
@@ -45,7 +52,7 @@ public class DriveGyroCorrect extends PIDCommand{
 
     @Override
     protected double returnPIDInput() {
-        return Robot.driveSubsystem.getAngle();
+        return Robot.driveSubsystem.getRate();
     }
 
     @Override
@@ -65,14 +72,15 @@ public class DriveGyroCorrect extends PIDCommand{
                     joystick.getY(GenericHID.Hand.kLeft),
                     output,
                     Robot.driveSubsystem.getAngle());
-            System.out.println("FIELD ORIENTED");
+//            System.out.println("FIELD ORIENTED");
         } else {
             // otherwise use the right analog stick for robot oriented
             Robot.driveSubsystem.mecanumDrive(joystick.getX(GenericHID.Hand.kRight),
                     joystick.getY(GenericHID.Hand.kRight),
                     output,
                     0);
-            System.out.println("ROBOT ORIENTED");
+//            System.out.println("ROBOT ORIENTED");
         }
+        System.out.println(output);
     }
 }
