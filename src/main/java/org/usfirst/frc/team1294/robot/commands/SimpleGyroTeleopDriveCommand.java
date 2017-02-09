@@ -7,20 +7,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1294.robot.Robot;
 
 public class SimpleGyroTeleopDriveCommand extends PIDCommand {
-  private static final double P = 0.1;
+  private static final double P = 0.01;
   private static final double I = 0;
   private static final double D = 0;
-  private static final double PERCENT_TOLERANCE = 0.1;
+  private static final double ABS_TOLERANCE = 5;
 
   private double z = 0;
 
   public SimpleGyroTeleopDriveCommand() {
     super("SimpleGyroTeleopDriveCommand", P, I, D);
     requires(Robot.driveSubsystem);
-    getPIDController().setPercentTolerance(PERCENT_TOLERANCE);
-    getPIDController().setInputRange(-5, 5);
+    getPIDController().setAbsoluteTolerance(ABS_TOLERANCE);
+    getPIDController().setInputRange(0, 360);
     getPIDController().setOutputRange(-1, 1);
+    getPIDController().setContinuous(true);
     SmartDashboard.putData("SimpleGyroTeleopDriveCommandPID", getPIDController());
+  }
+
+  @Override
+  protected void initialize() {
+    getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
   }
 
   @Override
@@ -29,18 +35,32 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
 
     double leftTriggerValue = joystick.getTriggerAxis(GenericHID.Hand.kLeft);
     double rightTriggerValue = joystick.getTriggerAxis(GenericHID.Hand.kRight);
-    getPIDController().setSetpoint(rightTriggerValue - leftTriggerValue);
+    double zRate = rightTriggerValue - leftTriggerValue;
+    if (Math.abs(zRate) > .05 || Math.abs(Robot.driveSubsystem.getRate()) > 2) {
+      if (getPIDController().isEnabled()) {
+        getPIDController().disable();
+      }
+      z = zRate;
+    } else {
+      if (!getPIDController().isEnabled()) {
+        getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
+        getPIDController().enable();
+      }
+    }
+
 
     double x = joystick.getX(GenericHID.Hand.kRight);
     double y = joystick.getY(GenericHID.Hand.kRight);
 
-    System.out.printf("SimpleGyroTeleopDriveCommand X:%.2f Y:%.2f Z:%.2f%n", x,y,z);
+    SmartDashboard.putNumber("driveX", x);
+    SmartDashboard.putNumber("driveY", y);
+    SmartDashboard.putNumber("driveZ", z);
     Robot.driveSubsystem.mecanumDrive(x, y, z, 0);
   }
 
   @Override
   protected double returnPIDInput() {
-    return Robot.driveSubsystem.getRate();
+    return Robot.driveSubsystem.getAngle();
   }
 
   @Override

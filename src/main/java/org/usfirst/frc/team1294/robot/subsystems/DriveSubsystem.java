@@ -9,6 +9,7 @@ import org.usfirst.frc.team1294.robot.RobotMap;
 import org.usfirst.frc.team1294.robot.commands.DriveGyroCorrect;
 import org.usfirst.frc.team1294.robot.commands.DriveMotorCommand;
 import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
+import org.usfirst.frc.team1294.robot.commands.SimpleGyroTeleopDriveCommand;
 
 /**
  * @author Austin Jenchi (timtim17)
@@ -47,7 +48,9 @@ public class DriveSubsystem extends Subsystem {
   @Override
   protected void initDefaultCommand() {
     //setDefaultCommand(new MecanumDriveCommand());
-    setDefaultCommand(new DriveGyroCorrect());
+//    setDefaultCommand(new DriveGyroCorrect());
+    setDefaultCommand(new SimpleGyroTeleopDriveCommand());
+//    setDefaultCommand(new DriveMotorCommand());
   }
 
   public void mecanumDrive(double x, double y, double rotate, double gyro) {
