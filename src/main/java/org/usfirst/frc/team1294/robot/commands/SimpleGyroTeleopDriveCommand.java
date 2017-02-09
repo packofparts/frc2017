@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1294.robot.Robot;
 
+import static org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand.DEADZONE;
+
 public class SimpleGyroTeleopDriveCommand extends PIDCommand {
   private static final double P = 0.01;
   private static final double I = 0;
@@ -13,6 +15,8 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
   private static final double ABS_TOLERANCE = 5;
 
   private double z = 0;
+
+  private final double DEADZONE = 0.05;
 
   public SimpleGyroTeleopDriveCommand() {
     super("SimpleGyroTeleopDriveCommand", P, I, D);
@@ -47,15 +51,31 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
         getPIDController().enable();
       }
     }
-
-
-    double x = joystick.getX(GenericHID.Hand.kRight);
-    double y = joystick.getY(GenericHID.Hand.kRight);
-
-    SmartDashboard.putNumber("driveX", x);
-    SmartDashboard.putNumber("driveY", y);
     SmartDashboard.putNumber("driveZ", z);
-    Robot.driveSubsystem.mecanumDrive(x, y, z, 0);
+
+    double absXL = Math.abs(joystick.getX(GenericHID.Hand.kLeft));
+    absXL = absXL < DEADZONE ? 0 : absXL;
+    double absXR = Math.abs(joystick.getX(GenericHID.Hand.kRight));
+    absXR = absXR < DEADZONE ? 0 : absXR;
+    double abxYL = Math.abs(joystick.getY(GenericHID.Hand.kLeft));
+    abxYL = abxYL < DEADZONE ? 0 : abxYL;
+    double absYR = Math.abs(joystick.getY(GenericHID.Hand.kRight));
+    absYR = absYR < DEADZONE ? 0 : absYR;
+    if (absXL > absXR
+            || abxYL > absYR) {
+      Robot.driveSubsystem.mecanumDrive(joystick.getX(GenericHID.Hand.kLeft),
+              joystick.getY(GenericHID.Hand.kLeft),
+              joystick.getTriggerAxis(GenericHID.Hand.kRight) - joystick.getTriggerAxis(GenericHID.Hand.kLeft),
+              Robot.driveSubsystem.getAngle());
+//      System.out.println("FIELD ORIENTED");
+    } else {
+      // otherwise use the right analog stick for robot oriented
+      Robot.driveSubsystem.mecanumDrive(joystick.getX(GenericHID.Hand.kRight),
+              joystick.getY(GenericHID.Hand.kRight),
+              joystick.getTriggerAxis(GenericHID.Hand.kRight) - joystick.getTriggerAxis(GenericHID.Hand.kLeft),
+              0);
+//      System.out.println("ROBOT ORIENTED");
+    }
   }
 
   @Override
