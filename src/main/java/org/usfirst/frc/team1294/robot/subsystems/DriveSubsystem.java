@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team1294.robot.RobotMap;
 import org.usfirst.frc.team1294.robot.commands.DriveGyroCorrect;
+import org.usfirst.frc.team1294.robot.commands.DriveMotorCommand;
 import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
 
 /**
@@ -30,7 +31,7 @@ public class DriveSubsystem extends Subsystem {
     rightFrontTalon = new CANTalon(RobotMap.DRIVEBASE_RIGHT_FRONT_TALON);
     rightRearTalon = new CANTalon(RobotMap.DRIVEBASE_RIGHT_REAR_TALON);
     robotDrive = new RobotDrive(leftFrontTalon, leftRearTalon, rightFrontTalon, rightRearTalon);
-    robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+//    robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
     navX = new AHRS(SPI.Port.kMXP);
     leftFrontTalon.setVoltageRampRate (RobotMap.RAMP_RATE);
     rightFrontTalon.setVoltageRampRate (RobotMap.RAMP_RATE);
@@ -39,6 +40,8 @@ public class DriveSubsystem extends Subsystem {
 
 //    extraTalon = new CANTalon(0);
     leftRearTalon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+
+    robotDrive.setSafetyEnabled(false);
   }
 
   @Override
