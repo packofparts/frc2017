@@ -55,6 +55,7 @@ model {
 }
 
 jar {
+	archiveName = "frc1294.jar"
 	manifest {
 		attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
 		attributes 'Robot-Class': frc.robotClass
