@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Austin Jenchi (timtim17)
  */
 public class DriveStraightTurnCommand extends PIDCommand {
-  private static final double p = 0.;
+  private static final double p = 1.;
   private static final double i = 0.;
   private static final double d = 0.;
   private static final double TOLERANCE = 2.;
@@ -25,18 +25,24 @@ public class DriveStraightTurnCommand extends PIDCommand {
 
   @Override
   protected double returnPIDInput() {
-    return 0;
+    return Robot.driveSubsystem.getAngle();
   }
 
-  @Override
-  protected void usePIDOutput(double output) {
+  // assuming angle is the error and target angle is 0
 
+  protected void usePIDOutput(double output) {
+	  if (getGroup() instanceof DriveStraightCommand) {
+	      ((DriveStraightCommand) getGroup()).setzRate(output);
+	    }
   }
 
   @Override
   protected boolean isFinished() {
     return false;
   }
+  
+  
+  
 
   public boolean onTarget() {
     return getPIDController().onTarget();
