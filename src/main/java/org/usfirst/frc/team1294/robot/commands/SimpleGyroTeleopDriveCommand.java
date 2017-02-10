@@ -12,6 +12,7 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
   private static final double D = 0;
   private static final double ABS_TOLERANCE = 5;
   private static final double DEADZONE = 0.05;
+  private static final double TRIGGER_DEADZONE = 0.01;
 
   private XboxController joystick;
   private double pidZ = 0;
@@ -48,6 +49,8 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
 
       // use the joystick to control the rotation rate
       z = joystickZ;
+
+      //getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
     } else {
       // robot should be in pid steering mode where the PIDController controls the rotation rate
 
@@ -83,22 +86,18 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
   }
 
   private boolean shouldBeOpenLoopSteering(double joystickZ) {
-    if (driveMode == DriveMode.OpenLoop) {
-      // stay in open loop if either the joystick is out of the deadzone or the robot is still rotating too fast
-      return Math.abs(joystickZ) > DEADZONE || Math.abs(Robot.driveSubsystem.getRate()) > 2;
-    } else {
-      // only stay in closed loop if the joystick is in the deadzone
-      return Math.abs(joystickZ) > DEADZONE;
-    }
+    return Math.abs(joystickZ) > TRIGGER_DEADZONE || Math.abs(Robot.driveSubsystem.getRate()) > 2;
   }
 
   private void switchToOpenLoopSteering() {
     driveMode = DriveMode.OpenLoop;
+    getPIDController().disable();
   }
 
   private void switchToPidSteering() {
-    getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
     driveMode = DriveMode.PID;
+    getPIDController().enable();
+    getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
   }
 
   private boolean shouldUseFieldOrientedDrive() {
