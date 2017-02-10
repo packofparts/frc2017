@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team1294.robot.Robot;
 import org.usfirst.frc.team1294.robot.RobotMap;
 import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
@@ -16,39 +18,46 @@ public class TurnToHeading extends PIDCommand {
 
     private final double heading;
 
-    private static final double kP = 0.03;
+    private static final double kP = 0.04;
     private static final double kI = 0.00;
-    private static final double kD = 0.00;
+    private static final double kD = 0.075;
 
-    private final double kToleranceDegrees = 2.0f;
+    private final double kToleranceDegrees = 5.f;
+
+    private boolean hasRunReturnPidInputAtLeastOnce;
 
     public TurnToHeading(double heading) {
-        super(kP, kI, kD);
+        super("turn to " + heading, kP, kI, kD);
         requires(Robot.driveSubsystem);
         this.heading = heading;
+        getPIDController().setInputRange(0.f, 360.f);
+        getPIDController().setOutputRange(-1., 1.);
+        getPIDController().setAbsoluteTolerance(kToleranceDegrees);
+        getPIDController().setContinuous(true);
+        setSetpoint(heading);
     }
 
     @Override
-    protected void execute() {
-        this.getPIDController().setInputRange(-180.0f,  180.0f);
-        this.getPIDController().setOutputRange(-1.0, 1.0);
-        this.getPIDController().setAbsoluteTolerance(kToleranceDegrees);
-        this.getPIDController().setContinuous(true);
+    protected void initialize() {
+      hasRunReturnPidInputAtLeastOnce = false;
     }
 
     @Override
     protected boolean isFinished() {
-        return this.getPIDController().onTarget();
+        return this.getPIDController().onTarget()
+                && hasRunReturnPidInputAtLeastOnce
+                && Math.abs(Robot.driveSubsystem.getRate()) <= 0.3;
     }
 
 
     @Override
     protected double returnPIDInput() {
-        return Robot.driveSubsystem.getAngle();
+      if (!hasRunReturnPidInputAtLeastOnce) hasRunReturnPidInputAtLeastOnce = true;
+      return Robot.driveSubsystem.getAngle();
     }
 
     @Override
     protected void usePIDOutput(double output) {
-        Robot.driveSubsystem.mecanumDrive(0, 0, output, Robot.driveSubsystem.getAngle());
+      Robot.driveSubsystem.mecanumDrive(0, 0, output, Robot.driveSubsystem.getAngle());
     }
 }
