@@ -22,6 +22,12 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team1294.robot.commands.*;
+import org.usfirst.frc.team1294.robot.subsystems.ClimbingSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.FuelSubsystem;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -47,6 +53,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		// THESE MUST BE INITIALIZED FIRST
 		driveSubsystem = new DriveSubsystem();
 		cameraSubsystem = new CameraSubsystem();
         climbingSubsystem = new ClimbingSubsystem();
@@ -61,7 +68,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new MecanumDriveCommand());
 		SmartDashboard.putData(new DriveMotorCommand());
 		SmartDashboard.putData(new ResetGyroCommand());
-		SmartDashboard.putData(new DriveBaseBreakInCommand());
 		SmartDashboard.putData(new TurnToHeading(45));
 		SmartDashboard.putData(new TurnToHeading(90));
 		SmartDashboard.putData(new TurnToHeading(180));
@@ -74,6 +80,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(cameraSubsystem);
 		SmartDashboard.putData(climbingSubsystem);
 		SmartDashboard.putData(fuelSubsystem);
+		SmartDashboard.putData(new DriveGyroCorrect());
 	}
 
 	/**
@@ -124,8 +131,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-
-//		SmartDashboard.putData(Scheduler.getInstance());
 	}
 
 	@Override
