@@ -1,17 +1,21 @@
-package org.usfirst.frc.team1294.robot.subsystems;
+package org.usfirst.frc.team1294.robot.commands;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team1294.robot.Robot;
+
+import java.awt.*;
 
 /**
  * Created by root on 2/11/17.
  */
 public class FeederCommand extends Command {
 
-    private XboxController joystick2;
+    public FeederCommand(){
 
+    }
 
     @Override
     protected boolean isFinished() {
@@ -20,9 +24,10 @@ public class FeederCommand extends Command {
 
     @Override
     protected void execute() {
-        double leftTriggerValue = joystick2
-        double rightTriggerValue = joystick2.getTriggerAxis(GenericHID.Hand.kRight);
         super.execute();
+        while(Robot.oi.getJoystick2().getAButton()) {
+            Robot.fuelSubsystem.
+        }
     }
 
     @Override
