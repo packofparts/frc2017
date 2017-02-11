@@ -149,14 +149,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		SmartDashboard.putNumber("Angle", driveSubsystem.getAngle());
-		SmartDashboard.putNumber("Angle (not a graph)", driveSubsystem.getAngle());
-		SmartDashboard.putNumber("Angle (PIDSource)", driveSubsystem.getAnglePidGet());
 		SmartDashboard.putNumber("VelocityZ (graph)", driveSubsystem.getRate());
 		SmartDashboard.putNumber("VelocityZ", driveSubsystem.getRate());
 		Scheduler.getInstance().run();
 
 //		SmartDashboard.putData(Scheduler.getInstance());
-		SmartDashboard.putNumber("enc", driveSubsystem.getEncoder());
+		SmartDashboard.putNumber("getEncoderX", driveSubsystem.getEncoderX());
+		SmartDashboard.putNumber("getEncoderY", driveSubsystem.getEncoderY());
 	}
 
 	/**

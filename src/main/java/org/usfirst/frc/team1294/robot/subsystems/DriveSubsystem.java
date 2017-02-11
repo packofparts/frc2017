@@ -32,15 +32,19 @@ public class DriveSubsystem extends Subsystem {
     rightFrontTalon = new CANTalon(RobotMap.DRIVEBASE_RIGHT_FRONT_TALON);
     rightRearTalon = new CANTalon(RobotMap.DRIVEBASE_RIGHT_REAR_TALON);
     robotDrive = new RobotDrive(leftFrontTalon, leftRearTalon, rightFrontTalon, rightRearTalon);
-//    robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
     navX = new AHRS(SPI.Port.kMXP);
     leftFrontTalon.setVoltageRampRate (RobotMap.RAMP_RATE);
     rightFrontTalon.setVoltageRampRate (RobotMap.RAMP_RATE);
     leftRearTalon.setVoltageRampRate (RobotMap.RAMP_RATE);
     rightRearTalon.setVoltageRampRate (RobotMap.RAMP_RATE);
 
-//    extraTalon = new CANTalon(0);
-    leftRearTalon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+
+    leftFrontTalon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+
+    rightRearTalon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+    rightRearTalon.reverseSensor(true);
+
+
 
     robotDrive.setSafetyEnabled(false);
   }
@@ -70,10 +74,19 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public double getEncoderX(){
-    return leftRearTalon.getPosition();
-  }//TODO pick correct talon
+    return leftFrontTalon.getPosition();
+  }
 
   public double getEncoderY(){
-    return leftRearTalon.getPosition();
-  }//TODO pick correct talon
+    return rightRearTalon.getPosition() / 4;
+  }
+
+  public double getRate() {
+    return navX.getRate();
+  }
+
+  public void resetEncoders() {
+    leftFrontTalon.setEncPosition(0);
+    rightRearTalon.setEncPosition(0);
+  }
 }

@@ -1,9 +1,7 @@
 package org.usfirst.frc.team1294.robot.commands;
 
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
-import org.opencv.core.Mat;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1294.robot.Robot;
 
 /**
@@ -13,45 +11,61 @@ import org.usfirst.frc.team1294.robot.Robot;
  */
 public class DriveHeadingAndDistance extends PIDCommand {
 
-    private final double heading;
-    private final double distanceInMeters;
-//    private final double MAX_SPEED = 1.0;
-    private static double distanceX;
-    private static double distanceY;
-    private static double initialDistanceX;
-    private static double initialDistanceY;
+  private static final double P = 0.1;
+  private static final double I = 0f;
+  private static final double D = 0f;
+  private static final double ABS_TOLERANCE = 0.1;
+  private final double heading;
+  private final double distanceInMeters;
+  private final double MAX_SPEED = 0.5;
+  private double rateX;
+  private double rateY;
+  private double scaleX;
+  private double scaleY;
+  private boolean hasRunReturnPidInputAtLeastOnce;
 
-    public DriveHeadingAndDistance(double heading, double distanceInMeters, double kP, double kI, double kD) {
-        super(kP, kI, kD);
-        Robot.driveSubsystem.resetEncoder();
-        requires(Robot.driveSubsystem);
-        setSetpoint(distanceInMeters);
-        this.heading = heading;
-        this.distanceInMeters = distanceInMeters;
-        distanceX = Math.cos(heading);
-        distanceY = Math.sin(heading);
-    }
+  public DriveHeadingAndDistance(double heading, double distanceInMeters) {
+    super(P, I, D);
 
-    @Override
-    protected void execute() {
-        super.execute();
-        Robot.driveSubsystem.mecanumDrive(distanceX, distanceY, heading, Robot.driveSubsystem.getAngle());
-    }
+    getPIDController().setAbsoluteTolerance(ABS_TOLERANCE);
+    getPIDController().setOutputRange(-MAX_SPEED, MAX_SPEED);
+    requires(Robot.driveSubsystem);
 
-    @Override
-    protected boolean isFinished() {
-        return this.getPIDController().onTarget();
-    }
+    this.heading = heading;
+    this.distanceInMeters = distanceInMeters;
+    scaleX = distanceInMeters * Math.sin(heading);
+    scaleY = distanceInMeters * Math.cos(heading);
 
-    @Override
-    protected double returnPIDInput() {
-        return Math.sqrt(Math.pow(Robot.driveSubsystem.getEncoderX(), 2) + Math.pow(Robot.driveSubsystem.getEncoderY(), 2));
-    }
+    SmartDashboard.putData("DriveHeadingAndDistancePID", getPIDController());
+  }
+
+  @Override
+  protected void initialize() {
+    setSetpoint(distanceInMeters);
+    Robot.driveSubsystem.resetEncoders();
+  }
+
+  @Override
+  protected void execute() {
+    Robot.driveSubsystem.mecanumDrive(rateX, -rateY, heading, Robot.driveSubsystem.getAngle());
+  }
+
+  @Override
+  protected boolean isFinished() {
+    return this.getPIDController().onTarget()
+            && hasRunReturnPidInputAtLeastOnce;
+  }
+
+  @Override
+  protected double returnPIDInput() {
+    if (!hasRunReturnPidInputAtLeastOnce) hasRunReturnPidInputAtLeastOnce = true;
+    return Math.sqrt(Math.pow(Robot.driveSubsystem.getEncoderX(), 2) + Math.pow(Robot.driveSubsystem.getEncoderY(), 2));
+  }
 
 
-    @Override
-    protected void usePIDOutput(double output) {
-        distanceY = initialDistanceY * output;
-        distanceX = initialDistanceX * output;
-    }
+  @Override
+  protected void usePIDOutput(double output) {
+    rateY = scaleY * output;
+    rateX = scaleX * output;
+  }
 }
