@@ -3,6 +3,7 @@ package org.usfirst.frc.team1294.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Trigger;
+import org.usfirst.frc.team1294.robot.commands.DriveHeadingAndDistance;
 import org.usfirst.frc.team1294.robot.commands.TurnToHeading;
 
 /**
@@ -35,16 +36,16 @@ public class OI {
 
     // mappings based on this post from CD...
     // https://www.chiefdelphi.com/forums/attachment.php?attachmentid=20028&d=1455109186
-    this.buttonA = new JoystickButton(this.joystick, 0);
-    this.buttonB = new JoystickButton(this.joystick, 1);
-    this.buttonX = new JoystickButton(this.joystick, 2);
-    this.buttonY = new JoystickButton(this.joystick, 3);
-    this.buttonLeftBumper = new JoystickButton(this.joystick, 4);
-    this.buttonRightBumper = new JoystickButton(this.joystick, 5);
-    this.buttonBack = new JoystickButton(this.joystick, 6);
-    this.buttonStart = new JoystickButton(this.joystick, 7);
-    this.buttonLeftThumb = new JoystickButton(this.joystick, 8);
-    this.buttonRightThumb = new JoystickButton(this.joystick, 9);
+    this.buttonA = new JoystickButton(this.joystick, 1);
+    this.buttonB = new JoystickButton(this.joystick, 2);
+    this.buttonX = new JoystickButton(this.joystick, 3);
+    this.buttonY = new JoystickButton(this.joystick, 4);
+    this.buttonLeftBumper = new JoystickButton(this.joystick, 5);
+    this.buttonRightBumper = new JoystickButton(this.joystick, 6);
+    this.buttonBack = new JoystickButton(this.joystick, 7);
+    this.buttonStart = new JoystickButton(this.joystick, 8);
+    this.buttonLeftThumb = new JoystickButton(this.joystick, 9);
+    this.buttonRightThumb = new JoystickButton(this.joystick, 10);
     this.dpadUp = new Trigger() {@Override public boolean get() {return joystick.getPOV(0) == 0;}};
     this.dpadUpRight = new Trigger() {@Override public boolean get() {return joystick.getPOV(0) == 45;}};
     this.dpadRight = new Trigger() {@Override public boolean get() {return joystick.getPOV(0) == 90;}};
@@ -54,7 +55,8 @@ public class OI {
     this.dpadLeft = new Trigger() {@Override public boolean get() {return joystick.getPOV(0) == 270;}};
     this.dpadUpLeft = new Trigger() {@Override public boolean get() {return joystick.getPOV(0) == 315;}};
 
-    this.buttonA.whenPressed(new TurnToHeading(90));
+    this.buttonA.whenPressed(new DriveHeadingAndDistance(0, 1));
+    this.buttonB.whenPressed(new DriveHeadingAndDistance(45, 1));
   }
 
   public XboxController getJoystick() {
