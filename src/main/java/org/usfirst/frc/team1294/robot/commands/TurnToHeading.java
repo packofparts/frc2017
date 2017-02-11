@@ -24,7 +24,6 @@ public class TurnToHeading extends PIDCommand {
         super("turn to " + heading, kP, kI, kD);
         requires(Robot.driveSubsystem);
         this.heading = heading;
-        getPIDController().setInputRange(0.f, 360.f);
         getPIDController().setOutputRange(-MAX_RATE, MAX_RATE);
         getPIDController().setAbsoluteTolerance(kToleranceDegrees);
         getPIDController().setContinuous(true);

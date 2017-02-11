@@ -59,12 +59,13 @@ public class DriveSubsystem extends Subsystem {
 
   public void mecanumDrive(double x, double y, double rotate, double gyro) {
     robotDrive.mecanumDrive_Cartesian(x, y, rotate, gyro);
-    //robotDrive.mecanumDrive_Cartesian();
   }
 
   public double getAngle() {
     double angle = Math.abs(navX.getAngle()) % 360;
-//    System.out.println(angle);
+    //double angle = navX.getAngle();
+    //double angle = navX.getAngle() % 180;
+    System.out.println(angle);
     return angle;
   }
 

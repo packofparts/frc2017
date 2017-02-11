@@ -13,6 +13,7 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
   private static final double ABS_TOLERANCE = 5;
   private static final double DEADZONE = 0.05;
   private static final double TRIGGER_DEADZONE = 0.01;
+  private static final double MAX_TURN_RATE = 0.25;
 
   private XboxController joystick;
   private double pidZ = 0;
@@ -28,15 +29,20 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
     joystick = Robot.oi.getJoystick();
 
     getPIDController().setAbsoluteTolerance(ABS_TOLERANCE);
-    getPIDController().setInputRange(0, 360);
     getPIDController().setOutputRange(-1, 1);
     getPIDController().setContinuous(true);
     SmartDashboard.putData("SimpleGyroTeleopDriveCommandPID", getPIDController());
+    switchToPidSteering();
+    switchToOpenLoopSteering();
   }
 
   @Override
   protected void initialize() {
-    getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
+//    getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
+//    driveMode = DriveMode.OpenLoop;
+//    getPIDController().disable();
+    switchToPidSteering();
+    switchToOpenLoopSteering();
   }
 
   @Override
@@ -55,7 +61,7 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
       // use the joystick to control the rotation rate
       z = joystickZ;
 
-      //getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
+      getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
     } else {
       // robot should be in pid steering mode where the PIDController controls the rotation rate
 
