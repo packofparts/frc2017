@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1294.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.team1294.robot.Robot;
 
 public class DriveStraightCommand extends CommandGroup {
   private final DriveStraightTurnCommand driveStraightTurnCommand;
@@ -25,6 +26,17 @@ public class DriveStraightCommand extends CommandGroup {
 
     setTimeout(15);
   }
+
+  @Override
+  protected void initialize() {
+    Robot.driveSubsystem.enableBrakeMode(true);
+  }
+
+  @Override
+  protected void end() {
+    Robot.driveSubsystem.enableBrakeMode(false);
+  }
+
 
   public double getxRate() {
     return xRate;

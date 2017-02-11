@@ -9,17 +9,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Austin Jenchi (timtim17)
  */
 public class DriveStraightTurnCommand extends PIDCommand {
-  private static final double p = 1.;
+  private static final double p = 0.01;
   private static final double i = 0.;
   private static final double d = 0.;
-  private static final double TOLERANCE = 2.;
+  private static final double TOLERANCE = 2;
   private boolean hasRunReturnPidInputAtLeastOnce;
+  private static final double MAX_RATE = 0.05;
 
   public DriveStraightTurnCommand() {
     super("DriveStraightTurnCommand", p, i, d);
     getPIDController().setAbsoluteTolerance(TOLERANCE);
     getPIDController().setInputRange(0, 360);
-    getPIDController().setOutputRange(-1, 1);
+    getPIDController().setOutputRange(-MAX_RATE, MAX_RATE);
     SmartDashboard.putData("DriveStraightTurnCommandPID", getPIDController());
   }
 

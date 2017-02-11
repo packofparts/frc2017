@@ -58,7 +58,7 @@ public class OI {
 
     //this.buttonA.whenPressed(new DriveHeadingAndDistance(0, 1));
     //this.buttonB.whenPressed(new DriveHeadingAndDistance(45, 1));
-    this.buttonA.whenPressed(new DriveStraightCommand(1));
+    this.buttonA.whenPressed(new DriveStraightCommand(5));
   }
 
   public XboxController getJoystick() {

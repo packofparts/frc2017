@@ -78,7 +78,7 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public double getEncoderY(){
-    return rightRearTalon.getPosition() / 4;
+    return rightRearTalon.getPosition() * 0.26;
   }
 
   public double getRate() {
@@ -92,5 +92,12 @@ public class DriveSubsystem extends Subsystem {
 
   public double getDistanceToWall() {
     return 0;
+  }
+
+  public void enableBrakeMode(boolean enabled) {
+    this.leftFrontTalon.enableBrakeMode(enabled);
+    this.rightFrontTalon.enableBrakeMode(enabled);
+    this.leftRearTalon.enableBrakeMode(enabled);
+    this.rightRearTalon.enableBrakeMode(enabled);
   }
 }
