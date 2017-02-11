@@ -35,6 +35,11 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
   }
 
   @Override
+  protected void initialize() {
+    getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
+  }
+
+  @Override
   protected void execute() {
     double z; // this will contain the rotation rate (from either the joystick or the PID as appropriate)
     double joystickZ = getJoystickZ(); // temp variable to hold the joystick rotation rate

@@ -11,9 +11,10 @@ public class TurnToHeading extends PIDCommand {
 
     private final double heading;
 
-    private static final double kP = 0.04;
+    private static final double kP = 0.01;
     private static final double kI = 0.00;
-    private static final double kD = 0.075;
+    private static final double kD = 0.00;
+    private static final double MAX_RATE = 0.25;
 
     private final double kToleranceDegrees = 5.f;
 
@@ -24,7 +25,7 @@ public class TurnToHeading extends PIDCommand {
         requires(Robot.driveSubsystem);
         this.heading = heading;
         getPIDController().setInputRange(0.f, 360.f);
-        getPIDController().setOutputRange(-1., 1.);
+        getPIDController().setOutputRange(-MAX_RATE, MAX_RATE);
         getPIDController().setAbsoluteTolerance(kToleranceDegrees);
         getPIDController().setContinuous(true);
         setSetpoint(heading);
