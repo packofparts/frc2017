@@ -12,6 +12,8 @@ import java.awt.*;
  * Created by root on 2/11/17.
  */
 public class FeederCommand extends Command {
+    private static final double WaitTime = 1.0; //time to wait in seconds
+    private static final double St
 
     public FeederCommand(){
 
