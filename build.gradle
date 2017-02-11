@@ -93,6 +93,15 @@ release {
   grgit = org.ajoberstar.grgit.Grgit.open(project.file('.'))
 }
 
+
+test {
+    useTestNG {
+        include('**/*')
+        if (!project.hasProperty('test.vision'))
+            getExcludeGroups().add('vision')
+    }
+}
+
 def getAuthor() {
   def author = "unknown"
   grgit = org.ajoberstar.grgit.Grgit.open(project.file('.'))
