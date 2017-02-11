@@ -13,24 +13,33 @@ public class DriveStraightStrafeCommand extends PIDCommand {
   private static final double i = 0.;
   private static final double d = 0.;
   private static final double TOLERANCE = 2.;
+  private boolean hasRunReturnPidInputAtLeastOnce;
 
   public DriveStraightStrafeCommand() {
     super("DriveStraightStrafeCommand", p, i, d);
     getPIDController().setAbsoluteTolerance(TOLERANCE);
     getPIDController().setInputRange(0, 360);
     getPIDController().setOutputRange(-1, 1);
-    getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
     SmartDashboard.putData("DriveStraightStrafeCommandPID", getPIDController());
   }
 
   @Override
+  protected void initialize() {
+    Robot.driveSubsystem.resetEncoders();
+    getPIDController().setSetpoint(0);
+  }
+
+  @Override
   protected double returnPIDInput() {
-    return 0;
+    if (!hasRunReturnPidInputAtLeastOnce) hasRunReturnPidInputAtLeastOnce = true;
+    return Robot.driveSubsystem.getEncoderX();
   }
 
   @Override
   protected void usePIDOutput(double output) {
-
+    if (getGroup() instanceof DriveStraightCommand) {
+      ((DriveStraightCommand) getGroup()).setxRate(output);
+    }
   }
 
   @Override
@@ -39,6 +48,6 @@ public class DriveStraightStrafeCommand extends PIDCommand {
   }
 
   public boolean onTarget() {
-    return getPIDController().onTarget();
+    return hasRunReturnPidInputAtLeastOnce && getPIDController().onTarget();
   }
 }

@@ -20,7 +20,6 @@ public class DriveBaseBreakInCommand extends Command {
     protected void initialize() {
         timer = new Timer();
         timer.start();
-        Robot.driveSubsystem.toggleSafety();
     }
 
     @Override
@@ -36,7 +35,6 @@ public class DriveBaseBreakInCommand extends Command {
 
     @Override
     protected void end() {
-        Robot.driveSubsystem.toggleSafety();
     }
 
     @Override

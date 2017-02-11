@@ -14,37 +14,44 @@ public class DriveStraightApproachCommand extends PIDCommand {
   private static final double i = 0.;
   private static final double d = 0.;
   private static final double TOLERANCE = 2.;
-  private static double distance;
+  private final double distance;
+  private boolean hasRunReturnPidInputAtLeastOnce;
 
   public DriveStraightApproachCommand(double distance) {
     super("DriveStraightTurnCommand", p, i, d);
     this.distance = distance;
     getPIDController().setAbsoluteTolerance(TOLERANCE);
-    getPIDController().setInputRange(0, 360);
     getPIDController().setOutputRange(-1, 1);
     getPIDController().setSetpoint(Robot.driveSubsystem.getEncoderY() + distance);
     SmartDashboard.putData("DriveStraightApproachCommandPID", getPIDController());
   }
 
   @Override
-  protected double returnPIDInput() {
-      return Robot.driveSubsystem.getEncoderY();
+  protected void initialize() {
+    Robot.driveSubsystem.resetEncoders();
+    getPIDController().setSetpoint(this.distance);
   }
 
   @Override
-  protected void usePIDOutput(double output){
-      CommandGroup group = getGroup();
-      if (group instanceof DriveStraightCommand) {
-          ((DriveStraightCommand) group).setyRate(output);
-      }
+  protected double returnPIDInput() {
+    hasRunReturnPidInputAtLeastOnce = true;
+    return Robot.driveSubsystem.getEncoderY();
+  }
+
+  @Override
+  protected void usePIDOutput(double output) {
+    CommandGroup group = getGroup();
+    if (group instanceof DriveStraightCommand) {
+      ((DriveStraightCommand) group).setyRate(output);
+    }
   }
 
   @Override
   protected boolean isFinished() {
-      return false;
+    return false;
   }
 
   public boolean onTarget() {
-    return getPIDController().onTarget();
+    return hasRunReturnPidInputAtLeastOnce && getPIDController().onTarget();
   }
 }

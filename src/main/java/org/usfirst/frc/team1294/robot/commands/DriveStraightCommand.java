@@ -11,6 +11,7 @@ public class DriveStraightCommand extends CommandGroup {
   private double yRate;
   private double zRate;
 
+
   public DriveStraightCommand(double distance) {
     driveStraightTurnCommand = new DriveStraightTurnCommand();
     driveStraightStrafeCommand = new DriveStraightStrafeCommand();

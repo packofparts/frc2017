@@ -13,18 +13,24 @@ public class DriveStraightTurnCommand extends PIDCommand {
   private static final double i = 0.;
   private static final double d = 0.;
   private static final double TOLERANCE = 2.;
+  private boolean hasRunReturnPidInputAtLeastOnce;
 
   public DriveStraightTurnCommand() {
     super("DriveStraightTurnCommand", p, i, d);
     getPIDController().setAbsoluteTolerance(TOLERANCE);
     getPIDController().setInputRange(0, 360);
     getPIDController().setOutputRange(-1, 1);
-    getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
     SmartDashboard.putData("DriveStraightTurnCommandPID", getPIDController());
   }
 
   @Override
+  protected void initialize() {
+    getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
+  }
+
+  @Override
   protected double returnPIDInput() {
+    if (!hasRunReturnPidInputAtLeastOnce) hasRunReturnPidInputAtLeastOnce = true;
     return Robot.driveSubsystem.getAngle();
   }
 
@@ -40,11 +46,8 @@ public class DriveStraightTurnCommand extends PIDCommand {
   protected boolean isFinished() {
     return false;
   }
-  
-  
-  
 
   public boolean onTarget() {
-    return getPIDController().onTarget();
+    return hasRunReturnPidInputAtLeastOnce && getPIDController().onTarget();
   }
 }

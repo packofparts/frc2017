@@ -89,4 +89,8 @@ public class DriveSubsystem extends Subsystem {
     leftFrontTalon.setEncPosition(0);
     rightRearTalon.setEncPosition(0);
   }
+
+  public double getDistanceToWall() {
+    return 0;
+  }
 }
