@@ -76,11 +76,11 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public double getEncoderX(){
-    return leftFrontTalon.getPosition();
+    return leftFrontTalon.getPosition() * 0.24;
   }
 
   public double getEncoderY(){
-    return rightRearTalon.getPosition() * 0.26;
+    return rightRearTalon.getPosition() * 0.25;
   }
 
   public double getRate() {

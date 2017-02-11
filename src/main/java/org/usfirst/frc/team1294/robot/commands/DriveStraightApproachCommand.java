@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Austin Jenchi (timtim17)
  */
 public class DriveStraightApproachCommand extends PIDCommand {
-  private static final double p = 0.5;
+  private static final double p = 0.75;
   private static final double i = 0.;
   private static final double d = 0.;
   private static final double TOLERANCE = .1;

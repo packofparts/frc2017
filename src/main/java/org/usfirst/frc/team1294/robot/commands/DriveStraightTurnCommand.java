@@ -12,9 +12,9 @@ public class DriveStraightTurnCommand extends PIDCommand {
   private static final double p = 0.01;
   private static final double i = 0.;
   private static final double d = 0.;
-  private static final double TOLERANCE = 2;
+  private static final double TOLERANCE = 3;
   private boolean hasRunReturnPidInputAtLeastOnce;
-  private static final double MAX_RATE = 0.05;
+  private static final double MAX_RATE = 0.25;
 
   public DriveStraightTurnCommand() {
     super("DriveStraightTurnCommand", p, i, d);

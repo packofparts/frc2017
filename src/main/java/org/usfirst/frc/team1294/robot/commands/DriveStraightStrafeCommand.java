@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Austin Jenchi (timtim17)
  */
 public class DriveStraightStrafeCommand extends PIDCommand {
-  private static final double p = 0.1;
+  private static final double p = 0.75;
   private static final double i = 0.;
   private static final double d = 0.;
-  private static final double TOLERANCE = .05;
+  private static final double TOLERANCE = .1;
   private boolean hasRunReturnPidInputAtLeastOnce;
-  private static final double MAX_RATE = 0.2;
+  private static final double MAX_RATE = 0.5;
 
   public DriveStraightStrafeCommand() {
     super("DriveStraightStrafeCommand", p, i, d);
