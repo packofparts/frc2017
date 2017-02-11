@@ -14,6 +14,7 @@ public class DriveStraightApproachCommand extends PIDCommand {
   private static final double i = 0.;
   private static final double d = 0.;
   private static final double TOLERANCE = 2.;
+  private static final double MAX_SPEED = 0.5;
   private final double distance;
   private boolean hasRunReturnPidInputAtLeastOnce;
 
@@ -21,7 +22,7 @@ public class DriveStraightApproachCommand extends PIDCommand {
     super("DriveStraightTurnCommand", p, i, d);
     this.distance = distance;
     getPIDController().setAbsoluteTolerance(TOLERANCE);
-    getPIDController().setOutputRange(-1, 1);
+    getPIDController().setOutputRange(-MAX_SPEED, MAX_SPEED);
     getPIDController().setSetpoint(Robot.driveSubsystem.getEncoderY() + distance);
     SmartDashboard.putData("DriveStraightApproachCommandPID", getPIDController());
   }

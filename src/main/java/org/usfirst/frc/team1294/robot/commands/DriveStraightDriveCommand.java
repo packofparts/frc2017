@@ -27,7 +27,7 @@ public class DriveStraightDriveCommand extends Command {
       zRate = ((DriveStraightCommand) group).getzRate();
     }
 
-    Robot.driveSubsystem.mecanumDrive(xRate, yRate, zRate, 0);
+    Robot.driveSubsystem.mecanumDrive(xRate, -yRate, zRate, 0);
   }
 
   @Override
