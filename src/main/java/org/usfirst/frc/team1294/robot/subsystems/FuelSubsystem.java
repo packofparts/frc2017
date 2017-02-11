@@ -15,4 +15,13 @@ public class FuelSubsystem extends Subsystem {
     protected void initDefaultCommand() {
 
     }
+
+    public void setFeederMotorVoltageSpeed(double voltageSpeed){
+
+    }
+
+    public void setShooterMotorvoltageSpeed(double voltageSpeed){
+
+    }
+
 }
