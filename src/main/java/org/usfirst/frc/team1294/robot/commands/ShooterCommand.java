@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShooterCommand extends Command{
 	@Override
     protected void execute() {
-		super.execute();
 		Robot.fuelSubsystem.setShooterMotorBVoltageSpeed(10);
 		Robot.fuelSubsystem.setShooterMotorAVoltageSpeed(8);
     }
