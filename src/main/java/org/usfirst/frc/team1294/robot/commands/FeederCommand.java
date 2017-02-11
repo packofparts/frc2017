@@ -13,6 +13,7 @@ import java.awt.*;
 /**
  * Created by root on 2/11/17.
  */
+
 public class FeederCommand extends Command {
     private static final double waitTime = 1.0; //time to wait in seconds
     private static final double startTime = 1.0; //time to run the motor for
@@ -25,12 +26,12 @@ public class FeederCommand extends Command {
     public FeederCommand(){
         timer = new Timer();
         shootTime = timer.get();
-        requires(Robot.fuelSubsystem);
+        //requires(Robot.fuelSubsystem);
     }
 
     @Override
     protected boolean isFinished() {
-        return done;
+        return (!Robot.fuelSubsystem.isMotorARunning() && !Robot.fuelSubsystem.isMotorBRunning()) || done;
     }
 
     @Override
@@ -49,8 +50,8 @@ public class FeederCommand extends Command {
                     shooting = true;
                 }
                 Robot.fuelSubsystem.setFeederMotorVoltageSpeed(0.0);
-                done = !Robot.oi.getJoystick2().getAButton();
+                done = !Robot.oi.getJoystick2().getAButton(); //if there is a problem it will be here
             }
-        }
     }
 }
+
