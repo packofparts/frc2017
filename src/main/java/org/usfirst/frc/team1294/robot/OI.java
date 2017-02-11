@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Trigger;
 import org.usfirst.frc.team1294.robot.commands.DriveHeadingAndDistance;
 import org.usfirst.frc.team1294.robot.commands.DriveStraightCommand;
+import org.usfirst.frc.team1294.robot.commands.FlipAUTurn;
 import org.usfirst.frc.team1294.robot.commands.TurnToHeading;
 
 /**
@@ -60,6 +61,7 @@ public class OI {
     //this.buttonB.whenPressed(new DriveHeadingAndDistance(45, 1));
     this.buttonA.whenPressed(new DriveStraightCommand(5));
     this.buttonB.whenPressed(new TurnToHeading(180));
+    this.buttonX.whenPressed(new FlipAUTurn());
   }
 
   public XboxController getJoystick() {
