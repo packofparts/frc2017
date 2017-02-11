@@ -59,12 +59,14 @@ public class DriveSubsystem extends Subsystem {
 
   public void mecanumDrive(double x, double y, double rotate, double gyro) {
     robotDrive.mecanumDrive_Cartesian(x, y, rotate, gyro);
-    //robotDrive.mecanumDrive_Cartesian();
   }
 
   public double getAngle() {
-    double angle = Math.abs(navX.getAngle()) % 360;
-//    System.out.println(angle);
+    //double angle = Math.abs(navX.getAngle()) % 360;
+    //double angle = navX.getAngle();
+    //double angle = navX.getAngle() % 180;
+    double angle = navX.getAngle() % 360;
+    System.out.println(angle);
     return angle;
   }
 
@@ -74,11 +76,11 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public double getEncoderX(){
-    return leftFrontTalon.getPosition();
+    return leftFrontTalon.getPosition() * 0.24;
   }
 
   public double getEncoderY(){
-    return rightRearTalon.getPosition() / 4;
+    return rightRearTalon.getPosition() * 0.25;
   }
 
   public double getRate() {
@@ -88,5 +90,16 @@ public class DriveSubsystem extends Subsystem {
   public void resetEncoders() {
     leftFrontTalon.setEncPosition(0);
     rightRearTalon.setEncPosition(0);
+  }
+
+  public double getDistanceToWall() {
+    return 0;
+  }
+
+  public void enableBrakeMode(boolean enabled) {
+    this.leftFrontTalon.enableBrakeMode(enabled);
+    this.rightFrontTalon.enableBrakeMode(enabled);
+    this.leftRearTalon.enableBrakeMode(enabled);
+    this.rightRearTalon.enableBrakeMode(enabled);
   }
 }

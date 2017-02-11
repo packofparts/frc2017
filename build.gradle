@@ -25,12 +25,17 @@ frc {
     rioIP = "10.12.94.75"
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
-  compile wpilib()
-  compile talonSrx()
-  compile fileTree(dir: 'libs', include: '**/*.jar')
-	// GradleRIO README claims this is needed but navX doesn't appear to have any .so files
-//  native fileTree(dir: 'libs', include: '**/*.so')
+    compile wpilib()
+    compile talonSrx()
+    compile fileTree(dir: 'libs', include: '**/*.jar')
+
+    testCompile group: 'org.testng', name: 'testng', version: '6.9.13.6'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.5.2'
 }
 
 task wrapper(type: Wrapper) {
@@ -86,6 +91,15 @@ task generateBintrayFile(type: Copy) {
 release {
   // need to specify the repository to interact with
   grgit = org.ajoberstar.grgit.Grgit.open(project.file('.'))
+}
+
+
+test {
+    useTestNG {
+        include('**/*')
+        if (!project.hasProperty('test.vision'))
+            getExcludeGroups().add('vision')
+    }
 }
 
 def getAuthor() {

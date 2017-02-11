@@ -13,6 +13,7 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
   private static final double ABS_TOLERANCE = 5;
   private static final double DEADZONE = 0.05;
   private static final double TRIGGER_DEADZONE = 0.01;
+  private static final double MAX_TURN_RATE = 0.25;
 
   private XboxController joystick;
   private double pidZ = 0;
@@ -28,10 +29,26 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
     joystick = Robot.oi.getJoystick();
 
     getPIDController().setAbsoluteTolerance(ABS_TOLERANCE);
-    getPIDController().setInputRange(0, 360);
-    getPIDController().setOutputRange(-1, 1);
+    getPIDController().setOutputRange(-MAX_TURN_RATE, MAX_TURN_RATE);
     getPIDController().setContinuous(true);
     SmartDashboard.putData("SimpleGyroTeleopDriveCommandPID", getPIDController());
+    switchToPidSteering();
+    switchToOpenLoopSteering();
+  }
+
+  @Override
+  protected void initialize() {
+//    getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
+//    driveMode = DriveMode.OpenLoop;
+//    getPIDController().disable();
+    switchToPidSteering();
+    switchToOpenLoopSteering();
+    Robot.driveSubsystem.enableBrakeMode(true);
+  }
+
+  @Override
+  protected void end() {
+    Robot.driveSubsystem.enableBrakeMode(false);
   }
 
   @Override
@@ -48,9 +65,9 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
       }
 
       // use the joystick to control the rotation rate
-      z = joystickZ;
+      z = joystickZ / 2;
 
-      //getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
+      getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
     } else {
       // robot should be in pid steering mode where the PIDController controls the rotation rate
 
@@ -86,7 +103,7 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
   }
 
   private boolean shouldBeOpenLoopSteering(double joystickZ) {
-    return Math.abs(joystickZ) > TRIGGER_DEADZONE || Math.abs(Robot.driveSubsystem.getRate()) > 2;
+    return Math.abs(joystickZ) > TRIGGER_DEADZONE || Math.abs(Robot.driveSubsystem.getRate()) > 2 || allInputsInDeadZone();
   }
 
   private void switchToOpenLoopSteering() {
@@ -110,6 +127,15 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
     double absYR = Math.abs(joystick.getY(GenericHID.Hand.kRight));
     absYR = absYR < DEADZONE ? 0 : absYR;
     return absXL > absXR || abxYL > absYR;
+  }
+
+  private boolean allInputsInDeadZone() {
+    return Math.abs(getJoystickZ()) <  TRIGGER_DEADZONE &&
+            Math.abs(joystick.getX(GenericHID.Hand.kLeft)) < DEADZONE &&
+            Math.abs(joystick.getY(GenericHID.Hand.kLeft)) < DEADZONE &&
+            Math.abs(joystick.getX(GenericHID.Hand.kRight)) < DEADZONE &&
+            Math.abs(joystick.getY(GenericHID.Hand.kRight)) < DEADZONE;
+
   }
 
   @Override
