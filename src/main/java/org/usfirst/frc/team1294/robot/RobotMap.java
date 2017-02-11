@@ -14,5 +14,8 @@ public class RobotMap {
     public static final int DRIVEBASE_LEFT_REAR_TALON = 2;
     public static final int DRIVEBASE_RIGHT_FRONT_TALON = 4;
     public static final int DRIVEBASE_RIGHT_REAR_TALON = 3;
+    public static final int FUEL_SHOOTER_MOTOR_A = 5;
+    public static final int FUEL_SHOOTER_MOTOR_B = 6;
+    public static final int FUEL_FEEDER_MOTOR = 7;
     public static final double RAMP_RATE = 48.;
 }
