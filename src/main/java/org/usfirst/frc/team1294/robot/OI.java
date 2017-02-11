@@ -107,11 +107,15 @@ public class OI {
     this.buttonX.whenPressed(new FlipAUTurn());
   }
 
-  public XboxController getJoystick() {
-    return joystick;
-  }
+    public XboxController getJoystick() {
+        return joystick;
+    }
 
-  //// CREATING BUTTONS
+    public XboxController getJoystick2() {
+        return joystick2;
+    }
+
+    //// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
 	// You create one by telling it which joystick it's on and which button
