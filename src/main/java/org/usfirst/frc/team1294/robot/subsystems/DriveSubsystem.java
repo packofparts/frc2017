@@ -62,9 +62,10 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public double getAngle() {
-    double angle = Math.abs(navX.getAngle()) % 360;
+    //double angle = Math.abs(navX.getAngle()) % 360;
     //double angle = navX.getAngle();
     //double angle = navX.getAngle() % 180;
+    double angle = navX.getAngle() % 360;
     System.out.println(angle);
     return angle;
   }

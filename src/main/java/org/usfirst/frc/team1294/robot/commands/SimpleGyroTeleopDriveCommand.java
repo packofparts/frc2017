@@ -29,7 +29,7 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
     joystick = Robot.oi.getJoystick();
 
     getPIDController().setAbsoluteTolerance(ABS_TOLERANCE);
-    getPIDController().setOutputRange(-1, 1);
+    getPIDController().setOutputRange(-MAX_TURN_RATE, MAX_TURN_RATE);
     getPIDController().setContinuous(true);
     SmartDashboard.putData("SimpleGyroTeleopDriveCommandPID", getPIDController());
     switchToPidSteering();
@@ -43,6 +43,12 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
 //    getPIDController().disable();
     switchToPidSteering();
     switchToOpenLoopSteering();
+    Robot.driveSubsystem.enableBrakeMode(true);
+  }
+
+  @Override
+  protected void end() {
+    Robot.driveSubsystem.enableBrakeMode(false);
   }
 
   @Override
@@ -59,7 +65,7 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
       }
 
       // use the joystick to control the rotation rate
-      z = joystickZ;
+      z = joystickZ / 2;
 
       getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
     } else {
@@ -97,7 +103,7 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
   }
 
   private boolean shouldBeOpenLoopSteering(double joystickZ) {
-    return Math.abs(joystickZ) > TRIGGER_DEADZONE || Math.abs(Robot.driveSubsystem.getRate()) > 2;
+    return Math.abs(joystickZ) > TRIGGER_DEADZONE || Math.abs(Robot.driveSubsystem.getRate()) > 2 || allInputsInDeadZone();
   }
 
   private void switchToOpenLoopSteering() {
@@ -121,6 +127,15 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
     double absYR = Math.abs(joystick.getY(GenericHID.Hand.kRight));
     absYR = absYR < DEADZONE ? 0 : absYR;
     return absXL > absXR || abxYL > absYR;
+  }
+
+  private boolean allInputsInDeadZone() {
+    return Math.abs(getJoystickZ()) <  TRIGGER_DEADZONE &&
+            Math.abs(joystick.getX(GenericHID.Hand.kLeft)) < DEADZONE &&
+            Math.abs(joystick.getY(GenericHID.Hand.kLeft)) < DEADZONE &&
+            Math.abs(joystick.getX(GenericHID.Hand.kRight)) < DEADZONE &&
+            Math.abs(joystick.getY(GenericHID.Hand.kRight)) < DEADZONE;
+
   }
 
   @Override
