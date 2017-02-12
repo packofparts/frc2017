@@ -44,6 +44,7 @@ public class DeliverGearTurnCommand extends PIDCommand {
     if (visionProcessingResult.targetAcquired) {
       getPIDController().setSetpoint(heading + visionProcessingResult.degreesOffCenter);
     }
+    parent.setVisionTargetAcquired(visionProcessingResult.targetAcquired);
   }
 
   @Override

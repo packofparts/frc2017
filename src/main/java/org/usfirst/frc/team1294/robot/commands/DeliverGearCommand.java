@@ -16,6 +16,7 @@ public class DeliverGearCommand extends CommandGroup {
   private double xRate;
   private double yRate;
   private double zRate;
+  private boolean visionTargetAcquired;
 
   public DeliverGearCommand() {
     deliverGearStrafeCommand = new DeliverGearStrafeCommand(this);
@@ -28,7 +29,7 @@ public class DeliverGearCommand extends CommandGroup {
     addParallel(deliverGearApproachCommand);
     addParallel(deliverGearDriveCommand);
 
-    setTimeout(15);
+    setTimeout(5);
   }
 
   @Override
@@ -60,4 +61,11 @@ public class DeliverGearCommand extends CommandGroup {
     this.zRate = zRate;
   }
 
+  public boolean isVisionTargetAcquired() {
+    return visionTargetAcquired;
+  }
+
+  public void setVisionTargetAcquired(boolean visionTargetAcquired) {
+    this.visionTargetAcquired = visionTargetAcquired;
+  }
 }

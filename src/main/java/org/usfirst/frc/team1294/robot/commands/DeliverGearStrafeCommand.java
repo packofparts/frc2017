@@ -2,37 +2,54 @@ package org.usfirst.frc.team1294.robot.commands;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team1294.robot.Robot;
 
 /**
  * Not intended for standalone use. Must be used as part of the DeliverGearCommand CommandGroup.
  * Sets the x rate in the parent CommandGroup.
  */
 public class DeliverGearStrafeCommand extends PIDCommand {
-  private static final double STRAFE_TOLERANCE = 0.5f;
-  private static final double STRAFE_KP = 1.0f;
+  private static final double STRAFE_TOLERANCE = 0.1f;
+  private static final double STRAFE_KP = 0.75f;
   private static final double STRAFE_KI = 0;
   private static final double STRAFE_KD = 0;
-  private static final double MAXIMUM_OUTPUT = 1;
+  private static final double MAXIMUM_OUTPUT = 0.5;
+  private static final double MAX_ALLOWED_DISTANCE_FROM_INITIAL = 0.5;
 
   private final DeliverGearCommand parent;
+  private double initialEncoderX;
 
   public DeliverGearStrafeCommand(DeliverGearCommand parent) {
     super("DeliverGearStrafeCommand", STRAFE_KP, STRAFE_KI, STRAFE_KD);
     this.parent = parent;
     getPIDController().setAbsoluteTolerance(STRAFE_TOLERANCE);
     getPIDController().setOutputRange(-MAXIMUM_OUTPUT, MAXIMUM_OUTPUT);
-    getPIDController().setSetpoint(0);
 
     SmartDashboard.putData("DeliverGearStrafeCommandPID", getPIDController());
   }
 
   @Override
+  protected void initialize() {
+    initialEncoderX = Robot.driveSubsystem.getEncoderX();
+    getPIDController().setSetpoint(initialEncoderX);
+  }
+
+  @Override
+  protected void execute() {
+    // only set a new strafing setpoint if vision target is acquired
+    if (parent.isVisionTargetAcquired()) {
+      double newSetpoint = Robot.driveSubsystem.getEncoderX() + Robot.spatialAwarenessSubsystem.getRightUltrasonicDistance() - Robot.spatialAwarenessSubsystem.getLeftUltrasonicDistance();
+
+      // only set a new setpoint if it is within the max distance from initial
+      if (Math.abs(initialEncoderX - newSetpoint) < MAX_ALLOWED_DISTANCE_FROM_INITIAL) {
+        setSetpoint(newSetpoint);
+      }
+    }
+  }
+
+  @Override
   protected double returnPIDInput() {
-    // todo : math goes here
-    // calculate the number of meters that the robot should strafe to the left or right
-    // such that if the robot were pointing directly at the vision target, that the difference
-    // between the two ultrasonic sensors should read zero.
-    return 0;
+    return Robot.driveSubsystem.getEncoderX();
   }
 
   @Override
