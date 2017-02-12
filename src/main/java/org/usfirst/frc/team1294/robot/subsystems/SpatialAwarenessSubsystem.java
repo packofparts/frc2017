@@ -21,6 +21,8 @@ public class SpatialAwarenessSubsystem extends Subsystem {
   private static final int IMG_WIDTH = 320;
   private static final int IMG_HEIGHT = 240;
 
+  private static final double ULTRASONIC_VOLTS_TO_METERS = 1; // TODO: calibrate this
+
   private final CvSink gearVideo;
   private final UsbCamera gearCamera;
   private final CameraServer cameraServer;
@@ -93,15 +95,15 @@ public class SpatialAwarenessSubsystem extends Subsystem {
   }
 
   public double getDistanceToWall() {
-    return leftUltrasonic.getVoltage();
+    return (leftUltrasonic.getVoltage() + rightUltrasonic.getVoltage()) / 2;
   }
 
   public double getLeftUltrasonicDistance() {
-    return leftUltrasonic.getVoltage();
+    return leftUltrasonic.getVoltage() * ULTRASONIC_VOLTS_TO_METERS;
   }
 
   public double getRightUltrasonicDistance() {
-    return rightUltrasonic.getVoltage();
+    return rightUltrasonic.getVoltage() * ULTRASONIC_VOLTS_TO_METERS;
   }
 
 
