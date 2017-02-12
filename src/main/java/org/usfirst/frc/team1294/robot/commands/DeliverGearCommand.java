@@ -24,12 +24,12 @@ public class DeliverGearCommand extends CommandGroup {
     deliverGearApproachCommand = new DeliverGearApproachCommand(this);
     deliverGearDriveCommand = new DeliverGearDriveCommand(this);
 
-    addParallel(deliverGearStrafeCommand);
     addParallel(deliverGearTurnCommand);
-    addParallel(deliverGearApproachCommand);
+    //addParallel(deliverGearStrafeCommand);
+    //addParallel(deliverGearApproachCommand);
     addParallel(deliverGearDriveCommand);
 
-    setTimeout(5);
+    setTimeout(10);
   }
 
   @Override
