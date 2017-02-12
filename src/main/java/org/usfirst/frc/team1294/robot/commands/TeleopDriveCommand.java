@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1294.robot.Robot;
 
-public class SimpleGyroTeleopDriveCommand extends PIDCommand {
+public class TeleopDriveCommand extends PIDCommand {
   private static final double P = 0.01;
   private static final double I = 0;
   private static final double D = 0;
@@ -21,8 +21,8 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
   private enum DriveMode { OpenLoop, PID;}
   private DriveMode driveMode = DriveMode.OpenLoop;
 
-  public SimpleGyroTeleopDriveCommand() {
-    super("SimpleGyroTeleopDriveCommand", P, I, D);
+  public TeleopDriveCommand() {
+    super("TeleopDriveCommand", P, I, D);
 
     requires(Robot.driveSubsystem);
 

@@ -4,7 +4,7 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team1294.robot.RobotMap;
-import org.usfirst.frc.team1294.robot.commands.SimpleGyroTeleopDriveCommand;
+import org.usfirst.frc.team1294.robot.commands.TeleopDriveCommand;
 
 /**
  * @author Austin Jenchi (timtim17)
@@ -42,7 +42,7 @@ public class DriveSubsystem extends Subsystem {
 
   @Override
   protected void initDefaultCommand() {
-    setDefaultCommand(new SimpleGyroTeleopDriveCommand());
+    setDefaultCommand(new TeleopDriveCommand());
   }
 
   public void mecanumDrive(double x, double y, double rotate, double gyro) {
