@@ -75,7 +75,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(spatialAwarenessSubsystem);
 		SmartDashboard.putData(climbingSubsystem);
 		SmartDashboard.putData(fuelSubsystem);
-		SmartDashboard.putData(new DriveGyroCorrect());
 	}
 
 	/**
