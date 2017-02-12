@@ -6,9 +6,7 @@ import org.usfirst.frc.team1294.robot.commands.AutoGearLeft;
 import org.usfirst.frc.team1294.robot.commands.AutoGearRight;
 import org.usfirst.frc.team1294.robot.commands.DoGearCameraImageProcessingCommand;
 import org.usfirst.frc.team1294.robot.commands.DriveBaseBreakInCommand;
-import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
 import org.usfirst.frc.team1294.robot.commands.ResetGyroCommand;
-import org.usfirst.frc.team1294.robot.commands.TurnToHeading;
 import org.usfirst.frc.team1294.robot.subsystems.SpatialAwarenessSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
