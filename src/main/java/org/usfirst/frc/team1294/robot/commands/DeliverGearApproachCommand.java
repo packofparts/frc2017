@@ -16,7 +16,12 @@ public class DeliverGearApproachCommand extends PIDCommand {
   private static final double KI = 0;
   private static final double KD = 0;
   private static final double MAXIMUM_OUTPUT = 0.25;
-  private static final double DISTANCE_TO_WALL_SETPOINT = 0.5; // todo determine correct distance to wall
+
+  // http://maxbotix.com/documents/LV-MaxSonar-EZ_Datasheet.pdf
+  // https://www.adafruit.com/products/980
+  // the minimum distance the sensor will read is 6 inches = 0.1524 meters
+  private static final double DISTANCE_TO_WALL_SETPOINT = 0.1524; // todo validate this distance to wall
+  // might want to move a short distance closer than the minimum ultrasonic distance will allow
 
   private final DeliverGearCommand parent;
 
