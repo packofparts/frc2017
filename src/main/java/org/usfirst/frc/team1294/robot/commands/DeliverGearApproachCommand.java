@@ -18,8 +18,11 @@ public class DeliverGearApproachCommand extends PIDCommand {
   private static final double MAXIMUM_OUTPUT = 0.25;
   private static final double DISTANCE_TO_WALL_SETPOINT = 0.5; // todo determine correct distance to wall
 
-  public DeliverGearApproachCommand() {
+  private final DeliverGearCommand parent;
+
+  public DeliverGearApproachCommand(DeliverGearCommand parent) {
     super("DeliverGearApproachCommand", KP, KI, KD);
+    this.parent = parent;
     getPIDController().setAbsoluteTolerance(TOLERANCE);
     getPIDController().setOutputRange(-MAXIMUM_OUTPUT, MAXIMUM_OUTPUT);
     getPIDController().setSetpoint(DISTANCE_TO_WALL_SETPOINT);
@@ -33,21 +36,16 @@ public class DeliverGearApproachCommand extends PIDCommand {
 
   @Override
   protected void usePIDOutput(double output) {
-    CommandGroup group = getGroup();
-    if (group instanceof DeliverGearCommand) {
-      // get the currently commanded x and z rate
-      double xRate = ((DeliverGearCommand) group).getxRate();
-      double zRate = ((DeliverGearCommand) group).getzRate();
+    // get the currently commanded x and z rate
+    double xRate = parent.getxRate();
+    double zRate = parent.getzRate();
 
-      // only approach the target if x and z are below thresholds
-      if (xRate < 0.1 && zRate < 0.1) {
-        ((DeliverGearCommand) group).setyRate(output);
-      } else {
-        ((DeliverGearCommand) group).setyRate(0);
-      }
+    // only approach the target if x and z are below thresholds
+    if (xRate < 0.1 && zRate < 0.1) {
+      parent.setyRate(output);
+    } else {
+      parent.setyRate(0);
     }
-
-
   }
 
   @Override

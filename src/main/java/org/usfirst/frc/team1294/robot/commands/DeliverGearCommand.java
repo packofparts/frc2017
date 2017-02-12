@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1294.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc.team1294.robot.Robot;
 
 /**
  * A command that moves the robot from a position near the lift to where the pilot can
@@ -19,10 +18,10 @@ public class DeliverGearCommand extends CommandGroup {
   private double zRate;
 
   public DeliverGearCommand() {
-    deliverGearStrafeCommand = new DeliverGearStrafeCommand();
-    deliverGearTurnCommand = new DeliverGearTurnCommand();
-    deliverGearApproachCommand = new DeliverGearApproachCommand();
-    deliverGearDriveCommand = new DeliverGearDriveCommand();
+    deliverGearStrafeCommand = new DeliverGearStrafeCommand(this);
+    deliverGearTurnCommand = new DeliverGearTurnCommand(this);
+    deliverGearApproachCommand = new DeliverGearApproachCommand(this);
+    deliverGearDriveCommand = new DeliverGearDriveCommand(this);
 
     addParallel(deliverGearStrafeCommand);
     addParallel(deliverGearTurnCommand);

@@ -2,8 +2,6 @@ package org.usfirst.frc.team1294.robot.commands;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team1294.robot.Robot;
-import org.usfirst.frc.team1294.robot.vision.VisionProcessing;
 
 /**
  * Not intended for standalone use. Must be used as part of the DeliverGearCommand CommandGroup.
@@ -14,10 +12,13 @@ public class DeliverGearStrafeCommand extends PIDCommand {
   private static final double STRAFE_KP = 1.0f;
   private static final double STRAFE_KI = 0;
   private static final double STRAFE_KD = 0;
-  public static final double MAXIMUM_OUTPUT = 1;
+  private static final double MAXIMUM_OUTPUT = 1;
 
-  public DeliverGearStrafeCommand() {
+  private final DeliverGearCommand parent;
+
+  public DeliverGearStrafeCommand(DeliverGearCommand parent) {
     super("DeliverGearStrafeCommand", STRAFE_KP, STRAFE_KI, STRAFE_KD);
+    this.parent = parent;
     getPIDController().setAbsoluteTolerance(STRAFE_TOLERANCE);
     getPIDController().setOutputRange(-MAXIMUM_OUTPUT, MAXIMUM_OUTPUT);
     getPIDController().setSetpoint(0);
@@ -36,9 +37,7 @@ public class DeliverGearStrafeCommand extends PIDCommand {
 
   @Override
   protected void usePIDOutput(double output) {
-    if (getGroup() instanceof DeliverGearCommand) {
-      ((DeliverGearCommand) getGroup()).setxRate(output);
-    }
+    parent.setxRate(output);
   }
 
   @Override

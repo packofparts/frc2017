@@ -17,13 +17,16 @@ public class DeliverGearTurnCommand extends PIDCommand {
   private static final double KD = 0;
   private static final double MAX_RATE = 0.25;
 
-  public DeliverGearTurnCommand() {
+  private final DeliverGearCommand parent;
+
+  public DeliverGearTurnCommand(DeliverGearCommand parent) {
     super("DeliverGearTurnCommand", KP, KI, KD);
+
+    this.parent = parent;
 
     requires(Robot.spatialAwarenessSubsystem);
 
     getPIDController().setAbsoluteTolerance(TOLERANCE);
-    getPIDController().setInputRange(-180, 180);
     getPIDController().setOutputRange(-MAX_RATE, MAX_RATE);
     getPIDController().setSetpoint(0);
     SmartDashboard.putData("DeliverGearTurnCommandPID", getPIDController());
@@ -32,14 +35,14 @@ public class DeliverGearTurnCommand extends PIDCommand {
   @Override
   protected void execute() {
     // record the angle before vision processing
-    double angle = Robot.spatialAwarenessSubsystem.getHeading();
+    double heading = Robot.spatialAwarenessSubsystem.getHeading();
 
     // do vision processing
     VisionProcessing.VisionProcessingResult visionProcessingResult = Robot.spatialAwarenessSubsystem.doVisionProcessingOnGearCamera();
 
     // if the target was acquired, adjust the setpoint
     if (visionProcessingResult.targetAcquired) {
-      getPIDController().setSetpoint(angle + visionProcessingResult.degreesOffCenter);
+      getPIDController().setSetpoint(heading + visionProcessingResult.degreesOffCenter);
     }
   }
 
@@ -50,9 +53,7 @@ public class DeliverGearTurnCommand extends PIDCommand {
 
   @Override
   protected void usePIDOutput(double output) {
-    if (getGroup() instanceof DeliverGearCommand) {
-      ((DeliverGearCommand) getGroup()).setzRate(output);
-    }
+    parent.setzRate(output);
   }
 
   @Override
