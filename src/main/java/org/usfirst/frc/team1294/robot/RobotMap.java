@@ -13,5 +13,6 @@ public class RobotMap {
     public static final int DRIVEBASE_LEFT_REAR_TALON = 2;
     public static final int DRIVEBASE_RIGHT_FRONT_TALON = 4;
     public static final int DRIVEBASE_RIGHT_REAR_TALON = 3;
+    public static final int CLIMBING_TALON = 8;
     public static final double RAMP_RATE = 48.;
 }
