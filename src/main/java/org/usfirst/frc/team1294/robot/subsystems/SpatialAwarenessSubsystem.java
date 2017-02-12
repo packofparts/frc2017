@@ -21,7 +21,15 @@ public class SpatialAwarenessSubsystem extends Subsystem {
   private static final int IMG_WIDTH = 320;
   private static final int IMG_HEIGHT = 240;
 
-  private static final double ULTRASONIC_VOLTS_TO_METERS = 1; // TODO: calibrate this
+  // http://maxbotix.com/documents/LV-MaxSonar-EZ_Datasheet.pdf
+  // Outputs analog voltage with a scaling factor of (Vcc/512) per inch. A supply of 5V yields ~9.8mV/in. and
+  // 3.3V yields ~6.4mV/in. The output is buffered and corresponds to the most recent range data.
+  // RoboRio analog port is 5v per http://www.ni.com/pdf/manuals/374474a.pdf
+  // 1000 mv/ 1 v
+  // 1 in / 9.8mv
+  // 1 m / 39.3701 in
+  // Y meters = X volts * 2.5918353351028 volts/meters
+  private static final double ULTRASONIC_VOLTS_TO_METERS = 2.5918353351028; // TODO: validate this calibration
 
   private final CvSink gearVideo;
   private final UsbCamera gearCamera;
