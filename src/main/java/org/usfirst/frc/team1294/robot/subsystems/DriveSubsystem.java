@@ -16,12 +16,11 @@ public class DriveSubsystem extends Subsystem {
 
   private static final double RAMP_RATE = 48.0;
 
-  public final CANTalon leftFrontTalon;
-  public final CANTalon leftRearTalon;
-  public final CANTalon rightFrontTalon;
-  public final CANTalon rightRearTalon;
+  private final CANTalon leftFrontTalon;
+  private final CANTalon leftRearTalon;
+  private final CANTalon rightFrontTalon;
+  private final CANTalon rightRearTalon;
   private final RobotDrive robotDrive;
-
 
   public DriveSubsystem() {
     super("DriveSubsystem");
@@ -71,5 +70,25 @@ public class DriveSubsystem extends Subsystem {
     this.rightFrontTalon.enableBrakeMode(enabled);
     this.leftRearTalon.enableBrakeMode(enabled);
     this.rightRearTalon.enableBrakeMode(enabled);
+  }
+
+  public void setLeftFrontTalon(double output) {
+    this.leftFrontTalon.set(output);
+  }
+
+  public void setLeftRearTalon(double output) {
+    this.leftRearTalon.set(output);
+  }
+
+  public void setRightFrontTalon(double output) {
+    this.rightFrontTalon.set(output);
+  }
+
+  public void setRightRearTalon(double output) {
+    this.rightRearTalon.set(output);
+  }
+
+  public void stop() {
+    robotDrive.stopMotor();
   }
 }

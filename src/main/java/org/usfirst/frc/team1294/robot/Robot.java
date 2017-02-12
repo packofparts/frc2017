@@ -6,7 +6,6 @@ import org.usfirst.frc.team1294.robot.commands.AutoGearLeft;
 import org.usfirst.frc.team1294.robot.commands.AutoGearRight;
 import org.usfirst.frc.team1294.robot.commands.DoGearCameraImageProcessingCommand;
 import org.usfirst.frc.team1294.robot.commands.DriveBaseBreakInCommand;
-import org.usfirst.frc.team1294.robot.commands.DriveMotorCommand;
 import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
 import org.usfirst.frc.team1294.robot.commands.ResetGyroCommand;
 import org.usfirst.frc.team1294.robot.commands.TurnToHeading;
@@ -61,15 +60,15 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Auto Gear Right", new AutoGearRight());
 		SmartDashboard.putData("Auto mode", chooser);
 
-		SmartDashboard.putData(new MecanumDriveCommand());
-		SmartDashboard.putData(new DriveMotorCommand());
-		SmartDashboard.putData(new ResetGyroCommand());
-		SmartDashboard.putData(new TurnToHeading(45));
-		SmartDashboard.putData(new TurnToHeading(90));
-		SmartDashboard.putData(new TurnToHeading(180));
-		SmartDashboard.putData(new TurnToHeading(270));
+		SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_LEFT_FRONT));
+		SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_LEFT_REAR));
+		SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_RIGHT_FRONT));
+		SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_RIGHT_REAR));
 
-        SmartDashboard.putData(new DriveBaseBreakInCommand());
+		SmartDashboard.putData(new ResetGyroCommand());
+
+		SmartDashboard.putData(new DriveBaseBreakInCommand());
+
 		SmartDashboard.putData(new DoGearCameraImageProcessingCommand());
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData(driveSubsystem);
