@@ -42,7 +42,7 @@ public class MecanumDriveCommand extends Command {
       Robot.driveSubsystem.mecanumDrive(joystick.getX(GenericHID.Hand.kLeft),
               joystick.getY(GenericHID.Hand.kLeft),
               joystick.getTriggerAxis(GenericHID.Hand.kRight) - joystick.getTriggerAxis(GenericHID.Hand.kLeft),
-              Robot.driveSubsystem.getAngle());
+              Robot.spatialAwarenessSubsystem.getHeading());
 //      System.out.println("FIELD ORIENTED");
     } else {
       // otherwise use the right analog stick for robot oriented

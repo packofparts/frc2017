@@ -19,7 +19,7 @@ public class DeliverGearTurnCommand extends PIDCommand {
   public DeliverGearTurnCommand() {
     super("DeliverGearTurnCommand", KP, KI, KD);
 
-    requires(Robot.cameraSubsystem);
+    requires(Robot.spatialAwarenessSubsystem);
 
     getPIDController().setAbsoluteTolerance(TOLERANCE);
     getPIDController().setInputRange(-180, 180);
@@ -31,10 +31,10 @@ public class DeliverGearTurnCommand extends PIDCommand {
   @Override
   protected void execute() {
     // record the angle before vision processing
-    double angle = Robot.driveSubsystem.getAngle();
+    double angle = Robot.spatialAwarenessSubsystem.getHeading();
 
     // do vision processing
-    VisionProcessing.VisionProcessingResult visionProcessingResult = Robot.cameraSubsystem.doVisionProcessingOnGearCamera();
+    VisionProcessing.VisionProcessingResult visionProcessingResult = Robot.spatialAwarenessSubsystem.doVisionProcessingOnGearCamera();
 
     // if the target was acquired, adjust the setpoint
     if (visionProcessingResult.targetAcquired) {
@@ -44,7 +44,7 @@ public class DeliverGearTurnCommand extends PIDCommand {
 
   @Override
   protected double returnPIDInput() {
-    return Robot.driveSubsystem.getAngle();
+    return Robot.spatialAwarenessSubsystem.getHeading();
   }
 
   @Override

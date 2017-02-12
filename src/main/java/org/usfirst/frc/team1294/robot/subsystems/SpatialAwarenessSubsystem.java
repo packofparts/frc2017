@@ -1,18 +1,22 @@
 package org.usfirst.frc.team1294.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
+import org.usfirst.frc.team1294.robot.RobotMap;
 import org.usfirst.frc.team1294.robot.vision.GearGripPipeline;
 import org.usfirst.frc.team1294.robot.vision.VisionProcessing;
 
 import java.util.Date;
 
-public class CameraSubsystem extends Subsystem {
+public class SpatialAwarenessSubsystem extends Subsystem {
 
   private static final int IMG_WIDTH = 320;
   private static final int IMG_HEIGHT = 240;
@@ -20,13 +24,17 @@ public class CameraSubsystem extends Subsystem {
   private final CvSink gearVideo;
   private final UsbCamera gearCamera;
   private final CameraServer cameraServer;
-  private final GearGripPipeline gearGripPipeline = new GearGripPipeline();
   private final VisionProcessing visionProcessing;
+
+  private final AnalogInput leftUltrasonic;
+  private final AnalogInput rightUltrasonic;
+
+  private final AHRS navX;
 
   private Mat gearFrame = new Mat();
 
-  public CameraSubsystem() {
-    super("CameraSubsystem");
+  public SpatialAwarenessSubsystem() {
+    super("SpatialAwarenessSubsystem");
 
     cameraServer = CameraServer.getInstance();
     gearCamera = cameraServer.startAutomaticCapture(0);
@@ -36,7 +44,12 @@ public class CameraSubsystem extends Subsystem {
 
     visionProcessing = new VisionProcessing();
 
-    System.out.println("CameraSubsystem constructor finished");
+    leftUltrasonic = new AnalogInput(RobotMap.ANALOG_ULTRASONIC_LEFT);
+    rightUltrasonic = new AnalogInput(RobotMap.ANALOG_ULTRASONIC_RIGHT);
+
+    navX = new AHRS(SPI.Port.kMXP);
+
+    System.out.println("SpatialAwarenessSubsystem constructor finished");
   }
 
   @Override
@@ -48,8 +61,8 @@ public class CameraSubsystem extends Subsystem {
       setGearFrameFromCamera();
       VisionProcessing.VisionProcessingResult result = visionProcessing.processGearFrame(gearFrame);
 
-      SmartDashboard.putBoolean("CameraSubsystem.GearTargetAcquired", result.targetAcquired);
-      SmartDashboard.putNumber("CameraSubsystem.GearTargerPixelsFromCenter", result.pixelsOffCenter);
+      SmartDashboard.putBoolean("SpatialAwarenessSubsystem.GearTargetAcquired", result.targetAcquired);
+      SmartDashboard.putNumber("SpatialAwarenessSubsystem.GearTargerPixelsFromCenter", result.pixelsOffCenter);
 
       System.out.println("Successfully ran vision processing.");
 
@@ -79,13 +92,31 @@ public class CameraSubsystem extends Subsystem {
     System.out.println("last image saved");
   }
 
-//  public boolean isGearTargetAcquired() {
-//    return visionProcessing.isGearTargetAcquired();
-//  }
-//
-//  public int getGearTargetPixelsFromCenter() {
-//    return visionProcessing.getGearTargetPixelsFromCenter();
-//  }
+  public double getDistanceToWall() {
+    return leftUltrasonic.getVoltage();
+  }
 
+  public double getLeftUltrasonicDistance() {
+    return leftUltrasonic.getVoltage();
+  }
+
+  public double getRightUltrasonicDistance() {
+    return rightUltrasonic.getVoltage();
+  }
+
+
+  public double getHeading() {
+    double angle = navX.getAngle() % 360;
+    return angle;
+  }
+
+
+  public double getRate() {
+    return navX.getRate();
+  }
+
+  public void resetGyro() {
+    navX.reset();
+  }
 
 }

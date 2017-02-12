@@ -28,7 +28,7 @@ public class DeliverGearApproachCommand extends PIDCommand {
 
   @Override
   protected double returnPIDInput() {
-    return Robot.driveSubsystem.getDistanceToWall();
+    return Robot.spatialAwarenessSubsystem.getDistanceToWall();
   }
 
   @Override

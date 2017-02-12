@@ -10,10 +10,7 @@ import org.usfirst.frc.team1294.robot.commands.DriveMotorCommand;
 import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
 import org.usfirst.frc.team1294.robot.commands.ResetGyroCommand;
 import org.usfirst.frc.team1294.robot.commands.TurnToHeading;
-import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
-import org.usfirst.frc.team1294.robot.subsystems.ClimbingSubsystem;
-import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team1294.robot.subsystems.FuelSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.SpatialAwarenessSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -25,7 +22,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1294.robot.commands.*;
 import org.usfirst.frc.team1294.robot.subsystems.ClimbingSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.FuelSubsystem;
 
 /**
@@ -39,7 +35,7 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static DriveSubsystem driveSubsystem;
-	public static CameraSubsystem cameraSubsystem;
+	public static SpatialAwarenessSubsystem spatialAwarenessSubsystem;
     public static ClimbingSubsystem climbingSubsystem;
     public static FuelSubsystem fuelSubsystem;
 
@@ -55,7 +51,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		// THESE MUST BE INITIALIZED FIRST
 		driveSubsystem = new DriveSubsystem();
-		cameraSubsystem = new CameraSubsystem();
+		spatialAwarenessSubsystem = new SpatialAwarenessSubsystem();
         climbingSubsystem = new ClimbingSubsystem();
         fuelSubsystem = new FuelSubsystem();
 		oi = new OI();
@@ -77,7 +73,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new DoGearCameraImageProcessingCommand());
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData(driveSubsystem);
-		SmartDashboard.putData(cameraSubsystem);
+		SmartDashboard.putData(spatialAwarenessSubsystem);
 		SmartDashboard.putData(climbingSubsystem);
 		SmartDashboard.putData(fuelSubsystem);
 		SmartDashboard.putData(new DriveGyroCorrect());
@@ -148,9 +144,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		SmartDashboard.putNumber("Angle", driveSubsystem.getAngle());
-		SmartDashboard.putNumber("VelocityZ (graph)", driveSubsystem.getRate());
-		SmartDashboard.putNumber("VelocityZ", driveSubsystem.getRate());
+		SmartDashboard.putNumber("Angle", spatialAwarenessSubsystem.getHeading());
+		SmartDashboard.putNumber("VelocityZ (graph)", spatialAwarenessSubsystem.getRate());
+		SmartDashboard.putNumber("VelocityZ", spatialAwarenessSubsystem.getRate());
 		Scheduler.getInstance().run();
 
 //		SmartDashboard.putData(Scheduler.getInstance());

@@ -52,7 +52,7 @@ public class DriveGyroCorrect extends PIDCommand{
 
     @Override
     protected double returnPIDInput() {
-        return Robot.driveSubsystem.getRate();
+        return Robot.spatialAwarenessSubsystem.getRate();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class DriveGyroCorrect extends PIDCommand{
             Robot.driveSubsystem.mecanumDrive(joystick.getX(GenericHID.Hand.kLeft),
                     joystick.getY(GenericHID.Hand.kLeft),
                     output,
-                    Robot.driveSubsystem.getAngle());
+                    Robot.spatialAwarenessSubsystem.getHeading());
 //            System.out.println("FIELD ORIENTED");
         } else {
             // otherwise use the right analog stick for robot oriented

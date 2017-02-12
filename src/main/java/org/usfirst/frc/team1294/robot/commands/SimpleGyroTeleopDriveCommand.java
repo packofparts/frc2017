@@ -38,7 +38,7 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
 
   @Override
   protected void initialize() {
-//    getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
+//    getPIDController().setSetpoint(Robot.driveSubsystem.getHeading());
 //    driveMode = DriveMode.OpenLoop;
 //    getPIDController().disable();
     switchToPidSteering();
@@ -67,7 +67,7 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
       // use the joystick to control the rotation rate
       z = joystickZ / 2;
 
-      getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
+      getPIDController().setSetpoint(Robot.spatialAwarenessSubsystem.getHeading());
     } else {
       // robot should be in pid steering mode where the PIDController controls the rotation rate
 
@@ -85,7 +85,7 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
               joystick.getX(GenericHID.Hand.kLeft),
               joystick.getY(GenericHID.Hand.kLeft),
               z,
-              Robot.driveSubsystem.getAngle());
+              Robot.spatialAwarenessSubsystem.getHeading());
     } else {
       // otherwise use the right analog stick for robot oriented
       Robot.driveSubsystem.mecanumDrive(
@@ -103,7 +103,7 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
   }
 
   private boolean shouldBeOpenLoopSteering(double joystickZ) {
-    return Math.abs(joystickZ) > TRIGGER_DEADZONE || Math.abs(Robot.driveSubsystem.getRate()) > 2 || allInputsInDeadZone();
+    return Math.abs(joystickZ) > TRIGGER_DEADZONE || Math.abs(Robot.spatialAwarenessSubsystem.getRate()) > 2 || allInputsInDeadZone();
   }
 
   private void switchToOpenLoopSteering() {
@@ -114,7 +114,7 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
   private void switchToPidSteering() {
     driveMode = DriveMode.PID;
     getPIDController().enable();
-    getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
+    getPIDController().setSetpoint(Robot.spatialAwarenessSubsystem.getHeading());
   }
 
   private boolean shouldUseFieldOrientedDrive() {
@@ -140,7 +140,7 @@ public class SimpleGyroTeleopDriveCommand extends PIDCommand {
 
   @Override
   protected double returnPIDInput() {
-    return Robot.driveSubsystem.getAngle();
+    return Robot.spatialAwarenessSubsystem.getHeading();
   }
 
   @Override
