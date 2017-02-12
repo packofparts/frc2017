@@ -1,25 +1,17 @@
 
 package org.usfirst.frc.team1294.robot;
 
-import org.usfirst.frc.team1294.robot.commands.AutoGearCenter;
-import org.usfirst.frc.team1294.robot.commands.AutoGearLeft;
-import org.usfirst.frc.team1294.robot.commands.AutoGearRight;
-import org.usfirst.frc.team1294.robot.commands.DoGearCameraImageProcessingCommand;
-import org.usfirst.frc.team1294.robot.commands.TestDriveBaseBreakInCommand;
-import org.usfirst.frc.team1294.robot.commands.ResetGyroCommand;
-import org.usfirst.frc.team1294.robot.subsystems.SpatialAwarenessSubsystem;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team1294.robot.commands.*;
 import org.usfirst.frc.team1294.robot.subsystems.ClimbingSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.FuelSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.SpatialAwarenessSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -141,14 +133,15 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		SmartDashboard.putNumber("Angle", spatialAwarenessSubsystem.getHeading());
-		SmartDashboard.putNumber("VelocityZ (graph)", spatialAwarenessSubsystem.getRate());
+		SmartDashboard.putNumber("Heading", spatialAwarenessSubsystem.getHeading());
 		SmartDashboard.putNumber("VelocityZ", spatialAwarenessSubsystem.getRate());
-		Scheduler.getInstance().run();
-
-//		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putNumber("getEncoderX", driveSubsystem.getEncoderX());
 		SmartDashboard.putNumber("getEncoderY", driveSubsystem.getEncoderY());
+		SmartDashboard.putNumber("UltrasonicLeft", spatialAwarenessSubsystem.getLeftUltrasonicDistance());
+    SmartDashboard.putNumber("UltrasonicRight", spatialAwarenessSubsystem.getRightUltrasonicDistance());
+    SmartDashboard.putNumber("DistanceToWall", spatialAwarenessSubsystem.getDistanceToWall());
+
+		Scheduler.getInstance().run();
 	}
 
 	/**
