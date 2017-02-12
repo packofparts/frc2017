@@ -5,7 +5,7 @@ import org.usfirst.frc.team1294.robot.commands.AutoGearCenter;
 import org.usfirst.frc.team1294.robot.commands.AutoGearLeft;
 import org.usfirst.frc.team1294.robot.commands.AutoGearRight;
 import org.usfirst.frc.team1294.robot.commands.DoGearCameraImageProcessingCommand;
-import org.usfirst.frc.team1294.robot.commands.DriveBaseBreakInCommand;
+import org.usfirst.frc.team1294.robot.commands.TestDriveBaseBreakInCommand;
 import org.usfirst.frc.team1294.robot.commands.ResetGyroCommand;
 import org.usfirst.frc.team1294.robot.subsystems.SpatialAwarenessSubsystem;
 
@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData(new ResetGyroCommand());
 
-		SmartDashboard.putData(new DriveBaseBreakInCommand());
+		SmartDashboard.putData(new TestDriveBaseBreakInCommand());
 
 		SmartDashboard.putData(new DoGearCameraImageProcessingCommand());
 		SmartDashboard.putData(Scheduler.getInstance());
