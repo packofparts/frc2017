@@ -1,10 +1,7 @@
 package org.usfirst.frc.team1294.robot.subsystems;
 
 import com.ctre.CANTalon;
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team1294.robot.RobotMap;
 import org.usfirst.frc.team1294.robot.commands.SimpleGyroTeleopDriveCommand;
@@ -52,11 +49,11 @@ public class DriveSubsystem extends Subsystem {
     robotDrive.mecanumDrive_Cartesian(x, y, rotate, gyro);
   }
 
-  public double getEncoderX(){
+  public double getEncoderX() {
     return leftFrontTalon.getPosition() * 0.24;
   }
 
-  public double getEncoderY(){
+  public double getEncoderY() {
     return rightRearTalon.getPosition() * 0.25;
   }
 
