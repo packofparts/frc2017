@@ -67,7 +67,8 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData(new TestDriveBaseBreakInCommand());
 
-		SmartDashboard.putData(new DoGearCameraImageProcessingCommand());
+		SmartDashboard.putData(new DeliverGearCommand());
+
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData(driveSubsystem);
 		SmartDashboard.putData(spatialAwarenessSubsystem);
