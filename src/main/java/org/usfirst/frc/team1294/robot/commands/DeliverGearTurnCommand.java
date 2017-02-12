@@ -15,6 +15,7 @@ public class DeliverGearTurnCommand extends PIDCommand {
   private static final double KP = 0.3f;
   private static final double KI = 0;
   private static final double KD = 0;
+  private static final double MAX_RATE = 0.25;
 
   public DeliverGearTurnCommand() {
     super("DeliverGearTurnCommand", KP, KI, KD);
@@ -23,7 +24,7 @@ public class DeliverGearTurnCommand extends PIDCommand {
 
     getPIDController().setAbsoluteTolerance(TOLERANCE);
     getPIDController().setInputRange(-180, 180);
-    getPIDController().setOutputRange(-1, 1);
+    getPIDController().setOutputRange(-MAX_RATE, MAX_RATE);
     getPIDController().setSetpoint(0);
     SmartDashboard.putData("DeliverGearTurnCommandPID", getPIDController());
   }
