@@ -22,7 +22,7 @@ plugins {
 frc {
 	team = "1294"
 	robotClass = "org.usfirst.frc.team1294.robot.Robot"
-    rioIP = "10.12.94.75"
+    rioIP = "10.12.94.77"
 }
 
 repositories {
@@ -55,7 +55,7 @@ publishing {
 
 model {
 	tasks.generatePomFileForMyPublicationPublication {
-		destination = file("$buildDir/frc2017-${project.version.toString()}.pom")
+		destination = file("$buildDir/frc2017.pom")
 	}
 }
 
