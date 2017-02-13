@@ -18,12 +18,12 @@ public class DoGearCameraImageProcessingCommand extends Command {
 
   @Override
   protected void initialize() {
-    Robot.cameraSubsystem.setFPS(10);
   }
 
   @Override
   protected void execute() {
     Robot.cameraSubsystem.doVisionProcessingOnGearCamera();
+    Robot.cameraSubsystem.saveLastImage();
     hasRunOnce = true;
   }
 

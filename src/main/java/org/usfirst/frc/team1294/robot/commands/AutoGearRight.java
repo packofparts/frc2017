@@ -8,6 +8,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoGearRight extends CommandGroup {
     public AutoGearRight() {
         addSequential(new MoveFromStartToLiftRight());
-        addSequential(new DeliverGear());
+        addSequential(new DeliverGearCommand());
     }
 }
