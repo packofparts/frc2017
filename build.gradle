@@ -55,7 +55,7 @@ publishing {
 
 model {
 	tasks.generatePomFileForMyPublicationPublication {
-		destination = file("$buildDir/frc2017.pom")
+		destination = file("$buildDir/frc1294.pom")
 	}
 }
 
