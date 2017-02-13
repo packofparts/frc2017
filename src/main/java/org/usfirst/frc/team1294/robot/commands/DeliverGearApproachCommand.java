@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1294.robot.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1294.robot.Robot;
@@ -36,7 +35,7 @@ public class DeliverGearApproachCommand extends PIDCommand {
 
   @Override
   protected double returnPIDInput() {
-    return Robot.spatialAwarenessSubsystem.getDistanceToWall();
+    return Robot.spatialAwarenessSubsystem.getAverageUltrasonicDistance();
   }
 
   @Override

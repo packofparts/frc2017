@@ -139,7 +139,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("getEncoderY", driveSubsystem.getEncoderY());
 		SmartDashboard.putNumber("UltrasonicLeft", spatialAwarenessSubsystem.getLeftUltrasonicDistance());
     SmartDashboard.putNumber("UltrasonicRight", spatialAwarenessSubsystem.getRightUltrasonicDistance());
-    SmartDashboard.putNumber("DistanceToWall", spatialAwarenessSubsystem.getDistanceToWall());
+    SmartDashboard.putNumber("UltrasonicAverage", spatialAwarenessSubsystem.getAverageUltrasonicDistance());
 
 		Scheduler.getInstance().run();
 	}

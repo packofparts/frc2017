@@ -102,8 +102,8 @@ public class SpatialAwarenessSubsystem extends Subsystem {
     System.out.println("last image saved");
   }
 
-  public double getDistanceToWall() {
-    return (leftUltrasonic.getVoltage() + rightUltrasonic.getVoltage()) / 2;
+  public double getAverageUltrasonicDistance() {
+    return (getLeftUltrasonicDistance() + getRightUltrasonicDistance()) / 2;
   }
 
   public double getLeftUltrasonicDistance() {
@@ -114,12 +114,10 @@ public class SpatialAwarenessSubsystem extends Subsystem {
     return rightUltrasonic.getVoltage() * ULTRASONIC_VOLTS_TO_METERS;
   }
 
-
   public double getHeading() {
     double angle = navX.getAngle() % 360;
     return angle;
   }
-
 
   public double getRate() {
     return navX.getRate();
