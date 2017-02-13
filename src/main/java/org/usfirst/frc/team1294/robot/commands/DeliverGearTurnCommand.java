@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1294.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1294.robot.Robot;
@@ -18,6 +19,7 @@ public class DeliverGearTurnCommand extends PIDCommand {
   private static final double MAX_RATE = 0.25;
 
   private final DeliverGearCommand parent;
+  private final Timer timer;
 
   public DeliverGearTurnCommand(DeliverGearCommand parent) {
     super("DeliverGearTurnCommand", KP, KI, KD);
@@ -30,6 +32,13 @@ public class DeliverGearTurnCommand extends PIDCommand {
     getPIDController().setOutputRange(-MAX_RATE, MAX_RATE);
     getPIDController().setSetpoint(0);
     SmartDashboard.putData("DeliverGearTurnCommandPID", getPIDController());
+
+    timer = new Timer();
+  }
+
+  @Override
+  protected void initialize() {
+    timer.start();
   }
 
   @Override
@@ -44,6 +53,13 @@ public class DeliverGearTurnCommand extends PIDCommand {
     if (visionProcessingResult.targetAcquired) {
       getPIDController().setSetpoint(heading + visionProcessingResult.degreesOffCenter);
     }
+
+    // periodically save an image
+    if (timer.hasPeriodPassed(250)) {
+      Robot.spatialAwarenessSubsystem.saveLastImage();
+      timer.reset();
+    }
+
     parent.setVisionTargetAcquired(visionProcessingResult.targetAcquired);
   }
 
