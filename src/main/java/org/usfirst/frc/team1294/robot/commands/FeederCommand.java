@@ -15,6 +15,9 @@ import java.awt.*;
  */
 
 public class FeederCommand extends Command {
+
+    //I won't be there on Monday but if you have questions ask Lucas, he'll be able to explain the execute methods logic
+
     private static final double waitTime = 1.0; //time to wait in seconds
     private static final double startTime = 1.0; //time to run the motor for
     private static final double feederMotorVoltage = 9.0; //time to run the motor for
