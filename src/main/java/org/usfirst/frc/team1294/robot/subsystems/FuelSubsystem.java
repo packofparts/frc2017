@@ -39,6 +39,15 @@ public class FuelSubsystem extends Subsystem {
     public void setShooterMotorBVoltageSpeed(double voltageSpeed){
     	shooterMotorB.set(voltageSpeed);
     }
+
+    public boolean isMotorARunning(){
+        return shooterMotorA.getOutputVoltage() == 0;
+    }
+
+    public boolean isMotorBRunning(){
+        return shooterMotorB.getOutputVoltage() == 0;
+    }
+
     public void stopShooterMotors(){
     	shooterMotorA.set(0);
     	shooterMotorB.set(0);
