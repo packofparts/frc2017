@@ -5,6 +5,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Trigger;
 import org.usfirst.frc.team1294.robot.commands.*;
+import org.usfirst.frc.team1294.robot.commands.DriveHeadingAndDistance;
+import org.usfirst.frc.team1294.robot.commands.DriveStraightCommand;
+import org.usfirst.frc.team1294.robot.commands.FlipAUTurn;
+import org.usfirst.frc.team1294.robot.commands.ShooterCommand;
+import org.usfirst.frc.team1294.robot.commands.TurnToHeading;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -98,11 +103,11 @@ public class OI {
     this.dpadUpLeft = new Trigger() {@Override public boolean get() {return joystick.getPOV(0) == 315;}};
 
     //this.buttonA.whenPressed(new DriveHeadingAndDistance(0, 1));
-    //this.buttonB.whenPressed(new DriveHeadingAndDistance(45, 1));
-      this.buttonA2.whenPressed(new FeederCommand());
-      this.buttonA.whenPressed(new DriveStraightCommand(5));
+    this.buttonA2.whenPressed(new FeederCommand());this.buttonA.whenPressed(new DriveStraightCommand(5));
+    this.buttonA.whenPressed(new DriveStraightCommand(5));
     this.buttonB.whenPressed(new TurnToHeading(180));
     this.buttonX.whenPressed(new FlipAUTurn());
+    this.buttonA2.toggleWhenPressed(new ShooterCommand()); //quick merge this may be wrong
   }
 
     public XboxController getJoystick() {
