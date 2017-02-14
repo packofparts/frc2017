@@ -12,11 +12,11 @@ import org.usfirst.frc.team1294.robot.vision.VisionProcessing;
  */
 public class DeliverGearTurnCommand extends PIDCommand {
 
-  private static final double TOLERANCE = 2.0f;
-  private static final double KP = 0.3f;
+  private static final double TOLERANCE = 5.0f;
+  private static final double KP = 0.01f;
   private static final double KI = 0;
   private static final double KD = 0;
-  private static final double MAX_RATE = 0.25;
+  private static final double MAX_RATE = 0.08;
 
   private final DeliverGearCommand parent;
   private final Timer timer;
@@ -43,15 +43,12 @@ public class DeliverGearTurnCommand extends PIDCommand {
 
   @Override
   protected void execute() {
-    // record the angle before vision processing
-    double heading = Robot.spatialAwarenessSubsystem.getHeading();
-
     // do vision processing
     VisionProcessing.VisionProcessingResult visionProcessingResult = Robot.spatialAwarenessSubsystem.doVisionProcessingOnGearCamera();
 
     // if the target was acquired, adjust the setpoint
     if (visionProcessingResult.targetAcquired) {
-      getPIDController().setSetpoint(heading + visionProcessingResult.degreesOffCenter);
+      getPIDController().setSetpoint(visionProcessingResult.headingWhenImageTaken + visionProcessingResult.degreesOffCenter);
     }
 
     // periodically save an image

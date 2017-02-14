@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
+import org.usfirst.frc.team1294.robot.Robot;
 import org.usfirst.frc.team1294.robot.RobotMap;
 import org.usfirst.frc.team1294.robot.vision.GearGripPipeline;
 import org.usfirst.frc.team1294.robot.vision.VisionProcessing;
@@ -50,6 +51,7 @@ public class SpatialAwarenessSubsystem extends Subsystem {
     gearCamera = cameraServer.startAutomaticCapture(0);
     gearCamera.setResolution(IMG_WIDTH, IMG_HEIGHT);
     gearCamera.setFPS(30);
+    gearCamera.setBrightness(7);
     gearVideo = cameraServer.getVideo(gearCamera);
 
     visionProcessing = new VisionProcessing();
@@ -68,13 +70,18 @@ public class SpatialAwarenessSubsystem extends Subsystem {
 
   public VisionProcessing.VisionProcessingResult doVisionProcessingOnGearCamera() {
     try {
+      double heading = Robot.spatialAwarenessSubsystem.getHeading();
+
       setGearFrameFromCamera();
       VisionProcessing.VisionProcessingResult result = visionProcessing.processGearFrame(gearFrame);
 
       SmartDashboard.putBoolean("SpatialAwarenessSubsystem.GearTargetAcquired", result.targetAcquired);
       SmartDashboard.putNumber("SpatialAwarenessSubsystem.GearTargerPixelsFromCenter", result.pixelsOffCenter);
+      SmartDashboard.putNumber("SpatialAwarenessSubsystem.degreesOffCenter", result.degreesOffCenter);
 
       System.out.println("Successfully ran vision processing.");
+
+      result.headingWhenImageTaken = heading;
 
       return result;
     } catch (Exception ex) {
@@ -107,11 +114,11 @@ public class SpatialAwarenessSubsystem extends Subsystem {
   }
 
   public double getLeftUltrasonicDistance() {
-    return leftUltrasonic.getVoltage() * ULTRASONIC_VOLTS_TO_METERS;
+    return leftUltrasonic.getAverageVoltage() * ULTRASONIC_VOLTS_TO_METERS;
   }
 
   public double getRightUltrasonicDistance() {
-    return rightUltrasonic.getVoltage() * ULTRASONIC_VOLTS_TO_METERS;
+    return rightUltrasonic.getAverageVoltage() * ULTRASONIC_VOLTS_TO_METERS;
   }
 
   public double getHeading() {

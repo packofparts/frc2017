@@ -25,16 +25,16 @@ public class DeliverGearCommand extends CommandGroup {
     deliverGearDriveCommand = new DeliverGearDriveCommand(this);
 
     addParallel(deliverGearTurnCommand);
-    //addParallel(deliverGearStrafeCommand);
-    //addParallel(deliverGearApproachCommand);
+    addParallel(deliverGearStrafeCommand);
+    addParallel(deliverGearApproachCommand);
     addParallel(deliverGearDriveCommand);
 
-    setTimeout(10);
+    setTimeout(3);
   }
 
   @Override
   protected boolean isFinished() {
-    return deliverGearStrafeCommand.onTarget() && deliverGearTurnCommand.onTarget() && deliverGearApproachCommand.onTarget();
+    return isTimedOut() || (deliverGearTurnCommand.onTarget() && deliverGearApproachCommand.onTarget()); //deliverGearStrafeCommand.onTarget() && deliverGearTurnCommand.onTarget() && deliverGearApproachCommand.onTarget());
   }
 
   public double getxRate() {

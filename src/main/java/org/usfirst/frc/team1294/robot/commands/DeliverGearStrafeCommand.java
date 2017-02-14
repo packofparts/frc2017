@@ -10,11 +10,11 @@ import org.usfirst.frc.team1294.robot.Robot;
  */
 public class DeliverGearStrafeCommand extends PIDCommand {
   private static final double STRAFE_TOLERANCE = 0.1f;
-  private static final double STRAFE_KP = 0.75f;
+  private static final double STRAFE_KP = 0.1f;
   private static final double STRAFE_KI = 0;
   private static final double STRAFE_KD = 0;
-  private static final double MAXIMUM_OUTPUT = 0.5;
-  private static final double MAX_ALLOWED_DISTANCE_FROM_INITIAL = 0.5;
+  private static final double MAXIMUM_OUTPUT = 0.1;
+  private static final double MAX_ALLOWED_DISTANCE_FROM_INITIAL = 0.1;
 
   private final DeliverGearCommand parent;
   private double initialEncoderX;

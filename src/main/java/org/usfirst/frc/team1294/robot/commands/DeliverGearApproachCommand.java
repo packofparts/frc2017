@@ -4,15 +4,18 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1294.robot.Robot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Not intended for standalone use. Must be used as part of the DeliverGearCommand CommandGroup.
  * Sets the y rate in the parent CommandGroup.
  */
 public class DeliverGearApproachCommand extends PIDCommand {
 
-  private static final double TOLERANCE = 0.05f;
-  private static final double KP = 0.3f;
-  private static final double KI = 0;
+  private static final double TOLERANCE = 0.1f;
+  private static final double KP = 0.75f;
+  private static final double KI = 0.01;
   private static final double KD = 0;
   private static final double MAXIMUM_OUTPUT = 0.25;
 
@@ -23,6 +26,7 @@ public class DeliverGearApproachCommand extends PIDCommand {
   // might want to move a short distance closer than the minimum ultrasonic distance will allow
 
   private final DeliverGearCommand parent;
+  private final List<Double> distanceList;
 
   public DeliverGearApproachCommand(DeliverGearCommand parent) {
     super("DeliverGearApproachCommand", KP, KI, KD);
@@ -31,21 +35,27 @@ public class DeliverGearApproachCommand extends PIDCommand {
     getPIDController().setOutputRange(-MAXIMUM_OUTPUT, MAXIMUM_OUTPUT);
     getPIDController().setSetpoint(DISTANCE_TO_WALL_SETPOINT);
     SmartDashboard.putData("DeliverGearApproachCommandPID", getPIDController());
+
+    distanceList = new ArrayList<>();
   }
 
   @Override
   protected double returnPIDInput() {
-    return Robot.spatialAwarenessSubsystem.getAverageUltrasonicDistance();
+    distanceList.add(Robot.spatialAwarenessSubsystem.getAverageUltrasonicDistance());
+    if (distanceList.size() > 30) {
+      distanceList.remove(0);
+    }
+    return Robot.spatialAwarenessSubsystem.getAverageUltrasonicDistance();// + 0.3;
   }
 
   @Override
   protected void usePIDOutput(double output) {
     // get the currently commanded x and z rate
-    double xRate = parent.getxRate();
-    double zRate = parent.getzRate();
+    //double xRate = parent.getxRate();
+    //double zRate = parent.getzRate();
 
     // only approach the target if x and z are below thresholds
-    if (xRate < 0.1 && zRate < 0.1) {
+    if (parent.isVisionTargetAcquired()) { // && xRate < 0.2 && zRate < 0.2) {
       parent.setyRate(output);
     } else {
       parent.setyRate(0);
@@ -59,6 +69,18 @@ public class DeliverGearApproachCommand extends PIDCommand {
   }
 
   public boolean onTarget() {
-    return getPIDController().onTarget();
+    double average = 0;
+    if (distanceList.size() > 0) {
+      for (Double d : distanceList) {
+        average += d;
+      }
+      average /= distanceList.size();
+    }
+    SmartDashboard.putNumber("averageDistance", average);
+    SmartDashboard.putBoolean("DeliverGearApproachCommand.pidontarget", getPIDController().onTarget());
+
+    boolean averageOnTarget = average < 0.2;
+
+    return averageOnTarget && getPIDController().onTarget();
   }
 }
