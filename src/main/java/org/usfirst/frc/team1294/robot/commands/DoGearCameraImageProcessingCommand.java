@@ -13,7 +13,7 @@ public class DoGearCameraImageProcessingCommand extends Command {
 
   public DoGearCameraImageProcessingCommand() {
     super("DoGearCameraImageProcessingCommand");
-    requires(Robot.cameraSubsystem);
+    requires(Robot.spatialAwarenessSubsystem);
   }
 
   @Override
@@ -22,8 +22,8 @@ public class DoGearCameraImageProcessingCommand extends Command {
 
   @Override
   protected void execute() {
-    Robot.cameraSubsystem.doVisionProcessingOnGearCamera();
-    Robot.cameraSubsystem.saveLastImage();
+    Robot.spatialAwarenessSubsystem.doVisionProcessingOnGearCamera();
+    Robot.spatialAwarenessSubsystem.saveLastImage();
     hasRunOnce = true;
   }
 

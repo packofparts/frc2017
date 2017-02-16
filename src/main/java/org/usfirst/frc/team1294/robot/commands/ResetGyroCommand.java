@@ -15,7 +15,7 @@ public class ResetGyroCommand extends Command {
 
   @Override
   protected void initialize() {
-    Robot.driveSubsystem.resetGyro();
+    Robot.spatialAwarenessSubsystem.resetGyro();
 
   }
 

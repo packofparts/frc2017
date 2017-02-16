@@ -26,13 +26,13 @@ public class DriveStraightTurnCommand extends PIDCommand {
 
   @Override
   protected void initialize() {
-    getPIDController().setSetpoint(Robot.driveSubsystem.getAngle());
+    getPIDController().setSetpoint(Robot.spatialAwarenessSubsystem.getHeading());
   }
 
   @Override
   protected double returnPIDInput() {
     if (!hasRunReturnPidInputAtLeastOnce) hasRunReturnPidInputAtLeastOnce = true;
-    return Robot.driveSubsystem.getAngle();
+    return Robot.spatialAwarenessSubsystem.getHeading();
   }
 
   // assuming angle is the error and target angle is 0

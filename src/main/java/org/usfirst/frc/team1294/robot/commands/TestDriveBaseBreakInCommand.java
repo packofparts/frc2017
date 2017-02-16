@@ -7,12 +7,12 @@ import org.usfirst.frc.team1294.robot.Robot;
 /**
  * a command to break in the motors of the drive base.
  */
-public class DriveBaseBreakInCommand extends Command {
+public class TestDriveBaseBreakInCommand extends Command {
     private Timer timer;
     private long n = 0;
 
-    public DriveBaseBreakInCommand() {
-        super("DriveBaseBreakInCommand");
+    public TestDriveBaseBreakInCommand() {
+        super("TestDriveBaseBreakInCommand");
         requires(Robot.driveSubsystem);
     }
 

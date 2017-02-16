@@ -1,32 +1,17 @@
 
 package org.usfirst.frc.team1294.robot;
 
-import org.usfirst.frc.team1294.robot.commands.AutoGearCenter;
-import org.usfirst.frc.team1294.robot.commands.AutoGearLeft;
-import org.usfirst.frc.team1294.robot.commands.AutoGearRight;
-import org.usfirst.frc.team1294.robot.commands.DoGearCameraImageProcessingCommand;
-import org.usfirst.frc.team1294.robot.commands.DriveBaseBreakInCommand;
-import org.usfirst.frc.team1294.robot.commands.DriveMotorCommand;
-import org.usfirst.frc.team1294.robot.commands.MecanumDriveCommand;
-import org.usfirst.frc.team1294.robot.commands.ResetGyroCommand;
-import org.usfirst.frc.team1294.robot.commands.TurnToHeading;
-import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
-import org.usfirst.frc.team1294.robot.subsystems.ClimbingSubsystem;
-import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team1294.robot.subsystems.FuelSubsystem;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team1294.robot.commands.*;
 import org.usfirst.frc.team1294.robot.subsystems.ClimbingSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.FuelSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.SpatialAwarenessSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,7 +24,7 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static DriveSubsystem driveSubsystem;
-	public static CameraSubsystem cameraSubsystem;
+	public static SpatialAwarenessSubsystem spatialAwarenessSubsystem;
     public static ClimbingSubsystem climbingSubsystem;
     public static FuelSubsystem fuelSubsystem;
 
@@ -55,7 +40,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		// THESE MUST BE INITIALIZED FIRST
 		driveSubsystem = new DriveSubsystem();
-		cameraSubsystem = new CameraSubsystem();
+		spatialAwarenessSubsystem = new SpatialAwarenessSubsystem();
         climbingSubsystem = new ClimbingSubsystem();
         fuelSubsystem = new FuelSubsystem();
 		oi = new OI();
@@ -65,22 +50,23 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Auto Gear Right", new AutoGearRight());
 		SmartDashboard.putData("Auto mode", chooser);
 
-		SmartDashboard.putData(new MecanumDriveCommand());
-		SmartDashboard.putData(new DriveMotorCommand());
-		SmartDashboard.putData(new ResetGyroCommand());
-		SmartDashboard.putData(new TurnToHeading(45));
-		SmartDashboard.putData(new TurnToHeading(90));
-		SmartDashboard.putData(new TurnToHeading(180));
-		SmartDashboard.putData(new TurnToHeading(270));
+		SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_LEFT_FRONT));
+		SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_LEFT_REAR));
+		SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_RIGHT_FRONT));
+		SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_RIGHT_REAR));
 
-        SmartDashboard.putData(new DriveBaseBreakInCommand());
-		SmartDashboard.putData(new DoGearCameraImageProcessingCommand());
+		SmartDashboard.putData(new ResetGyroCommand());
+
+		SmartDashboard.putData(new TestDriveBaseBreakInCommand());
+
+		SmartDashboard.putData(new DeliverGearCommand());
+
+
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData(driveSubsystem);
-		SmartDashboard.putData(cameraSubsystem);
+		SmartDashboard.putData(spatialAwarenessSubsystem);
 		SmartDashboard.putData(climbingSubsystem);
 		SmartDashboard.putData(fuelSubsystem);
-		SmartDashboard.putData(new DriveGyroCorrect());
 	}
 
 	/**
@@ -148,14 +134,15 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		SmartDashboard.putNumber("Angle", driveSubsystem.getAngle());
-		SmartDashboard.putNumber("VelocityZ (graph)", driveSubsystem.getRate());
-		SmartDashboard.putNumber("VelocityZ", driveSubsystem.getRate());
-		Scheduler.getInstance().run();
-
-//		SmartDashboard.putData(Scheduler.getInstance());
+		SmartDashboard.putNumber("Heading", spatialAwarenessSubsystem.getHeading());
+		SmartDashboard.putNumber("VelocityZ", spatialAwarenessSubsystem.getRate());
 		SmartDashboard.putNumber("getEncoderX", driveSubsystem.getEncoderX());
 		SmartDashboard.putNumber("getEncoderY", driveSubsystem.getEncoderY());
+		SmartDashboard.putNumber("UltrasonicLeft", spatialAwarenessSubsystem.getLeftUltrasonicDistance());
+    SmartDashboard.putNumber("UltrasonicRight", spatialAwarenessSubsystem.getRightUltrasonicDistance());
+    SmartDashboard.putNumber("UltrasonicAverage", spatialAwarenessSubsystem.getAverageUltrasonicDistance());
+
+		Scheduler.getInstance().run();
 	}
 
 	/**
