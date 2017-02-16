@@ -18,7 +18,7 @@ public class ClimbRope extends Command {
 
   @Override
   protected void execute() {
-    Robot.climbingSubsystem.setMotor(-0.75);
+    Robot.climbingSubsystem.setMotor(0.75);
   }
   @Override
   protected void end() {
