@@ -2,11 +2,7 @@ package org.usfirst.frc.team1294.robot.vision;
 
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfInt;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
 import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team1294.robot.subsystems.CameraSubsystem;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

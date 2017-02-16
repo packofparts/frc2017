@@ -47,7 +47,7 @@ public class VisionProcessing {
       double halfWidth = gearFrame.width() / 2;
       pixelsOffCenter = pair.centerX() - halfWidth;
       double percentOffCenter = pixelsOffCenter  / halfWidth;
-      degreesOffCenter = percentOffCenter * 60;
+      degreesOffCenter = percentOffCenter * 30;
     }
 
     VisionProcessingResult result = new VisionProcessingResult();
@@ -60,7 +60,7 @@ public class VisionProcessing {
   public class VisionProcessingResult {
     public boolean targetAcquired;
     public double degreesOffCenter;
-    public int headingWhenImageTaken;
+    public double headingWhenImageTaken;
     public int pixelsOffCenter;
   }
 
