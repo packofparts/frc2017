@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1294.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc.team1294.robot.Robot;
 
 /**
  * A command that moves the robot from a position near the lift to where the pilot can
@@ -17,24 +16,25 @@ public class DeliverGearCommand extends CommandGroup {
   private double xRate;
   private double yRate;
   private double zRate;
+  private boolean visionTargetAcquired;
 
   public DeliverGearCommand() {
-    deliverGearStrafeCommand = new DeliverGearStrafeCommand();
-    deliverGearTurnCommand = new DeliverGearTurnCommand();
-    deliverGearApproachCommand = new DeliverGearApproachCommand();
-    deliverGearDriveCommand = new DeliverGearDriveCommand();
+    deliverGearStrafeCommand = new DeliverGearStrafeCommand(this);
+    deliverGearTurnCommand = new DeliverGearTurnCommand(this);
+    deliverGearApproachCommand = new DeliverGearApproachCommand(this);
+    deliverGearDriveCommand = new DeliverGearDriveCommand(this);
 
-    addParallel(deliverGearStrafeCommand);
     addParallel(deliverGearTurnCommand);
+    addParallel(deliverGearStrafeCommand);
     addParallel(deliverGearApproachCommand);
     addParallel(deliverGearDriveCommand);
 
-    setTimeout(15);
+    setTimeout(3);
   }
 
   @Override
   protected boolean isFinished() {
-    return deliverGearStrafeCommand.onTarget() && deliverGearTurnCommand.onTarget() && deliverGearApproachCommand.onTarget();
+    return isTimedOut() || (deliverGearTurnCommand.onTarget() && deliverGearApproachCommand.onTarget()); //deliverGearStrafeCommand.onTarget() && deliverGearTurnCommand.onTarget() && deliverGearApproachCommand.onTarget());
   }
 
   public double getxRate() {
@@ -61,4 +61,11 @@ public class DeliverGearCommand extends CommandGroup {
     this.zRate = zRate;
   }
 
+  public boolean isVisionTargetAcquired() {
+    return visionTargetAcquired;
+  }
+
+  public void setVisionTargetAcquired(boolean visionTargetAcquired) {
+    this.visionTargetAcquired = visionTargetAcquired;
+  }
 }

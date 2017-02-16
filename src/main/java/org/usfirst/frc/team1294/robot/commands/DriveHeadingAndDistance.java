@@ -47,7 +47,7 @@ public class DriveHeadingAndDistance extends PIDCommand {
 
   @Override
   protected void execute() {
-    Robot.driveSubsystem.mecanumDrive(rateX, -rateY, heading, Robot.driveSubsystem.getAngle());
+    Robot.driveSubsystem.mecanumDrive(rateX, -rateY, heading, Robot.spatialAwarenessSubsystem.getHeading());
   }
 
   @Override
