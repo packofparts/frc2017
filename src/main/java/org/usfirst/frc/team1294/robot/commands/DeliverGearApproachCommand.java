@@ -17,12 +17,12 @@ public class DeliverGearApproachCommand extends PIDCommand {
   private static final double KP = 0.75f;
   private static final double KI = 0.01;
   private static final double KD = 0;
-  private static final double MAXIMUM_OUTPUT = 0.25;
+  private static final double MAXIMUM_OUTPUT = 0.15;
 
   // http://maxbotix.com/documents/LV-MaxSonar-EZ_Datasheet.pdf
   // https://www.adafruit.com/products/980
   // the minimum distance the sensor will read is 6 inches = 0.1524 meters
-  private static final double DISTANCE_TO_WALL_SETPOINT = 0.1524; // todo validate this distance to wall
+  private static final double DISTANCE_TO_WALL_SETPOINT = .18; // todo validate this distance to wall
   // might want to move a short distance closer than the minimum ultrasonic distance will allow
 
   private final DeliverGearCommand parent;
@@ -69,18 +69,6 @@ public class DeliverGearApproachCommand extends PIDCommand {
   }
 
   public boolean onTarget() {
-    double average = 0;
-    if (distanceList.size() > 0) {
-      for (Double d : distanceList) {
-        average += d;
-      }
-      average /= distanceList.size();
-    }
-    SmartDashboard.putNumber("averageDistance", average);
-    SmartDashboard.putBoolean("DeliverGearApproachCommand.pidontarget", getPIDController().onTarget());
-
-    boolean averageOnTarget = average < 0.2;
-
-    return averageOnTarget && getPIDController().onTarget();
+    return  getPIDController().onTarget();
   }
 }

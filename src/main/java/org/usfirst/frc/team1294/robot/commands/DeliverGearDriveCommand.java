@@ -29,6 +29,6 @@ public class DeliverGearDriveCommand extends Command {
   @Override
   protected boolean isFinished() {
     // never finishes by itself, depends on the parent CommandGroup to do that
-    return false;
+    return false; //parent.isVisionApproachFinished();
   }
 }

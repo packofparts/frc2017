@@ -29,13 +29,14 @@ public class DeliverGearCommand extends CommandGroup {
     addParallel(deliverGearApproachCommand);
     addParallel(deliverGearDriveCommand);
 
-    setTimeout(3);
+    setTimeout(5);
   }
 
   @Override
   protected boolean isFinished() {
-    return isTimedOut() || (deliverGearTurnCommand.onTarget() && deliverGearApproachCommand.onTarget()); //deliverGearStrafeCommand.onTarget() && deliverGearTurnCommand.onTarget() && deliverGearApproachCommand.onTarget());
+    return isTimedOut() || (deliverGearTurnCommand.onTarget() && deliverGearApproachCommand.onTarget());
   }
+
 
   public double getxRate() {
     return xRate;
