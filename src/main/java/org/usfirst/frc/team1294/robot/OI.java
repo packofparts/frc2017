@@ -64,7 +64,11 @@ public class OI {
     this.buttonA.whenPressed(new DriveStraightCommand(5));
     this.buttonB.whenPressed(new TurnToHeading(180));
     this.buttonY.whileHeld(new ClimbRope());
-    this.buttonX.whenPressed(new DeliverGearCommand());
+
+
+    this.buttonRightBumper.whileHeld(new DeliverGearCommand());
+
+
   }
 
   public XboxController getJoystick() {

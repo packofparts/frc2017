@@ -12,6 +12,7 @@ import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.usfirst.frc.team1294.robot.Robot;
 import org.usfirst.frc.team1294.robot.RobotMap;
+import org.usfirst.frc.team1294.robot.filter.SimpleKalman;
 import org.usfirst.frc.team1294.robot.vision.GearGripPipeline;
 import org.usfirst.frc.team1294.robot.vision.VisionProcessing;
 
@@ -40,6 +41,9 @@ public class SpatialAwarenessSubsystem extends Subsystem {
   private final AnalogInput leftUltrasonic;
   private final AnalogInput rightUltrasonic;
 
+  private final SimpleKalman leftUltrasonicKalman;
+  private final SimpleKalman rightUltrasonicKalman;
+
   private final AHRS navX;
 
   private Mat gearFrame = new Mat();
@@ -58,6 +62,9 @@ public class SpatialAwarenessSubsystem extends Subsystem {
 
     leftUltrasonic = new AnalogInput(RobotMap.ANALOG_ULTRASONIC_LEFT);
     rightUltrasonic = new AnalogInput(RobotMap.ANALOG_ULTRASONIC_RIGHT);
+
+    leftUltrasonicKalman = new SimpleKalman(1.4d, 64d, leftUltrasonic.getAverageVoltage() * ULTRASONIC_VOLTS_TO_METERS);
+    rightUltrasonicKalman = new SimpleKalman(1.4d, 64d, rightUltrasonic.getAverageVoltage() * ULTRASONIC_VOLTS_TO_METERS);
 
     navX = new AHRS(SPI.Port.kMXP);
 
@@ -114,11 +121,13 @@ public class SpatialAwarenessSubsystem extends Subsystem {
   }
 
   public double getLeftUltrasonicDistance() {
-    return leftUltrasonic.getAverageVoltage() * ULTRASONIC_VOLTS_TO_METERS;
+    //return leftUltrasonic.getAverageVoltage() * ULTRASONIC_VOLTS_TO_METERS;
+    return leftUltrasonicKalman.getPredicted_Value(leftUltrasonic.getAverageVoltage() * ULTRASONIC_VOLTS_TO_METERS);
   }
 
   public double getRightUltrasonicDistance() {
-    return rightUltrasonic.getAverageVoltage() * ULTRASONIC_VOLTS_TO_METERS;
+    //return rightUltrasonic.getAverageVoltage() * ULTRASONIC_VOLTS_TO_METERS;
+    return rightUltrasonicKalman.getPredicted_Value(rightUltrasonic.getAverageVoltage() * ULTRASONIC_VOLTS_TO_METERS);
   }
 
   public double getHeading() {
