@@ -103,10 +103,11 @@ public class OI {
     this.dpadUpLeft = new Trigger() {@Override public boolean get() {return joystick.getPOV(0) == 315;}};
 
     //this.buttonA.whenPressed(new DriveHeadingAndDistance(0, 1));
-    this.buttonA2.whenPressed(new FeederCommand());this.buttonA.whenPressed(new DriveStraightCommand(5));
+    this.buttonA2.whenPressed(new FeederCommand());
+    this.buttonA.whenPressed(new DriveStraightCommand(5));
     this.buttonA.whenPressed(new DriveStraightCommand(5));
     this.buttonB.whenPressed(new TurnToHeading(180));
-    this.buttonA2.toggleWhenPressed(new ShooterCommand()); //quick merge this may be wrong
+    this.buttonB2.toggleWhenPressed(new ShooterCommand());
     this.buttonY.whileHeld(new ClimbRope());
     this.buttonRightBumper.whileHeld(new DeliverGearCommand());
   }

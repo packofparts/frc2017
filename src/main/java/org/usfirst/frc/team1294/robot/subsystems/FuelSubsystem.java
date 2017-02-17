@@ -41,11 +41,11 @@ public class FuelSubsystem extends Subsystem {
     }
 
     public boolean isMotorARunning(){
-        return shooterMotorA.getOutputVoltage() == 0;
+        return shooterMotorA.getOutputVoltage() != 0;
     }
 
     public boolean isMotorBRunning(){
-        return shooterMotorB.getOutputVoltage() == 0;
+        return shooterMotorB.getOutputVoltage() != 0;
     }
 
     public void stopShooterMotors(){

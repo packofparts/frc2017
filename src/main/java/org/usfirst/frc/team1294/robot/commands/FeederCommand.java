@@ -1,14 +1,9 @@
 package org.usfirst.frc.team1294.robot.commands;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team1294.robot.Robot;
-import org.usfirst.frc.team1294.robot.subsystems.FuelSubsystem;
 
-import java.awt.*;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Created by root on 2/11/17.
@@ -16,11 +11,9 @@ import java.awt.*;
 
 public class FeederCommand extends Command {
 
-    //I won't be there on Monday but if you have questions ask Lucas, he'll be able to explain the execute methods logic
-
     private static final double waitTime = 1.0; //time to wait in seconds
     private static final double startTime = 1.0; //time to run the motor for
-    private static final double feederMotorVoltage = 9.0; //time to run the motor for
+    private static final double feederMotorVoltage = -9.0; //time to run the motor for
     private boolean done = false;
     private final Timer timer;
     private double shootTime;
@@ -28,8 +21,15 @@ public class FeederCommand extends Command {
 
     public FeederCommand(){
         timer = new Timer();
-        shootTime = timer.get();
+        timer.start();
         //requires(Robot.fuelSubsystem);
+        shootTime = timer.get();
+    }
+
+    @Override
+    protected void initialize() {
+        done = false;
+        shooting = true;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class FeederCommand extends Command {
     @Override
     protected void execute() {
             if(shooting){
-                if(shootTime - timer.get() >= startTime){
+                if(timer.get() - shootTime >= startTime){
                     shootTime = timer.get();
                     shooting = false;
                 }
@@ -48,13 +48,18 @@ public class FeederCommand extends Command {
             }
             else if(!shooting) {
 
-                if (shootTime - timer.get() >= waitTime){
+                if (timer.get() - shootTime >= waitTime){
                     shootTime= timer.get();
                     shooting = true;
                 }
                 Robot.fuelSubsystem.setFeederMotorVoltageSpeed(0.0);
                 done = !Robot.oi.getJoystick2().getAButton(); //if there is a problem it will be here
             }
+    }
+
+    @Override
+    protected void end() {
+        timer.stop();
     }
 }
 
