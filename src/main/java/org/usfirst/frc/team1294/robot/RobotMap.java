@@ -18,4 +18,7 @@ public class RobotMap {
     public static final int FUEL_SHOOTER_MOTOR_B = 6;
     public static final int FUEL_FEEDER_MOTOR = 7;
     public static final double RAMP_RATE = 48.;
+    public static final int CLIMBING_TALON = 8;
+    public static final int ANALOG_ULTRASONIC_LEFT = 0;
+    public static final int ANALOG_ULTRASONIC_RIGHT = 1;
 }

@@ -10,22 +10,18 @@ import org.usfirst.frc.team1294.robot.Robot;
  */
 public class DeliverGearDriveCommand extends Command {
 
-  public DeliverGearDriveCommand() {
+  private final DeliverGearCommand parent;
+
+  public DeliverGearDriveCommand(DeliverGearCommand parent) {
     requires(Robot.driveSubsystem);
+    this.parent = parent;
   }
 
   @Override
   protected void execute() {
-    double xRate = 0;
-    double yRate = 0;
-    double zRate = 0;
-
-    CommandGroup group = getGroup();
-    if (group instanceof DeliverGearCommand) {
-      xRate = ((DeliverGearCommand) group).getxRate();
-      yRate = ((DeliverGearCommand) group).getyRate();
-      zRate = ((DeliverGearCommand) group).getzRate();
-    }
+    double xRate = parent.getxRate();
+    double yRate = parent.getyRate();
+    double zRate = parent.getzRate();
 
     Robot.driveSubsystem.mecanumDrive(xRate, yRate, zRate, 0);
   }
@@ -33,6 +29,6 @@ public class DeliverGearDriveCommand extends Command {
   @Override
   protected boolean isFinished() {
     // never finishes by itself, depends on the parent CommandGroup to do that
-    return false;
+    return false; //parent.isVisionApproachFinished();
   }
 }

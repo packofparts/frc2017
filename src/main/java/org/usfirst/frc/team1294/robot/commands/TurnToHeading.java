@@ -39,18 +39,18 @@ public class TurnToHeading extends PIDCommand {
     protected boolean isFinished() {
         return this.getPIDController().onTarget()
                 && hasRunReturnPidInputAtLeastOnce
-                && Math.abs(Robot.driveSubsystem.getRate()) <= 0.3;
+                && Math.abs(Robot.spatialAwarenessSubsystem.getRate()) <= 0.3;
     }
 
 
     @Override
     protected double returnPIDInput() {
       if (!hasRunReturnPidInputAtLeastOnce) hasRunReturnPidInputAtLeastOnce = true;
-      return Robot.driveSubsystem.getAngle();
+      return Robot.spatialAwarenessSubsystem.getHeading();
     }
 
     @Override
     protected void usePIDOutput(double output) {
-      Robot.driveSubsystem.mecanumDrive(0, 0, output, Robot.driveSubsystem.getAngle());
+      Robot.driveSubsystem.mecanumDrive(0, 0, output, Robot.spatialAwarenessSubsystem.getHeading());
     }
 }
