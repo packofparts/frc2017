@@ -27,21 +27,16 @@ public class DeliverGearCommand extends CommandGroup {
     addParallel(deliverGearTurnCommand);
     addParallel(deliverGearStrafeCommand);
     addParallel(deliverGearApproachCommand);
-
-    addSequential(deliverGearDriveCommand, 3);
+    addParallel(deliverGearDriveCommand);
 
     setTimeout(5);
   }
 
   @Override
   protected boolean isFinished() {
-    //return isTimedOut() || (deliverGearTurnCommand.onTarget() && deliverGearApproachCommand.onTarget()); //deliverGearStrafeCommand.onTarget() && deliverGearTurnCommand.onTarget() && deliverGearApproachCommand.onTarget());
-    return isVisionApproachFinished();
+    return isTimedOut() || (deliverGearTurnCommand.onTarget() && deliverGearApproachCommand.onTarget());
   }
 
-  public boolean isVisionApproachFinished() {
-    return deliverGearApproachCommand.onTarget();
-  }
 
   public double getxRate() {
     return xRate;
