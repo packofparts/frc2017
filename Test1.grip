@@ -1,10 +1,86 @@
 <grip:Pipeline>
   <sources>
     <grip:MultiImageFile>
-      <property name="numImages" value="2"/>
-      <property name="path[0]" value="/Users/jxlewis/Documents/workspace/frc2017/src/test/resources/TestImages/positive/1ftH2ftD1Angle0Brightness.jpg"/>
-      <property name="path[1]" value="/Users/jxlewis/Documents/workspace/frc2017/src/test/resources/TestImages/positive/gearFrame_1485026289452.jpg"/>
-      <property name="index" value="1"/>
+      <property name="path[26]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379404307.jpg"/>
+      <property name="path[75]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379351279.jpg"/>
+      <property name="path[10]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379417110.jpg"/>
+      <property name="path[16]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379413809.jpg"/>
+      <property name="path[65]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379361547.jpg"/>
+      <property name="path[5]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379422510.jpg"/>
+      <property name="path[55]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379371912.jpg"/>
+      <property name="path[45]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379374508.jpg"/>
+      <property name="path[35]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379400944.jpg"/>
+      <property name="path[25]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379407313.jpg"/>
+      <property name="path[74]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379352481.jpg"/>
+      <property name="path[15]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379413508.jpg"/>
+      <property name="path[64]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379361248.jpg"/>
+      <property name="path[4]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379422212.jpg"/>
+      <property name="path[54]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379371611.jpg"/>
+      <property name="path[44]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379376437.jpg"/>
+      <property name="path[34]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379400644.jpg"/>
+      <property name="path[24]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379407011.jpg"/>
+      <property name="path[73]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379352180.jpg"/>
+      <property name="path[14]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379414409.jpg"/>
+      <property name="path[63]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379360941.jpg"/>
+      <property name="path[3]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379424974.jpg"/>
+      <property name="path[69]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379359741.jpg"/>
+      <property name="path[53]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379371311.jpg"/>
+      <property name="path[9]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379416806.jpg"/>
+      <property name="path[59]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379362148.jpg"/>
+      <property name="path[43]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379376014.jpg"/>
+      <property name="path[49]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379372208.jpg"/>
+      <property name="path[33]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379400343.jpg"/>
+      <property name="path[39]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379398643.jpg"/>
+      <property name="path[23]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379406706.jpg"/>
+      <property name="path[72]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379355448.jpg"/>
+      <property name="path[29]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379405203.jpg"/>
+      <property name="path[13]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379414104.jpg"/>
+      <property name="path[62]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379360646.jpg"/>
+      <property name="path[2]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379424676.jpg"/>
+      <property name="path[19]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379408641.jpg"/>
+      <property name="path[68]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379359449.jpg"/>
+      <property name="path[52]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379370876.jpg"/>
+      <property name="path[8]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379416506.jpg"/>
+      <property name="path[58]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379368881.jpg"/>
+      <property name="path[42]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379397740.jpg"/>
+      <property name="path[48]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379375513.jpg"/>
+      <property name="path[32]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379400009.jpg"/>
+      <property name="path[38]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379398340.jpg"/>
+      <property name="path[22]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379406409.jpg"/>
+      <property name="path[71]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379355145.jpg"/>
+      <property name="path[28]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379404909.jpg"/>
+      <property name="path[77]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379351877.jpg"/>
+      <property name="path[12]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379417702.jpg"/>
+      <property name="path[61]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379360343.jpg"/>
+      <property name="path[1]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379424371.jpg"/>
+      <property name="path[18]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379408344.jpg"/>
+      <property name="path[67]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379359144.jpg"/>
+      <property name="path[51]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379370575.jpg"/>
+      <property name="path[7]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379421837.jpg"/>
+      <property name="path[57]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379368281.jpg"/>
+      <property name="path[41]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379399247.jpg"/>
+      <property name="path[47]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379375114.jpg"/>
+      <property name="path[31]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379405809.jpg"/>
+      <property name="path[37]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379398042.jpg"/>
+      <property name="path[21]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379406110.jpg"/>
+      <property name="path[70]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379355744.jpg"/>
+      <property name="path[27]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379404606.jpg"/>
+      <property name="path[76]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379351577.jpg"/>
+      <property name="path[11]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379417409.jpg"/>
+      <property name="path[60]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379360041.jpg"/>
+      <property name="numImages" value="78"/>
+      <property name="path[0]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379424077.jpg"/>
+      <property name="path[17]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379409250.jpg"/>
+      <property name="path[66]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379361845.jpg"/>
+      <property name="path[50]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379370281.jpg"/>
+      <property name="path[6]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379421541.jpg"/>
+      <property name="index" value="61"/>
+      <property name="path[56]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379367982.jpg"/>
+      <property name="path[40]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379398941.jpg"/>
+      <property name="path[46]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379374810.jpg"/>
+      <property name="path[30]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379405506.jpg"/>
+      <property name="path[36]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379401240.jpg"/>
+      <property name="path[20]" value="/Users/jxlewis/Desktop/untitled folder/gearFrame_1487379408940.jpg"/>
     </grip:MultiImageFile>
   </sources>
   <steps>
@@ -22,19 +98,19 @@
       <grip:Input step="1" socket="0"/>
       <grip:Input step="1" socket="1">
         <value>
-          <double>19.424460431654676</double>
-          <double>131.10356536502547</double>
+          <double>0.0</double>
+          <double>91.37521222410867</double>
         </value>
       </grip:Input>
       <grip:Input step="1" socket="2">
         <value>
-          <double>45.86330935251798</double>
+          <double>126.12410071942446</double>
           <double>255.0</double>
         </value>
       </grip:Input>
       <grip:Input step="1" socket="3">
         <value>
-          <double>199.50539568345323</double>
+          <double>133.00359712230218</double>
           <double>255.0</double>
         </value>
       </grip:Input>
@@ -53,19 +129,19 @@
         <value>300.0</value>
       </grip:Input>
       <grip:Input step="3" socket="2">
-        <value>0</value>
+        <value>0.0</value>
       </grip:Input>
       <grip:Input step="3" socket="3">
-        <value>0</value>
+        <value>0.0</value>
       </grip:Input>
       <grip:Input step="3" socket="4">
-        <value>1000</value>
+        <value>1000.0</value>
       </grip:Input>
       <grip:Input step="3" socket="5">
-        <value>0</value>
+        <value>0.0</value>
       </grip:Input>
       <grip:Input step="3" socket="6">
-        <value>1000</value>
+        <value>1000.0</value>
       </grip:Input>
       <grip:Input step="3" socket="7">
         <value>
@@ -74,10 +150,10 @@
         </value>
       </grip:Input>
       <grip:Input step="3" socket="8">
-        <value>1000000</value>
+        <value>1000000.0</value>
       </grip:Input>
       <grip:Input step="3" socket="9">
-        <value>0</value>
+        <value>0.0</value>
       </grip:Input>
       <grip:Input step="3" socket="10">
         <value>0.0</value>
@@ -90,20 +166,20 @@
   </steps>
   <connections>
     <grip:Connection>
-      <grip:Output step="1" socket="0" previewed="true"/>
-      <grip:Input step="2" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
       <grip:Output step="2" socket="0" previewed="true"/>
       <grip:Input step="3" socket="0"/>
     </grip:Connection>
     <grip:Connection>
-      <grip:Output source="0" socket="0" previewed="false"/>
-      <grip:Input step="0" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
       <grip:Output step="0" socket="0" previewed="true"/>
       <grip:Input step="1" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="1" socket="0" previewed="true"/>
+      <grip:Input step="2" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="false"/>
+      <grip:Input step="0" socket="0"/>
     </grip:Connection>
   </connections>
   <settings>
