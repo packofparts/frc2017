@@ -17,7 +17,7 @@ public class DeliverGearApproachCommand extends PIDCommand {
   private static final double KP = 0.75f;
   private static final double KI = 0.01;
   private static final double KD = 0;
-  private static final double MAXIMUM_OUTPUT = 0.15;
+  private static final double MAXIMUM_OUTPUT = 0.2;
 
   // http://maxbotix.com/documents/LV-MaxSonar-EZ_Datasheet.pdf
   // https://www.adafruit.com/products/980
