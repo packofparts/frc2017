@@ -7,13 +7,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * with the gear side of the robot squared up with the lift wall. Will time out after 5 seconds.
  */
 public class MoveFromStartToLiftCenter extends CommandGroup {
-
-    public static final int HEADING_TO_TRAVEL = 0;
-    public static final double DISTANCE_TO_TRAVEL = 0.5;
-    public static final int HEADING_TO_FACE = 90;
+    public static final double DISTANCE_TO_TRAVEL = 1.8;
+    public static final int HEADING_TO_FACE = 0;
 
     public MoveFromStartToLiftCenter() {
-        addParallel(new DriveHeadingAndDistance(HEADING_TO_TRAVEL, DISTANCE_TO_TRAVEL));
-        addParallel(new TurnToHeading(HEADING_TO_FACE));
+        addSequential(new DriveStraightCommand(DISTANCE_TO_TRAVEL));
+        addSequential(new TurnToHeading(HEADING_TO_FACE));
+        addSequential(new DeliverGearCommand());
     }
 }

@@ -34,7 +34,7 @@ public class DriveStraightCommand extends CommandGroup {
 
   @Override
   protected void end() {
-    Robot.driveSubsystem.enableBrakeMode(false);
+
   }
 
 
