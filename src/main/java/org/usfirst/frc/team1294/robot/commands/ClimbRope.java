@@ -4,38 +4,34 @@ import org.usfirst.frc.team1294.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- * @author Austin Jenchi (timtim17)
- */
-public class ResetGyroCommand extends Command {
-  public ResetGyroCommand() {
-    super("Reset gyro");
-    requires(Robot.driveSubsystem);
+public class ClimbRope extends Command {
+
+  public ClimbRope() {
+    super("Drive motor");
+    requires(Robot.climbingSubsystem);
   }
 
   @Override
   protected void initialize() {
-    Robot.spatialAwarenessSubsystem.resetGyro();
 
   }
 
   @Override
   protected void execute() {
-
+    Robot.climbingSubsystem.setMotor(1.0);
   }
-
-  @Override
-  protected boolean isFinished() {
-    return true;
-  }
-
   @Override
   protected void end() {
-
+    Robot.climbingSubsystem.climbTalon.set(0);
   }
 
   @Override
   protected void interrupted() {
+    end();
+  }
 
+  @Override
+  protected boolean isFinished() {
+    return false;
   }
 }

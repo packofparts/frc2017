@@ -3,10 +3,12 @@ package org.usfirst.frc.team1294.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Trigger;
+import org.usfirst.frc.team1294.robot.commands.ClimbRope;
 import org.usfirst.frc.team1294.robot.commands.DriveHeadingAndDistance;
 import org.usfirst.frc.team1294.robot.commands.DriveStraightCommand;
 import org.usfirst.frc.team1294.robot.commands.FlipAUTurn;
 import org.usfirst.frc.team1294.robot.commands.TurnToHeading;
+import org.usfirst.frc.team1294.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -79,7 +81,12 @@ public class OI {
     //this.buttonB.whenPressed(new DriveHeadingAndDistance(45, 1));
     this.buttonA.whenPressed(new DriveStraightCommand(5));
     this.buttonB.whenPressed(new TurnToHeading(180));
-    this.buttonX.whenPressed(new FlipAUTurn());
+    this.buttonY.whileHeld(new ClimbRope());
+
+
+    this.buttonRightBumper.whileHeld(new DeliverGearCommand());
+
+
   }
 
   public XboxController getJoystick() {
