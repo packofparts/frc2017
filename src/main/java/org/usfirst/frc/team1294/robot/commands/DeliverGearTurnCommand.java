@@ -52,7 +52,7 @@ public class DeliverGearTurnCommand extends PIDCommand {
     }
 
     // periodically save an image
-    if (timer.hasPeriodPassed(250)) {
+    if (timer.hasPeriodPassed(.25)) {
       Robot.spatialAwarenessSubsystem.saveLastImage();
       timer.reset();
     }
