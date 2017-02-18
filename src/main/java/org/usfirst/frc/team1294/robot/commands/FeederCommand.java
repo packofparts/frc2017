@@ -4,10 +4,11 @@ import org.usfirst.frc.team1294.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeederCommand extends Command {
-  private static final double waitTime = 1.0; //time to wait in seconds
-  private static final double shootTime = 1.0; //time to run the motor for
+  private static double waitTime = 0.5; //time to wait in seconds
+  private static double shootTime = 0.25; //time to run the motor for
   private static final double feederMotorVoltage = -9.0; //speed to run the motor at
   private final Timer timer;
 
@@ -16,6 +17,8 @@ public class FeederCommand extends Command {
 
   public FeederCommand() {
     timer = new Timer();
+    SmartDashboard.putNumber("shooter wait time", waitTime);
+    SmartDashboard.putNumber("shooter shoot time", shootTime);
   }
 
   @Override
@@ -23,6 +26,8 @@ public class FeederCommand extends Command {
     shooting = true;
     ableToShoot = Robot.fuelSubsystem.isMotorARunning() && Robot.fuelSubsystem.isMotorBRunning();
     timer.start();
+    waitTime = SmartDashboard.getNumber("shooter wait time", waitTime);
+    shootTime = SmartDashboard.getNumber("shooter shoot time", shootTime);
   }
 
   @Override
