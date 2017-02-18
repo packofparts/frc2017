@@ -4,62 +4,70 @@ import org.usfirst.frc.team1294.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-
-/**
- * Created by root on 2/11/17.
- */
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeederCommand extends Command {
+  private static double waitTime = 0.5; //time to wait in seconds
+  private static double shootTime = 0.25; //time to run the motor for
+  private static final double feederMotorVoltage = -9.0; //speed to run the motor at
+  private final Timer timer;
 
-    private static final double waitTime = 1.0; //time to wait in seconds
-    private static final double startTime = 1.0; //time to run the motor for
-    private static final double feederMotorVoltage = -9.0; //time to run the motor for
-    private boolean done = false;
-    private final Timer timer;
-    private double shootTime;
-    private boolean shooting = true;
+  private boolean ableToShoot;
+  private boolean shooting;
 
-    public FeederCommand(){
-        timer = new Timer();
-        timer.start();
-        //requires(Robot.fuelSubsystem);
-        shootTime = timer.get();
+  public FeederCommand() {
+    timer = new Timer();
+    SmartDashboard.putNumber("shooter wait time", waitTime);
+    SmartDashboard.putNumber("shooter shoot time", shootTime);
+  }
+
+  @Override
+  protected void initialize() {
+    shooting = true;
+    ableToShoot = Robot.fuelSubsystem.isMotorARunning() && Robot.fuelSubsystem.isMotorBRunning();
+    timer.start();
+    waitTime = SmartDashboard.getNumber("shooter wait time", waitTime);
+    shootTime = SmartDashboard.getNumber("shooter shoot time", shootTime);
+  }
+
+  @Override
+  protected boolean isFinished() {
+    return !ableToShoot || (!shooting && !Robot.oi.getJoystick2().getAButton());
+  }
+
+  @Override
+  protected void execute() {
+    if (ableToShoot) {
+      if (shooting) {
+        if (timer.hasPeriodPassed(shootTime)) {
+          // stop shooting
+          shooting = false;
+          timer.reset();
+          Robot.fuelSubsystem.setFeederMotorVoltageSpeed(0.0);
+        } else {
+          // keep shooting
+          shooting = true;
+          Robot.fuelSubsystem.setFeederMotorVoltageSpeed(feederMotorVoltage);
+        }
+      } else {
+        if (timer.hasPeriodPassed(waitTime)) {
+          // start shooting
+          shooting = true;
+          timer.reset();
+          Robot.fuelSubsystem.setFeederMotorVoltageSpeed(feederMotorVoltage);
+        } else {
+          // stay stopped
+          shooting = false;
+          Robot.fuelSubsystem.setFeederMotorVoltageSpeed(0.0);
+        }
+      }
     }
+  }
 
-    @Override
-    protected void initialize() {
-        done = false;
-        shooting = true;
-    }
-
-    @Override
-    protected boolean isFinished() {
-        return (!Robot.fuelSubsystem.isMotorARunning() && !Robot.fuelSubsystem.isMotorBRunning()) || done;
-    }
-
-    @Override
-    protected void execute() {
-            if(shooting){
-                if(timer.get() - shootTime >= startTime){
-                    shootTime = timer.get();
-                    shooting = false;
-                }
-                Robot.fuelSubsystem.setFeederMotorVoltageSpeed(feederMotorVoltage);
-            }
-            else if(!shooting) {
-
-                if (timer.get() - shootTime >= waitTime){
-                    shootTime= timer.get();
-                    shooting = true;
-                }
-                Robot.fuelSubsystem.setFeederMotorVoltageSpeed(0.0);
-                done = !Robot.oi.getJoystick2().getAButton(); //if there is a problem it will be here
-            }
-    }
-
-    @Override
-    protected void end() {
-        timer.stop();
-    }
+  @Override
+  protected void end() {
+    timer.stop();
+    Robot.fuelSubsystem.setFeederMotorVoltageSpeed(0.0);
+  }
 }
 
