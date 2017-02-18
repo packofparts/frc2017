@@ -1,12 +1,13 @@
 package org.usfirst.frc.team1294.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Trigger;
-import org.usfirst.frc.team1294.robot.commands.ClimbRope;
 import org.usfirst.frc.team1294.robot.commands.DriveHeadingAndDistance;
 import org.usfirst.frc.team1294.robot.commands.DriveStraightCommand;
 import org.usfirst.frc.team1294.robot.commands.FlipAUTurn;
+import org.usfirst.frc.team1294.robot.commands.ShooterCommand;
 import org.usfirst.frc.team1294.robot.commands.TurnToHeading;
 import org.usfirst.frc.team1294.robot.commands.*;
 
@@ -15,6 +16,7 @@ import org.usfirst.frc.team1294.robot.commands.*;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+  private final XboxController joystick2;
   private final XboxController joystick;
   private final JoystickButton buttonA;
   private final JoystickButton buttonB;
@@ -35,8 +37,49 @@ public class OI {
   private final Trigger dpadLeft;
   private final Trigger dpadUpLeft;
 
+  private final JoystickButton buttonA2;
+  private final JoystickButton buttonB2;
+  private final JoystickButton buttonX2;
+  private final JoystickButton buttonY2;
+  private final JoystickButton buttonRightBumper2;
+  private final JoystickButton buttonLeftBumper2;
+  private final JoystickButton buttonStart2;
+  private final JoystickButton buttonBack2;
+  private final JoystickButton buttonLeftThumb2;
+  private final JoystickButton buttonRightThumb2;
+  private final Trigger dpadUp2;
+  private final Trigger dpadUpRight2;
+  private final Trigger dpadRight2;
+  private final Trigger dpadDownRight2;
+  private final Trigger dpadDown2;
+  private final Trigger dpadDownLeft2;
+  private final Trigger dpadLeft2;
+  private final Trigger dpadUpLeft2;
+
   public OI() {
     this.joystick = new XboxController(RobotMap.XBOX_CONTROLLER);
+
+    this.joystick2 = new XboxController(RobotMap.XBOX_CONTROLLER2);
+
+
+    this.buttonA2 = new JoystickButton(this.joystick2, 1);
+    this.buttonB2 = new JoystickButton(this.joystick2, 2);
+    this.buttonX2 = new JoystickButton(this.joystick2, 3);
+    this.buttonY2 = new JoystickButton(this.joystick2, 4);
+    this.buttonLeftBumper2 = new JoystickButton(this.joystick2, 5);
+    this.buttonRightBumper2 = new JoystickButton(this.joystick2, 6);
+    this.buttonBack2 = new JoystickButton(this.joystick2, 7);
+    this.buttonStart2 = new JoystickButton(this.joystick2, 8);
+    this.buttonLeftThumb2 = new JoystickButton(this.joystick2, 9);
+    this.buttonRightThumb2 = new JoystickButton(this.joystick2, 10);
+    this.dpadUp2 = new Trigger() {@Override public boolean get() {return joystick2.getPOV(0) == 0;}};
+    this.dpadUpRight2 = new Trigger() {@Override public boolean get() {return joystick2.getPOV(0) == 45;}};
+    this.dpadRight2 = new Trigger() {@Override public boolean get() {return joystick2.getPOV(0) == 90;}};
+    this.dpadDownRight2 = new Trigger() {@Override public boolean get() {return joystick2.getPOV(0) == 135;}};
+    this.dpadDown2 = new Trigger() {@Override public boolean get() {return joystick2.getPOV(0) == 180;}};
+    this.dpadDownLeft2 = new Trigger() {@Override public boolean get() {return joystick2.getPOV(0) == 225;}};
+    this.dpadLeft2 = new Trigger() {@Override public boolean get() {return joystick2.getPOV(0) == 270;}};
+    this.dpadUpLeft2 = new Trigger() {@Override public boolean get() {return joystick2.getPOV(0) == 315;}};
 
     // mappings based on this post from CD...
     // https://www.chiefdelphi.com/forums/attachment.php?attachmentid=20028&d=1455109186
@@ -60,22 +103,24 @@ public class OI {
     this.dpadUpLeft = new Trigger() {@Override public boolean get() {return joystick.getPOV(0) == 315;}};
 
     //this.buttonA.whenPressed(new DriveHeadingAndDistance(0, 1));
-    //this.buttonB.whenPressed(new DriveHeadingAndDistance(45, 1));
+    this.buttonA2.whenPressed(new FeederCommand());
+    this.buttonA.whenPressed(new DriveStraightCommand(5));
     this.buttonA.whenPressed(new DriveStraightCommand(5));
     this.buttonB.whenPressed(new TurnToHeading(180));
+    this.buttonB2.toggleWhenPressed(new ShooterCommand());
     this.buttonY.whileHeld(new ClimbRope());
-
-
     this.buttonRightBumper.whileHeld(new DeliverGearCommand());
-
-
   }
 
-  public XboxController getJoystick() {
-    return joystick;
-  }
+    public XboxController getJoystick() {
+        return joystick;
+    }
 
-  //// CREATING BUTTONS
+    public XboxController getJoystick2() {
+        return joystick2;
+    }
+
+    //// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
 	// You create one by telling it which joystick it's on and which button
