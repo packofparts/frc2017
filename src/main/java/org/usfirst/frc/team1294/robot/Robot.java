@@ -48,6 +48,7 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Auto Gear Center", new MoveFromStartToLiftCenter());
 		chooser.addObject("Auto Gear Left", new MoveFromStartToLiftLeft());
 		chooser.addObject("Auto Gear Right", new MoveFromStartToLiftRight());
+		chooser.addObject("Auto Gear and Fuel Center", new MoveFromStartToLiftCenterWithShooter());
 		SmartDashboard.putData("Auto mode", chooser);
 
 		SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_LEFT_FRONT));
