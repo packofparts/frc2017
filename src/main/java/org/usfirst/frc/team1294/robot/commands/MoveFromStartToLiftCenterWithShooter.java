@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1294.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class MoveFromStartToLiftCenterWithShooter extends CommandGroup{
 	public static final double DISTANCE_TO_TRAVEL = 1.8;
@@ -12,7 +12,7 @@ public class MoveFromStartToLiftCenterWithShooter extends CommandGroup{
     public MoveFromStartToLiftCenterWithShooter() {
         addSequential(new DriveStraightCommand(DISTANCE_TO_TRAVEL));
         addSequential(new DeliverGearCommand());
-        addSequential(new Wait(TIME_TO_WAIT));
+        addSequential(new WaitCommand(TIME_TO_WAIT));
         addSequential(new DriveStraightCommand(DISTANCE_TO_REVERSE));
         addSequential(new ShooterCommand());
         addSequential(new FeederCommand());
