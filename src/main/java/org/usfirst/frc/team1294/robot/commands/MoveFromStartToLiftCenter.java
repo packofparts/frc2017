@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class MoveFromStartToLiftCenter extends CommandGroup {
 
     public static final int HEADING_TO_TRAVEL = 0;
-    public static final double DISTANCE_TO_TRAVEL = 0.5;
-    public static final int HEADING_TO_FACE = 90;
+    public static final double DISTANCE_TO_TRAVEL = 1.58;
+
 
     public MoveFromStartToLiftCenter() {
         addParallel(new DriveHeadingAndDistance(HEADING_TO_TRAVEL, DISTANCE_TO_TRAVEL));
-        addParallel(new TurnToHeading(HEADING_TO_FACE));
+
     }
 }
