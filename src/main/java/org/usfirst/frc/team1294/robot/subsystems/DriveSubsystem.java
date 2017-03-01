@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team1294.robot.RobotMap;
 import org.usfirst.frc.team1294.robot.commands.TeleopDriveCommand;
+import org.usfirst.frc.team1294.robot.commands.TestMotor;
 
 /**
  * @author Austin Jenchi (timtim17)

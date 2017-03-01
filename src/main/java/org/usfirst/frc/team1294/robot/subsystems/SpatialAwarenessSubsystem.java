@@ -56,6 +56,7 @@ public class SpatialAwarenessSubsystem extends Subsystem {
     gearCamera.setResolution(IMG_WIDTH, IMG_HEIGHT);
     gearCamera.setFPS(30);
     gearCamera.setBrightness(7);
+    gearCamera.setExposureManual(46);
     gearVideo = cameraServer.getVideo(gearCamera);
 
     visionProcessing = new VisionProcessing();

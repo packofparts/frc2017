@@ -29,7 +29,7 @@ public class TurnToHeading extends PIDCommand {
         getPIDController().setAbsoluteTolerance(kToleranceDegrees);
         getPIDController().setContinuous(true);
         setSetpoint(heading);
-        SmartDashboard.putData("TurnToHeadingPID", getPIDController());
+//        SmartDashboard.putData("TurnToHeadingPID", getPIDController());
     }
 
     @Override

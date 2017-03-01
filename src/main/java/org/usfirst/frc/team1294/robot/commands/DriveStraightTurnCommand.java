@@ -21,7 +21,7 @@ public class DriveStraightTurnCommand extends PIDCommand {
     getPIDController().setAbsoluteTolerance(TOLERANCE);
     getPIDController().setInputRange(0, 360);
     getPIDController().setOutputRange(-MAX_RATE, MAX_RATE);
-    SmartDashboard.putData("DriveStraightTurnCommandPID", getPIDController());
+//    SmartDashboard.putData("DriveStraightTurnCommandPID", getPIDController());
   }
 
   @Override
