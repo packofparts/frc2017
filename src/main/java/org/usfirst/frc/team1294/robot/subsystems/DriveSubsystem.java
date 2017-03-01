@@ -13,10 +13,10 @@ public class DriveSubsystem extends Subsystem {
 
   private static final double RAMP_RATE = 48.0;
 
-  private final CANTalon leftFrontTalon;
-  private final CANTalon leftRearTalon;
-  private final CANTalon rightFrontTalon;
-  private final CANTalon rightRearTalon;
+  public final CANTalon leftFrontTalon;
+  public final CANTalon leftRearTalon;
+  public final CANTalon rightFrontTalon;
+  public final CANTalon rightRearTalon;
   private final RobotDrive robotDrive;
 
   public DriveSubsystem() {

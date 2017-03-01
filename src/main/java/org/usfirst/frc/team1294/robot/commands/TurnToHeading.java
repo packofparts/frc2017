@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1294.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1294.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
@@ -11,7 +12,7 @@ public class TurnToHeading extends PIDCommand {
 
     private final double heading;
 
-    private static final double kP = 0.01;
+    private static final double kP = 0.05;
     private static final double kI = 0.00;
     private static final double kD = 0.00;
     private static final double MAX_RATE = 0.25;
@@ -28,6 +29,7 @@ public class TurnToHeading extends PIDCommand {
         getPIDController().setAbsoluteTolerance(kToleranceDegrees);
         getPIDController().setContinuous(true);
         setSetpoint(heading);
+        SmartDashboard.putData("TurnToHeadingPID", getPIDController());
     }
 
     @Override

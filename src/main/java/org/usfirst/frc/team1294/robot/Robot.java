@@ -45,9 +45,9 @@ public class Robot extends IterativeRobot {
         fuelSubsystem = new FuelSubsystem();
 		oi = new OI();
 
-		chooser.addDefault("Auto Gear Center", new AutoGearCenter());
-		chooser.addObject("Auto Gear Left", new AutoGearLeft());
-		chooser.addObject("Auto Gear Right", new AutoGearRight());
+		chooser.addDefault("Auto Gear Center", new MoveFromStartToLiftCenter());
+		chooser.addObject("Auto Gear Left", new MoveFromStartToLiftLeft());
+		chooser.addObject("Auto Gear Right", new MoveFromStartToLiftRight());
 		SmartDashboard.putData("Auto mode", chooser);
 
 		SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_LEFT_FRONT));
