@@ -25,7 +25,7 @@ public class DeliverGearStrafeCommand extends PIDCommand {
     getPIDController().setAbsoluteTolerance(STRAFE_TOLERANCE);
     getPIDController().setOutputRange(-MAXIMUM_OUTPUT, MAXIMUM_OUTPUT);
 
-    SmartDashboard.putData("DeliverGearStrafeCommandPID", getPIDController());
+//    SmartDashboard.putData("DeliverGearStrafeCommandPID", getPIDController());
   }
 
   @Override

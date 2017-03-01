@@ -24,7 +24,7 @@ public class DriveStraightApproachCommand extends PIDCommand {
     getPIDController().setAbsoluteTolerance(TOLERANCE);
     getPIDController().setOutputRange(-MAX_SPEED, MAX_SPEED);
     getPIDController().setSetpoint(Robot.driveSubsystem.getEncoderY() + distance);
-    SmartDashboard.putData("DriveStraightApproachCommandPID", getPIDController());
+//    SmartDashboard.putData("DriveStraightApproachCommandPID", getPIDController());
   }
 
   @Override

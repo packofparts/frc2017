@@ -31,7 +31,7 @@ public class DeliverGearTurnCommand extends PIDCommand {
     getPIDController().setAbsoluteTolerance(TOLERANCE);
     getPIDController().setOutputRange(-MAX_RATE, MAX_RATE);
     getPIDController().setSetpoint(0);
-    SmartDashboard.putData("DeliverGearTurnCommandPID", getPIDController());
+//    SmartDashboard.putData("DeliverGearTurnCommandPID", getPIDController());
 
     timer = new Timer();
   }

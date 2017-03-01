@@ -36,7 +36,7 @@ public class DriveHeadingAndDistance extends PIDCommand {
     scaleX = distanceInMeters * Math.sin(heading);
     scaleY = distanceInMeters * Math.cos(heading);
 
-    SmartDashboard.putData("DriveHeadingAndDistancePID", getPIDController());
+//    SmartDashboard.putData("DriveHeadingAndDistancePID", getPIDController());
   }
 
   @Override

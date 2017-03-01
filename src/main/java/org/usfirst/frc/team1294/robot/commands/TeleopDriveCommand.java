@@ -12,8 +12,8 @@ public class TeleopDriveCommand extends PIDCommand {
   private static final double D = 0;
   private static final double ABS_TOLERANCE = 5;
   private static final double DEADZONE = 0.05;
-  private static final double TRIGGER_DEADZONE = 0.01;
-  private static final double MAX_TURN_RATE = 0.25;
+  private static /*final*/ double TRIGGER_DEADZONE = 0.05;
+  private static final double MAX_TURN_RATE = 0.2;
 
   private XboxController joystick;
   private double pidZ = 0;
@@ -31,7 +31,7 @@ public class TeleopDriveCommand extends PIDCommand {
     getPIDController().setAbsoluteTolerance(ABS_TOLERANCE);
     getPIDController().setOutputRange(-MAX_TURN_RATE, MAX_TURN_RATE);
     getPIDController().setContinuous(true);
-    SmartDashboard.putData("SimpleGyroTeleopDriveCommandPID", getPIDController());
+//    SmartDashboard.putData("SimpleGyroTeleopDriveCommandPID", getPIDController());
     switchToPidSteering();
     switchToOpenLoopSteering();
   }
@@ -44,6 +44,7 @@ public class TeleopDriveCommand extends PIDCommand {
     switchToPidSteering();
     switchToOpenLoopSteering();
     Robot.driveSubsystem.enableBrakeMode(true);
+//    SmartDashboard.putNumber("trig", TRIGGER_DEADZONE);
   }
 
   @Override
@@ -53,6 +54,8 @@ public class TeleopDriveCommand extends PIDCommand {
 
   @Override
   protected void execute() {
+//    TRIGGER_DEADZONE = SmartDashboard.getNumber("trig", TRIGGER_DEADZONE);
+
     double z; // this will contain the rotation rate (from either the joystick or the PID as appropriate)
     double joystickZ = getJoystickZ(); // temp variable to hold the joystick rotation rate
 
