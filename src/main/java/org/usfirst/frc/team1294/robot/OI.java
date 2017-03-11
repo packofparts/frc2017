@@ -110,7 +110,6 @@ public class OI {
 
     this.buttonA2.whenPressed(new FeederCommand());
     this.buttonB2.toggleWhenPressed(new ShooterCommand());
-    this.buttonY2.whileHeld(new ClimbRope());
   }
 
     public XboxController getJoystick() {
