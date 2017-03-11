@@ -9,10 +9,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class MoveFromStartToLiftCenter extends CommandGroup {
     public static final double DISTANCE_TO_TRAVEL = 1;
     public static final int HEADING_TO_FACE = 0;
+    private static final double MORE_DISTANCE = 0.01;
 
     public MoveFromStartToLiftCenter() {
         addSequential(new DriveStraightCommand(DISTANCE_TO_TRAVEL));
         addSequential(new TurnToHeading(HEADING_TO_FACE));
         addSequential(new DeliverGearCommand());
+        addSequential(new DriveStraightCommand(MORE_DISTANCE));
     }
 }
