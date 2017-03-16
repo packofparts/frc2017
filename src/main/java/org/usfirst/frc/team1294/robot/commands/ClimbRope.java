@@ -5,10 +5,11 @@ package org.usfirst.frc.team1294.robot.commands;
 
 import org.usfirst.frc.team1294.robot.Robot;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimbRope extends Command {
-
+	  private static double TRIGGER_DEADZONE = 0.05;
   public ClimbRope() {
     super("Drive motor");
     requires(Robot.climbingSubsystem);
@@ -21,10 +22,14 @@ public class ClimbRope extends Command {
 
   @Override
   protected void execute() {
-    Robot.climbingSubsystem.setMotor(1.0);
+	if(Robot.oi.getJoystick2().getTriggerAxis(Hand.kRight) > TRIGGER_DEADZONE){
+		Robot.driveSubsystem.enableBrakeMode(false);
+	    Robot.climbingSubsystem.climbTalon.set(Robot.oi.getJoystick2().getTriggerAxis(Hand.kRight));
+	}
   }
   @Override
   protected void end() {
+	Robot.driveSubsystem.enableBrakeMode(true);
     Robot.climbingSubsystem.climbTalon.set(0);
   }
 

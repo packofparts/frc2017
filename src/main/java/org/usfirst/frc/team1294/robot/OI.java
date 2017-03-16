@@ -106,7 +106,6 @@ public class OI {
     this.buttonA.whenPressed(new DriveStraightCommand(5));
     this.buttonA.whenPressed(new DriveStraightCommand(5));
     this.buttonB.whenPressed(new TurnToHeading(180));
-    this.buttonY.whileHeld(new ClimbRope());
     this.buttonRightBumper.whileHeld(new DeliverGearCommand());
 
     this.buttonA2.whenPressed(new FeederCommand());

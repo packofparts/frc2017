@@ -34,7 +34,7 @@ public class DeliverGearApproachCommand extends PIDCommand {
     getPIDController().setAbsoluteTolerance(TOLERANCE);
     getPIDController().setOutputRange(-MAXIMUM_OUTPUT, MAXIMUM_OUTPUT);
     getPIDController().setSetpoint(DISTANCE_TO_WALL_SETPOINT);
-    SmartDashboard.putData("DeliverGearApproachCommandPID", getPIDController());
+//    SmartDashboard.putData("DeliverGearApproachCommandPID", getPIDController());
 
     distanceList = new ArrayList<>();
   }

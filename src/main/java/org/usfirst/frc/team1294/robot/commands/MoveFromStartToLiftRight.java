@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * with the gear side of the robot squared up with the lift wall. Will time out after 5 seconds.
  */
 public class MoveFromStartToLiftRight extends CommandGroup {
-    public static final double DISTANCE_TO_TRAVEL = 2.34;
+    public static final double DISTANCE_TO_TRAVEL = 1.75;
     public static final int HEADING_TO_FACE = -60;
 
     public MoveFromStartToLiftRight() {
