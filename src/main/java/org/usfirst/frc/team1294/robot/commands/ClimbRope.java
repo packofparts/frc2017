@@ -23,6 +23,9 @@ public class ClimbRope extends Command {
 		Robot.driveSubsystem.enableBrakeMode(false);
 	    Robot.climbingSubsystem.climbTalon.set(Robot.oi.getJoystick2().getTriggerAxis(Hand.kRight));
 	}
+	else if(Robot.oi.getJoystick2().getYButton() == true){
+		Robot.climbingSubsystem.climbTalon.set(1.0);
+	}
   }
   @Override
   protected void end() {
