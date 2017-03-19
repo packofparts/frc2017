@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1294.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -20,4 +22,6 @@ public class RobotMap {
     public static final int CLIMBING_TALON = 8;
     public static final int ANALOG_ULTRASONIC_LEFT = 0;
     public static final int ANALOG_ULTRASONIC_RIGHT = 1;
+    public static final int GEAR_SOLENOID = 0;
+    public static final int COMPRESSOR = 0;
 }
