@@ -47,7 +47,6 @@ public class Robot extends IterativeRobot {
         fuelSubsystem = new FuelSubsystem();
         pneumaticGearSubsystem = new PneumaticGearSubsystem();
 		oi = new OI();
-		PneumaticGearSubsystem.c.enabled();
 
 		chooser.addDefault("Auto Gear Center", new MoveFromStartToLiftCenter());
 		chooser.addObject("Auto Gear Left", new MoveFromStartToLiftLeft());

@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class PneumaticGearSubsystem extends Subsystem{
-	public static final Compressor c = new Compressor(RobotMap.COMPRESSOR);
 	public static final Solenoid gearSolenoid = new Solenoid(RobotMap.GEAR_SOLENOID);
 	@Override
 	protected void initDefaultCommand() {
