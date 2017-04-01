@@ -103,9 +103,9 @@ public class OI {
     this.dpadUpLeft = new Trigger() {@Override public boolean get() {return joystick.getPOV(0) == 315;}};
 
     //this.buttonA.whenPressed(new DriveHeadingAndDistance(0, 1));
-    this.buttonA.whenPressed(new DriveStraightCommand(5));
-    this.buttonA.whenPressed(new DriveStraightCommand(5));
-    this.buttonB.whenPressed(new TurnToHeading(180));
+    //this.buttonA.whenPressed(new DriveStraightCommand(5));
+   // this.buttonA.whenPressed(new DriveStraightCommand(5));
+    //this.buttonB.whenPressed(new TurnToHeading(180));
     this.buttonRightBumper.whileHeld(new DeliverGearCommand());
 
     this.buttonA2.whenPressed(new FeederCommand());

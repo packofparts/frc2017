@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1294.robot.Robot;
+import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
 
 public class TeleopDriveCommand extends PIDCommand {
   private static final double P = 0.01;
@@ -58,7 +59,7 @@ public class TeleopDriveCommand extends PIDCommand {
 
     double z; // this will contain the rotation rate (from either the joystick or the PID as appropriate)
     double joystickZ = getJoystickZ(); // temp variable to hold the joystick rotation rate
-
+    
     if (shouldBeOpenLoopSteering(joystickZ)) {
       // robot should be in open loop steering mode where the joystick triggers control the rotation rate
 

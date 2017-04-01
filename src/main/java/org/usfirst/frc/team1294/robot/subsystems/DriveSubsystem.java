@@ -3,6 +3,8 @@ package org.usfirst.frc.team1294.robot.subsystems;
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team1294.robot.RobotMap;
 import org.usfirst.frc.team1294.robot.commands.TeleopDriveCommand;
 import org.usfirst.frc.team1294.robot.commands.TestMotor;
@@ -85,7 +87,6 @@ public class DriveSubsystem extends Subsystem {
   public void setRightRearTalon(double output) {
     this.rightRearTalon.set(output);
   }
-
   public void stop() {
     robotDrive.stopMotor();
   }
