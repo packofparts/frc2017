@@ -110,7 +110,7 @@ public class OI {
 
     this.buttonA2.whenPressed(new FeederCommand());
     this.buttonB2.toggleWhenPressed(new ShooterCommand());
-    this.buttonX2.whenPressed(new PushGear());
+    //this.buttonX2.whenPressed(new PushGear());
   }
 
     public XboxController getJoystick() {
