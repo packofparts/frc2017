@@ -1,3 +1,6 @@
+//**
+//Authored by Alyssa Giedd
+//**
 package org.usfirst.frc.team1294.robot.commands;
 
 import org.usfirst.frc.team1294.robot.Robot;
