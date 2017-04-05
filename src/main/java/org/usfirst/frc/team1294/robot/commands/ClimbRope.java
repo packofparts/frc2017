@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimbRope extends Command {
-	  private static double TRIGGER_DEADZONE = 0.05;
+	  private static double TRIGGER_DEADZONE = 0.01;
   public ClimbRope() {
     super("Drive motor");
     requires(Robot.climbingSubsystem);
@@ -22,6 +22,12 @@ public class ClimbRope extends Command {
 	if(Robot.oi.getJoystick2().getTriggerAxis(Hand.kRight) > TRIGGER_DEADZONE){
 		Robot.driveSubsystem.enableBrakeMode(false);
 	    Robot.climbingSubsystem.climbTalon.set(Robot.oi.getJoystick2().getTriggerAxis(Hand.kRight));
+	}
+	//else if(Robot.oi.getJoystick2().getYButton() == true){
+	//	Robot.climbingSubsystem.climbTalon.set(1.0);
+	//}
+	else{
+		Robot.climbingSubsystem.climbTalon.set(0);
 	}
   }
   @Override

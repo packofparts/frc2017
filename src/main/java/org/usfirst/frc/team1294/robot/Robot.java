@@ -11,6 +11,7 @@ import org.usfirst.frc.team1294.robot.commands.*;
 import org.usfirst.frc.team1294.robot.subsystems.ClimbingSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.FuelSubsystem;
+import org.usfirst.frc.team1294.robot.subsystems.PneumaticGearSubsystem;
 import org.usfirst.frc.team1294.robot.subsystems.SpatialAwarenessSubsystem;
 
 /**
@@ -27,6 +28,7 @@ public class Robot extends IterativeRobot {
 	public static SpatialAwarenessSubsystem spatialAwarenessSubsystem;
     public static ClimbingSubsystem climbingSubsystem;
     public static FuelSubsystem fuelSubsystem;
+    public static PneumaticGearSubsystem pneumaticGearSubsystem;
 
 
 	Command autonomousCommand;
@@ -43,6 +45,7 @@ public class Robot extends IterativeRobot {
 		spatialAwarenessSubsystem = new SpatialAwarenessSubsystem();
         climbingSubsystem = new ClimbingSubsystem();
         fuelSubsystem = new FuelSubsystem();
+        pneumaticGearSubsystem = new PneumaticGearSubsystem();
 		oi = new OI();
 
 		chooser.addDefault("Auto Gear Center", new MoveFromStartToLiftCenter());
