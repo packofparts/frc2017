@@ -53,10 +53,10 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Auto Gear Right", new MoveFromStartToLiftRight());
 		SmartDashboard.putData("Auto mode", chooser);
 
-		SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_LEFT_FRONT));
-		SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_LEFT_REAR));
-		SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_RIGHT_FRONT));
-		SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_RIGHT_REAR));
+		//SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_LEFT_FRONT));
+		//SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_LEFT_REAR));
+		//SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_RIGHT_FRONT));
+		//SmartDashboard.putData(new TestMotor(TestMotor.Motor.DRIVEBASE_RIGHT_REAR));
 
 		SmartDashboard.putData(new ResetGyroCommand());
 
