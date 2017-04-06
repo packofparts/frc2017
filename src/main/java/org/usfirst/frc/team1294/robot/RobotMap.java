@@ -24,4 +24,5 @@ public class RobotMap {
     public static final int ANALOG_ULTRASONIC_RIGHT = 1;
     public static final int GEAR_SOLENOID = 0;
     public static final int COMPRESSOR = 0;
+    public static final int SHOOTING_ANGLE = 0;
 }

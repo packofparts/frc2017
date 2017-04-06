@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1294.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -9,6 +10,7 @@ import org.usfirst.frc.team1294.robot.commands.DriveStraightCommand;
 import org.usfirst.frc.team1294.robot.commands.FlipAUTurn;
 import org.usfirst.frc.team1294.robot.commands.ShooterCommand;
 import org.usfirst.frc.team1294.robot.commands.TurnToHeading;
+import org.usfirst.frc.team1294.robot.RobotMap;
 import org.usfirst.frc.team1294.robot.commands.*;
 
 /**
@@ -106,6 +108,12 @@ public class OI {
     //this.buttonA.whenPressed(new DriveStraightCommand(5));
    // this.buttonA.whenPressed(new DriveStraightCommand(5));
     //this.buttonB.whenPressed(new TurnToHeading(180));
+    if(DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue){
+    	this.buttonX.whenPressed(new TurnToHeading(RobotMap.SHOOTING_ANGLE));
+    }
+    else{
+    	this.buttonX.whenPressed(new TurnToHeading( -1* (RobotMap.SHOOTING_ANGLE)));
+    }
     this.buttonRightBumper.whileHeld(new DeliverGearCommand());
 
     this.buttonA2.whenPressed(new FeederCommand());
