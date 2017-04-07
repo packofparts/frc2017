@@ -8,11 +8,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class MoveFromStartToLiftLeft extends CommandGroup {
     public static final double DISTANCE_TO_TRAVEL = 1.75;
+    public static final double SUPPLEMENTAL_DISTANCE = 0.15;
     public static final int HEADING_TO_FACE = 60;
 
     public MoveFromStartToLiftLeft() {
         addSequential(new DriveStraightCommand(DISTANCE_TO_TRAVEL));
         addSequential(new TurnToHeading(HEADING_TO_FACE));
+        //addSequential(new DriveHeadingAndDistance(HEADING_TO_FACE, SUPPLEMENTAL_DISTANCE));
+        addSequential(new DriveForwardUntilVisionTargetCommand());
         addSequential(new DeliverGearCommand());
     }
 }
