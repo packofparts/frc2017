@@ -1,0 +1,82 @@
+package org.usfirst.frc.team1294.robot.commands;
+
+import org.usfirst.frc.team1294.robot.Robot;
+
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.command.Command;
+
+public class MecanumDriveCommand extends Command {
+
+  public static final double DEADZONE = 0.05;
+  private double abxYL;
+
+  public MecanumDriveCommand() {
+    requires(Robot.driveSubsystem);
+  }
+
+//entire method susceptible to changes 
+  public void operatorControl() {
+	  while (isOperatorControl() && isEnabled()) {
+		  Robot.driveSubsystem.arcadeDrive(driveStick);
+		  Timer.delay(0.01);
+	  }
+  }
+  
+  @Override
+  protected void initialize() {
+
+  }
+
+  @Override
+  protected void execute() {
+    XboxController joystick = Robot.oi.getJoystick();
+    // if the magnitude of the left analog stick > right analog stick, use field oriented mode
+    System.out.printf("lx: %.2f rx: %.2f // ly: %.2f ry: %.2f // ", joystick.getX(GenericHID.Hand.kLeft), joystick.getX(GenericHID.Hand.kRight), joystick.getY(GenericHID.Hand.kLeft), joystick.getY(GenericHID.Hand.kRight));
+    double absXL = Math.abs(joystick.getX(GenericHID.Hand.kLeft));
+    absXL = absXL < DEADZONE ? 0 : absXL;
+    double absXR = Math.abs(joystick.getX(GenericHID.Hand.kRight));
+    absXR = absXR < DEADZONE ? 0 : absXR;
+    double abxYL = Math.abs(joystick.getY(GenericHID.Hand.kLeft));
+    abxYL = abxYL < DEADZONE ? 0 : abxYL;
+    double absYR = Math.abs(joystick.getY(GenericHID.Hand.kRight));
+    absYR = absYR < DEADZONE ? 0 : absYR;
+    if (absXL > absXR
+            || abxYL > absYR) {
+      Robot.driveSubsystem.mecanumDrive(joystick.getX(GenericHID.Hand.kLeft),
+              joystick.getY(GenericHID.Hand.kLeft),
+              joystick.getTriggerAxis(GenericHID.Hand.kRight) - joystick.getTriggerAxis(GenericHID.Hand.kLeft),
+              Robot.driveSubsystem.getAngle());
+      		  Robot.driveSubsystem.mecanumDrive(joystick.getTriggerAxis(GenericHID.Hand.kRight) - joystick.getTriggerAxis(GenericHID.Hand.kLeft),
+              0, 0, 0); //susceptible to changes
+      System.out.println("FIELD ORIENTED");
+    } else {
+      // otherwise use the right analog stick for arcade drive 
+      Robot.driveSubsystem.arcadeDrive(joystick.getX(GenericHID.moveStick.goForward), //susceptible to changes
+              joystick.getY(GenericHID.moveStick.goBackward), //susceptible to changes 
+              joystick.getW(GenericHID.rotateStick.rotateClockwise), //susceptible to changes 
+              joysticl.getZ(GenericHID.rotateStick.rotateCounterClockwise), //susceptible to changes
+              joystick.getTriggerAngle1(GenericHID.Hand.kRight), //susceptible to changes 
+              joystick.getTriggerAngle2(GenericHID.Hand.kLeft), //susceptible to changes 
+              Robot.driveSubsystem.mecanumDrive(joystick.getTriggerAxis(GenericHID.Hand.kRight) - joystick.getTriggerAxis(GenericHID.Hand.kLeft),
+              0, 0, 0); //susceptible to changes 
+      System.out.println("ARCADE DRIVE");
+      System.out.println("LEFT AND RIGHT TRIGGERS")
+    }
+  }
+
+  @Override
+  protected boolean isFinished() {
+    return false;
+  }
+
+  @Override
+  protected void end() {
+    // does nothing - this command will not end. 
+  }
+
+  @Override
+  protected void interrupted() {
+    end();
+  }
+}
